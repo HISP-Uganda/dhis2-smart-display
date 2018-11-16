@@ -30,3 +30,143 @@
     transform: rotate(360deg);
   }
 }
+div.appbar{
+  height: 40px;
+  padding-top:5px;
+    border-bottom: 1px solid #cc168d;
+    margin-bottom: 5px;
+}
+
+div.appbar > a{
+  text-decoration: none;
+  /*text-transform: uppercase;*/
+    margin:20px;
+    color: #cc168d;
+}
+
+.divTab{
+    padding: 10px;
+}
+
+.dashboards{
+    width: 40%;
+    border-right:1px solid #cc168d;
+    padding:5px;
+    color: #cc168d;
+    float: left;
+    height: 100%;
+}
+
+
+
+.dashboardItems{
+    width: 60%;
+    padding:5px;
+    color: #cc168d;
+}
+
+.dashboardItem{
+    margin: 10px;
+    color: #327dcc;
+}
+
+.fullList{
+    width: 765px;
+
+}
+
+.avatar-list, .app-color{
+    background-color:#cc168d;
+    color:#FFFFFF;
+    width: 150px;
+}
+
+.app-info{
+    margin-top:30px;
+}
+
+.dashboard-list{
+    margin-bottom: 70px;
+    height:250px;
+}
+
+.MuiAppBar-colorPrimary-8 {
+    color: #fff;
+    background-color: #cc168d;
+}
+
+.step-action{
+    margin-top:65px;
+}
+
+.card-header{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    /*background-color: #cde1f5;*/
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.smart-div{
+    margin:20px;
+}
+
+.app-header{
+    margin-bottom: 30px;
+
+}
+
+.add-button{
+    margin-left: 90%;
+}
+
+.slide-preview{
+    height:280px;
+}
+
+.slide-preview-header, .MuiTypography-root-95, .MuiTypography-headline-100,.MuiCardHeader-title-332{
+    font-size: 0.5em;
+    /*font-weight: bold;*/
+}
+
+.display-info{
+    margin-top: 50px;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+.slide-content{
+    width: 100%;
+    margin-top:15px;
+    /*background-color: #cc168d;*/
+}
+
+.slide{
+    /*border: 1px solid orangered;*/
+    width:100%;
+}
+
+.deck, spectacle-deck{
+    border: 5px solid #cc168d;
+    margin-top: 50px;
+}
+
+.grid-content{
+    border: 1px solid deeppink;
+    width:800px;
+}
+
+.main-content{
+    margin-top: 48px;
+    background-color: #327dcc;
+}
+
+.app-header{
+    background-color: #276696;
+    height: 48px;
+    position: fixed;
+    z-index: 1100;
+    top: 0;
+    left: 0;
+    right: 0;
+}

@@ -1,0 +1,23 @@
+{
+"launch_path": "index.html",
+"default_locale": "en",
+"activities": {
+"dhis": {
+"href": ".."
+}
+},
+"appType": "APP",
+"name": "dhis2-smart-display",
+"version": "1.0.0",
+"description": "A DHIS2 App for SMart screen display of DHIS2 Dashboards",
+"icons": {
+"48": "favicon.ico"
+},
+"developer": {
+"name": "DHIS2"
+},
+"dhis2": {
+"apiVersion": "29"
+},
+"manifest_generated_at": "Mon Jul 16 2018 19:26:06 GMT+0300 (EAT)"
+}

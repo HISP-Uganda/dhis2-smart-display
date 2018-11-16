@@ -1,0 +1,395 @@
+body {
+    font-family: sans-serif
+}
+
+[dir] body {
+    margin: 0;
+    padding: 0
+}
+
+[dir] #root {
+    margin-top: 48px
+}
+
+.dashboard-item-select h3 {
+    font-size: 15px;
+    color: #444
+}
+
+[dir] .dashboard-item-select h3 {
+    margin-top: 12px;
+    margin-bottom: 10px
+}
+
+.dashboard-item-select span p {
+    font-size: 15px
+}
+
+.dashboard-item-select button {
+    -ms-flex-item-align: end;
+    align-self: flex-end
+}
+
+.dashboard-item-select button span {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #1565c0
+}
+
+.d2ui-primary-button {
+    font-weight: 500
+}
+
+[dir] .d2ui-primary-button {
+    border-radius: 2px;
+    -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 8px 0 rgba(0, 0, 0, .12), 0 0 8px 0 rgba(0, 0, 0, .24);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, .12), 0 2px 2px 0 rgba(0, 0, 0, .24), 0 0 8px 0 rgba(0, 0, 0, .12), 0 0 8px 0 rgba(0, 0, 0, .24)
+}
+
+[dir] .d2ui-primary-button.disabled {
+    -webkit-box-shadow: none;
+    box-shadow: none
+}
+
+.dashboard-title:focus {
+    color: #555
+}
+
+.dashboard-description:focus {
+    color: #777
+}
+
+.react-grid-layout {
+    position: relative;
+    -webkit-transition: height .2s ease;
+    -o-transition: height .2s ease;
+    transition: height .2s ease
+}
+
+.react-grid-item {
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease
+}
+
+[dir=ltr] .react-grid-item {
+    -webkit-transition-property: left, top;
+    -o-transition-property: left, top;
+    transition-property: left, top
+}
+
+[dir=rtl] .react-grid-item {
+    -webkit-transition-property: right, top;
+    -o-transition-property: right, top;
+    transition-property: right, top
+}
+
+[dir] .react-grid-item.cssTransforms {
+    -webkit-transition-property: -webkit-transform;
+    transition-property: -webkit-transform;
+    -o-transition-property: transform;
+    transition-property: transform;
+    transition-property: transform, -webkit-transform
+}
+
+.react-grid-item.resizing {
+    z-index: 1;
+    will-change: width, height
+}
+
+.react-grid-item.react-draggable-dragging {
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+    z-index: 3;
+    will-change: transform
+}
+
+.react-grid-item.react-grid-placeholder {
+    opacity: .2;
+    z-index: 2;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none
+}
+
+[dir] .react-grid-item.react-grid-placeholder {
+    background: red;
+    -webkit-transition-duration: .1s;
+    -o-transition-duration: .1s;
+    transition-duration: .1s
+}
+
+.react-grid-item > .react-resizable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0
+}
+
+[dir=ltr] .react-grid-item > .react-resizable-handle {
+    right: 0;
+    cursor: se-resize
+}
+
+[dir=rtl] .react-grid-item > .react-resizable-handle {
+    left: 0;
+    cursor: sw-resize
+}
+
+.react-grid-item > .react-resizable-handle:after {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    width: 5px;
+    height: 5px
+}
+
+[dir] .react-grid-item > .react-resizable-handle:after {
+    border-bottom: 2px solid rgba(0, 0, 0, .4)
+}
+
+[dir=ltr] .react-grid-item > .react-resizable-handle:after {
+    right: 3px;
+    border-right: 2px solid rgba(0, 0, 0, .4)
+}
+
+[dir=rtl] .react-grid-item > .react-resizable-handle:after {
+    left: 3px;
+    border-left: 2px solid rgba(0, 0, 0, .4)
+}
+
+.react-resizable {
+    position: relative
+}
+
+.react-resizable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    background-origin: content-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+[dir] .react-resizable-handle {
+    background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+");
+    background-repeat: no-repeat
+}
+
+[dir=ltr] .react-resizable-handle {
+    right: 0;
+    background-position: 100% 100%;
+    padding: 0 3px 3px 0;
+    cursor: se-resize
+}
+
+[dir=rtl] .react-resizable-handle {
+    left: 0;
+    background-position: 0 100%;
+    padding: 0 0 3px 3px;
+    cursor: sw-resize
+}
+
+.react-grid-item {
+    overflow: hidden !important;
+    min-height: 70px;
+    min-width: 70px
+}
+
+[dir] .react-grid-item {
+    -webkit-box-shadow: 0 0 3px 0 #999;
+    box-shadow: 0 0 3px 0 #999;
+    background-color: #fff;
+    border-radius: 3px
+}
+
+.react-grid-item.APP, .react-grid-item.edit, .react-grid-item.MESSAGES, .react-grid-item.RESOURCES, .react-grid-item.TEXT {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column
+}
+
+[dir] .react-grid-item.edit:hover {
+    cursor: move
+}
+
+.react-grid-item.SPACER.view {
+    visibility: hidden
+}
+
+[dir] .react-grid-item.SPACER.edit {
+    background-color: hsla(0, 0%, 100%, .3)
+}
+
+.react-grid-item.react-grid-placeholder {
+    opacity: .1;
+    z-index: 2;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none
+}
+
+[dir] .react-grid-item.react-grid-placeholder {
+    background: #000;
+    -webkit-transition-duration: .15s;
+    -o-transition-duration: .15s;
+    transition-duration: .15s
+}
+
+[dir] .react-resizable-handle {
+    background: none
+}
+
+.dashboard-item-header {
+    font-size: 15px;
+    font-weight: 700;
+    color: #3a3a3a;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+[dir=ltr] .dashboard-item-header {
+    padding: 0 4px 0 14px
+}
+
+[dir=rtl] .dashboard-item-header {
+    padding: 0 14px 0 4px
+}
+
+.dashboard-item-header-title {
+    -ms-flex: 1 1;
+    flex: 1 1;
+    overflow: hidden;
+    position: relative;
+    top: -1px
+}
+
+[dir=ltr] .dashboard-item-header-title {
+    left: -1px
+}
+
+[dir=rtl] .dashboard-item-header-title {
+    right: -1px
+}
+
+.dashboard-item-content {
+    overflow: auto
+}
+
+[dir] .dashboard-item-content {
+    padding: 0 4px 4px
+}
+
+.react-grid-item.APP .dashboard-item-content, .react-grid-item.edit .dashboard-item-content, .react-grid-item.MESSAGES .dashboard-item-content, .react-grid-item.RESOURCES .dashboard-item-content, .react-grid-item.TEXT .dashboard-item-content {
+    -ms-flex: 1 1;
+    flex: 1 1
+}
+
+.CHART.resizing .dashboard-item-content, .EVENT_CHART.resizing .dashboard-item-content {
+    overflow: hidden
+}
+
+.comment-container, .interpretation-container {
+    max-width: 560px
+}
+
+[dir] .comment-container, [dir] .interpretation-container {
+    background-color: #f6f7f8;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 10px
+}
+
+[dir=ltr] .interpretation-container {
+    margin-left: 10px
+}
+
+[dir=rtl] .interpretation-container {
+    margin-right: 10px
+}
+
+[dir] .comment-container {
+    padding: 6px
+}
+
+.interpretation-action-button {
+    color: #494949;
+    font: inherit;
+    font-size: 12px;
+    height: 14px;
+    line-height: 14px;
+    text-decoration: underline
+}
+
+[dir] .interpretation-action-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0 !important
+}
+
+[dir=ltr] .interpretation-action-button {
+    margin-right: 10px
+}
+
+[dir=rtl] .interpretation-action-button {
+    margin-left: 10px
+}
+
+.interpretation-action-button:focus {
+    outline: 0
+}
+
+[dir] .item-action-button {
+    border: none;
+    background: transparent;
+    cursor: pointer
+}
+
+.item-action-button:focus {
+    outline: 0
+}
+
+.messages-action-button:focus {
+    outline: 0
+}
+
+.d2-ui-control-bar-dragflap-icon {
+    visibility: hidden
+}
+
+[dir] body {
+    background-color: #f4f6f8
+}
+
+.app-wrapper * {
+    font-family: Roboto
+}
+
+[dir] .dashboard-wrapper {
+    background-color: #f4f6f8
+}
+
+[dir=ltr] .dashboard-wrapper, [dir=rtl] .dashboard-wrapper {
+    padding-left: 10px;
+    padding-right: 10px
+}
+
+table.pivot * {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    -o-user-select: none !important;
+    user-select: none !important
+}
+
+/*# sourceMappingURL=main.8bb492b2.css.map*/
