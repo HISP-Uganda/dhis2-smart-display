@@ -12,6 +12,7 @@ import SmartDisplay from './presentation'
 
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from '@material-ui/icons/Add';
+import Fullscreen from "react-full-screen";
 
 function TabContainer(props) {
     return (
@@ -32,13 +33,13 @@ class HomePage extends React.Component {
         super(props);
         const {store, d2, baseUrl} = props;
 
-        console.log(baseUrl);
         this.store = store;
         store.checkDataStore(d2);
         d2.i18n.translations['name'] = "Presentation Name";
     }
 
     present = args => {
+        this.store.goFull();
         this.store.setPresentation(args);
         this.store.setStatus(3);
     };
@@ -83,6 +84,7 @@ class HomePage extends React.Component {
                             preview: <Visibility/>
                         }
                     }
+                    primaryAction={this.store.editPresentation}
                 />
                 <Button variant="fab" className="add-button" onClick={this.store.setStatus2(2)}
                         color="primary">
@@ -93,9 +95,12 @@ class HomePage extends React.Component {
             display = <ContentSettings d2={d2} baseUrl={baseUrl}/>
         } else if (this.store.status === 3) {
             display = <SmartDisplay d2={d2} baseUrl={baseUrl}/>
+
         }
 
-        return display;
+        return <Fullscreen enabled={this.store.isFull} onChange={isFull => this.store.setFull(isFull)}>
+            {display}
+        </Fullscreen>
 
     }
 }

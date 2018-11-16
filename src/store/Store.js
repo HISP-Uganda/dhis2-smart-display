@@ -7,6 +7,7 @@ import DashboardItem from "./DashboardItem";
 import DashboardItemContent from "./DashboardItemContent";
 import PresentationOption from "./PresentationOption";
 
+
 configure({enforceActions: "observed"});
 
 class Store {
@@ -31,6 +32,7 @@ class Store {
 
     presentation;
     presentations = [];
+    isFull = false;
 
     status = 1;
 
@@ -63,16 +65,49 @@ class Store {
             });
             return {...dashboard, dashboardItems};
         });
-        const items = this.dashboards.map(d => {
+
+        let items = this.dashboards.map(d => {
             return {text: d.name, value: d.id};
         });
-        this.itemStore.setState(items);
+
+        if (this.presentation) {
+            const ass = this.presentation.dashboards.map(d => {
+                return {text: d.name, value: d.id};
+            });
+
+            const assignedIds = ass.map(i => {
+                return i.value;
+            });
+
+
+            items = items.filter(obj => {
+                return !(assignedIds.indexOf(obj.value) !== -1);
+            });
+
+            const assigned = this.assignedItemStore.state.concat(ass);
+            this.assignedItemStore.setState(assigned);
+
+
+            this.itemStore.setState(items);
+        } else {
+            this.itemStore.setState(items);
+        }
+
+        return Promise.resolve();
     };
 
     setBaseUrl = (baseUrl) => {
         if (this.presentation) {
             this.presentation.setBaseUrl(baseUrl);
         }
+    };
+
+    goFull = () => {
+        this.isFull = true;
+    };
+
+    setFull = val => {
+        this.isFull = val;
     };
 
     convert = (pre) => {
@@ -84,6 +119,7 @@ class Store {
             return new PresentationOption(m.name, m.checked);
         });
         p.setTransitionDuration(parseInt(pre.transitionDuration, 10));
+        p.setSlideDuration(parseInt(pre.slideDuration, 10));
         p.setTransitionModes(transModes);
         const {dashboards} = pre;
         let selectedDashboards = [];
@@ -142,8 +178,8 @@ class Store {
         }
     };
 
-    filterChange = (e) => {
-        this.filterText = {filterText: e};
+    filterChange = e => {
+        this.filterText = e;
     };
 
     assignItems = (items) => {
@@ -166,6 +202,11 @@ class Store {
         return Promise.resolve();
     };
 
+    editPresentation = model => {
+        this.setPresentation(model);
+        this.setStatus(2);
+    };
+
 
     unAssignItems = (items) => {
         const assigned = this.assignedItemStore.state.filter(item => items.indexOf(item) === -1);
@@ -186,8 +227,6 @@ class Store {
             return p.canBeSaved;
         });
         const namespace = await d2.dataStore.get('smart-slides');
-        console.log(namespace);
-        console.log(whatToSave);
         namespace.set('presentations', whatToSave);
     };
 
@@ -203,6 +242,7 @@ decorate(Store, {
     filterText: observable,
     selectedDashboards: observable,
     status: observable,
+    isFull: observable,
 
     checked: observable,
     checkedItems: observable,
@@ -218,6 +258,8 @@ decorate(Store, {
     setPresentations: action,
     setPresentation: action,
     setStatus: action,
+    setFull: action,
+    goFull: action,
 
     groupedDashboards: computed
 

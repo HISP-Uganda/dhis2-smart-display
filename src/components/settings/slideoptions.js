@@ -72,8 +72,8 @@ class SlideOptions extends Component {
                                             />
                                         })}
                                     </FormGroup>
-                                </FormControl>
 
+                                <FormLabel component="legend">Transition Duration</FormLabel>
                                 <InputField
                                     placeholder="Transition duration"
                                     type="number"
@@ -81,6 +81,15 @@ class SlideOptions extends Component {
                                     value={presentation.transitionDuration}
                                     onChange={presentation.setTransitionDuration}
                                 />
+                                <FormLabel component="legend">Content Change (Slide) Duration</FormLabel>
+                                <InputField
+                                    placeholder="Slide Content change duration"
+                                    type="number"
+                                    fullWidth
+                                    value={presentation.slideDuration}
+                                    onChange={presentation.setSlideDuration}
+                                />
+                                </FormControl>
                             </CardContent>
                         </Card>
                     </Paper>
