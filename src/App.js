@@ -30,9 +30,10 @@ class App extends Component {
                 {/*<Router>*/}
                 <D2UIApp>
                     <HeaderBar d2={d2} className="app-header" />
-                    <div className="main-content">
-                        <HomePage d2={d2} baseUrl={baseUrl}/>
-                    </div>
+                    {/*<div className="main-content">*/}
+                       {/**/}
+                    {/*</div>*/}
+                    <HomePage d2={d2} baseUrl={baseUrl}/>
 
                     {/*  <AppBar position="static" className="appTab">
                             <Tabs value={value} onChange={this.handleChange} className="test-class">

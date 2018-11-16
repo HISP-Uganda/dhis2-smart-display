@@ -5,10 +5,18 @@ import * as PropTypes from "prop-types";
 import {inject, observer} from "mobx-react";
 
 class Dashboards extends Component {
+    store = null;
+
     constructor(props) {
         super(props);
         const {d2, store} = props;
         store.loadDashboards(d2);
+
+        this.store = props;
+
+        if (this.store.presentation) {
+            console.log(this.store.presentation);
+        }
     }
 
     /*getChildContext() {
@@ -18,7 +26,6 @@ class Dashboards extends Component {
     render() {
         const {store} = this.props;
         return <div className="smart-div">
-            {store.filterText}
             <InputField
                 id="filter"
                 label="Filter"

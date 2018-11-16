@@ -13,7 +13,8 @@ class Presentation {
         new PresentationOption('spin', true),
         new PresentationOption('fade', true)
     ];
-    transitionDuration = 5000; // 5 seconds
+    transitionDuration = 500; // 5 Miliseconds
+    slideDuration = 20000; //20 Seconds
 
     htmlTables;
 
@@ -24,6 +25,7 @@ class Presentation {
     setDescription = val => this.description = val;
     setTransitionModes = val => this.transitionModes = val;
     setTransitionDuration = val => this.transitionDuration = val;
+    setSlideDuration = val => this.slideDuration = val;
     setBaseUrl = val => this.baseUrl = val;
 
     setHtmlTables2 = val => this.htmlTables = val;
