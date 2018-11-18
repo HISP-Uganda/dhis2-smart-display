@@ -63,7 +63,9 @@
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.3"
+    "workbox-webpack-plugin": "3.6.3",
+    "d2": "latest",
+    "prop-types": "latest"
   },
   "scripts": {
     "start": "node scripts/start.js",

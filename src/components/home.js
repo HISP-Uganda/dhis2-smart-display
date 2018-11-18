@@ -88,7 +88,6 @@ class HomePage extends React.Component {
         };
 
         let display = '';
-        console.log(store.presentations.length);
         if (this.store.status === 1) {
             if (store.presentations.length > 0) {
                 display = <div>
