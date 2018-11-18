@@ -97,8 +97,9 @@ class HomePage extends React.Component {
                             {/*<Paper className={classes.paper}>xs=12</Paper>*/}
                             <Card className="start">
                                 <CardContent>
-                                    <h3>Please select a presentation to display on your smart screen or create a new
-                                        presentation by clicking on the + Button below</h3>
+                                    <h2 className="app-info">Please select a presentation to display on your smart
+                                        screen or create a new
+                                        presentation by clicking on the + Button below</h2>
                                     <Table
                                         columns={['name', 'description']}
                                         rows={store.presentations}
@@ -134,8 +135,25 @@ class HomePage extends React.Component {
                     </Button>
                 </div>
             } else {
+                const boxStyle = {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }
+                const iconStyles = {
+                    largeIcon: {
+                        width: 60,
+                        height: 60,
+                    },
+                }
                 display = <div>
-                    <h2>No Presentation Available. Please Start by Creating a Presentation</h2>
+                    <div style={boxStyle}>
+
+                        <h2 className="app-info">
+                            <Tv style={iconStyles.largeIcon}/> <br/>
+                            No presentation available. Please start by Creating a Presentation
+                        </h2>
+                    </div>
                     <Button variant="fab" style={style} onClick={this.store.setStatus2(2)}
                             color="primary">
                         <AddIcon/>

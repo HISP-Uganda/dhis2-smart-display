@@ -167,6 +167,10 @@ div.appbar > a{
     right: 0;
 }
 
+.start{
+    margin:20px;
+}
+
 
 table.listTable {
     border: 1px solid #1C6EA4;
@@ -224,4 +228,14 @@ table.listTable tfoot .links a{
     color: #FFFFFF;
     padding: 2px 8px;
     border-radius: 5px;
+}
+
+.app-info{
+    text-align: center;
+    text-transform: uppercase;
+    /* font-family: monospace; */
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    color: #4389d2;
+    font-weight: normal;
+    margin-top: 150px;
 }
