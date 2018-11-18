@@ -13,8 +13,8 @@ class Presentation {
         new PresentationOption('spin', true),
         new PresentationOption('fade', true)
     ];
-    transitionDuration = 500; // 5 Miliseconds
-    slideDuration = 20000; //20 Seconds
+    transitionDuration=500; // 5 Miliseconds
+    slideDuration=20000; //20 Seconds
 
     htmlTables;
 
@@ -51,7 +51,7 @@ class Presentation {
         let processedTables = {};
 
         ids.forEach((v, k) => {
-            processedTables = {...processedTables, ... _.fromPairs([[v, found[k]]])}
+            processedTables = {...processedTables, ..._.fromPairs([[v, found[k]]])}
         });
         this.setHtmlTables2(processedTables);
     };
@@ -68,8 +68,12 @@ class Presentation {
         this.setTransitionDuration(singleHintText)
     };
 
+    onSlideDurationChange = (singleHintText) => {
+        this.setSlideDuration(singleHintText)
+    };
+
     get canBeSaved() {
-        return _.pick(this, ['name', 'dashboards', 'description', 'transitionModes', 'transitionDuration'])
+        return _.pick(this, ['name', 'dashboards', 'description', 'transitionModes', 'transitionDuration','slideDuration'])
     }
 
     get presentation() {
@@ -107,6 +111,7 @@ decorate(Presentation, {
     description: observable,
     transitionModes: observable,
     transitionDuration: observable,
+    slideDuration: observable,
     htmlTables: observable,
 
     setName: action,
@@ -116,6 +121,7 @@ decorate(Presentation, {
     setTransitionModes: action,
     setHtmlTables: action,
     setHtmlTables2: action,
+    setSlideDuration: action,
 
     presentation: computed,
     pTransitionModes: computed

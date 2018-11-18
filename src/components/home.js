@@ -13,6 +13,10 @@ import SmartDisplay from './presentation'
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from '@material-ui/icons/Add';
 import Fullscreen from "react-full-screen";
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 
 function TabContainer(props) {
     return (
@@ -31,11 +35,19 @@ class HomePage extends React.Component {
 
     constructor(props) {
         super(props);
-        const {store, d2, baseUrl} = props;
+        const {store, d2} = props;
 
         this.store = store;
         store.checkDataStore(d2);
+        // Translations are all available below
         d2.i18n.translations['name'] = "Presentation Name";
+        d2.i18n.translations['description'] = "Presentation Description";
+        d2.i18n.translations['present'] = "Start Smart Display";
+        d2.i18n.translations['preview'] = "Preview Presentation";
+        d2.i18n.translations['edit'] = "Edit Presentation";
+        d2.i18n.translations['details'] = "Show details";
+        d2.i18n.translations['print'] = "Print Presentation";
+        d2.i18n.translations['delete'] = "Delete Presentation";
     }
 
     present = args => {
@@ -66,31 +78,72 @@ class HomePage extends React.Component {
     render() {
         const {d2, store, baseUrl} = this.props;
 
-        let display = '';
+        const style = {
+            margin: 0,
+            top: 'auto',
+            right: 20,
+            bottom: 20,
+            left: 'auto',
+            position: 'fixed',
+        };
 
+        let display = '';
+        console.log(store.presentations.length);
         if (this.store.status === 1) {
-            display = <div>
-                <Table
-                    columns={['name', 'description']}
-                    rows={store.presentations}
-                    contextMenuActions={this.smartMenuActions}
-                    contextMenuIcons={
-                        {
-                            edit: <Edit/>,
-                            present: <Tv/>,
-                            delete: <Delete/>,
-                            details: <Notes/>,
-                            print: <Print/>,
-                            preview: <Visibility/>
-                        }
-                    }
-                    primaryAction={this.store.editPresentation}
-                />
-                <Button variant="fab" className="add-button" onClick={this.store.setStatus2(2)}
-                        color="primary">
-                    <AddIcon/>
-                </Button>
-            </div>
+            if (store.presentations.length > 0) {
+                display = <div>
+                    <Grid container spacing={24}>
+                        <Grid item xs={12}>
+                            {/*<Paper className={classes.paper}>xs=12</Paper>*/}
+                            <Card className="start">
+                                <CardContent>
+                                    <h3>Please select a presentation to display on your smart screen or create a new
+                                        presentation by clicking on the + Button below</h3>
+                                    <Table
+                                        columns={['name', 'description']}
+                                        rows={store.presentations}
+                                        contextMenuActions={this.smartMenuActions}
+                                        contextMenuIcons={
+                                            {
+                                                edit: <Edit/>,
+                                                present: <Tv/>,
+                                                delete: <Delete/>,
+                                                details: <Notes/>,
+                                                print: <Print/>,
+                                                preview: <Visibility/>
+                                            }
+                                        }
+                                        // primaryAction={this.store.editPresentation}
+                                        primaryAction={this.smartMenuActions.preview}
+                                    />
+                                </CardContent>
+                                <CardActions>
+                                    <Button size="small" color="primary">
+                                        Share
+                                    </Button>
+                                    <Button size="small" color="primary">
+                                        Learn More
+                                    </Button>
+                                </CardActions>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                    <Button variant="fab" style={style} onClick={this.store.setStatus2(2)}
+                            color="primary">
+                        <AddIcon/>
+                    </Button>
+                </div>
+            } else {
+                display = <div>
+                    <h2>No Presentation Available. Please Start by Creating a Presentation</h2>
+                    <Button variant="fab" style={style} onClick={this.store.setStatus2(2)}
+                            color="primary">
+                        <AddIcon/>
+                    </Button>
+                </div>
+            }
+
+
         } else if (this.store.status === 2) {
             display = <ContentSettings d2={d2} baseUrl={baseUrl}/>
         } else if (this.store.status === 3) {

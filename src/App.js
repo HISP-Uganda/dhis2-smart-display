@@ -6,7 +6,6 @@ import HeaderBar from '@dhis2/d2-ui-header-bar';
 import * as PropTypes from "prop-types";
 import {Provider} from 'mobx-react';
 import Store from "./store/Store";
-import {Tv} from '@material-ui/icons';
 
 class App extends Component {
     constructor(props) {
@@ -30,9 +29,6 @@ class App extends Component {
                 {/*<Router>*/}
                 <D2UIApp>
                     <HeaderBar d2={d2} className="app-header" />
-                    {/*<div className="main-content">*/}
-                       {/**/}
-                    {/*</div>*/}
                     <HomePage d2={d2} baseUrl={baseUrl}/>
 
                     {/*  <AppBar position="static" className="appTab">
@@ -49,7 +45,6 @@ class App extends Component {
                         <Route path={`/smartdisplay`} render={(props) => <SmartDisplay {...props} d2={d2}/>}/>*/}
 
                 </D2UIApp>
-                {/*</Router>*/}
             </Provider>
         );
     }

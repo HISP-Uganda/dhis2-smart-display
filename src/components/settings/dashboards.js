@@ -17,6 +17,9 @@ class Dashboards extends Component {
         if (this.store.presentation) {
             console.log(this.store.presentation);
         }
+
+        //Translations
+        d2.i18n.translations['ASSIGN_ALL'] = "Assign All";
     }
 
     /*getChildContext() {
