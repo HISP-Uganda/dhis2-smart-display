@@ -7,14 +7,14 @@
 }
 },
 "appType": "APP",
-"name": "dhis2-smart-display",
-"version": "1.0.0",
+"name": "DHIS2 Smart Display",
+"version": "1.0.1",
 "description": "A DHIS2 App for SMart screen display of DHIS2 Dashboards",
 "icons": {
 "48": "favicon.ico"
 },
 "developer": {
-"name": "DHIS2"
+"name": "HISP Uganda"
 },
 "dhis2": {
 "apiVersion": "29"
