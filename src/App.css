@@ -116,10 +116,6 @@ div.appbar > a{
 
 }
 
-.add-button{
-    margin-left: 90%;
-}
-
 .slide-preview{
     height:280px;
 }
@@ -169,6 +165,10 @@ div.appbar > a{
     top: 0;
     left: 0;
     right: 0;
+}
+
+.start{
+    margin:20px;
 }
 
 
@@ -228,4 +228,14 @@ table.listTable tfoot .links a{
     color: #FFFFFF;
     padding: 2px 8px;
     border-radius: 5px;
+}
+
+.app-info{
+    text-align: center;
+    text-transform: uppercase;
+    /* font-family: monospace; */
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    color: #4389d2;
+    font-weight: normal;
+    margin-top: 150px;
 }

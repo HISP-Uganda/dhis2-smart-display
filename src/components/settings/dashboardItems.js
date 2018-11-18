@@ -82,10 +82,10 @@ class DashboardItems extends Component {
                             <ExpansionPanelDetails>
                                 <List>
                                     {
-                                        d.dashboardItems.map(item => {
+                                        d.dashboardItems.map((item, key) => {
                                             // console.log(item)
                                             // const iconName = 'ViewList';
-                                            return <ListItem key={item.dashboardItemContent.id} role={undefined} dense
+                                            return <ListItem key={key} role={undefined} dense
                                                              className="fullList">
                                                 <Avatar className="avatar-list">
                                                     {this.displayAvatar(item.dashboardItemContent.endpoint)}

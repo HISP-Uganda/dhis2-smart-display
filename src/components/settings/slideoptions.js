@@ -43,8 +43,9 @@ class SlideOptions extends Component {
                                     placeholder="Name"
                                     type="text"
                                     fullWidth
-                                    value={presentation.name}
+                                    value={(presentation.name)? presentation.name : ''}
                                     onChange={presentation.setName}
+                                    name="name"
                                 />
                                 <InputField
                                     placeholder="Multiline field showing 2 rows and up to 4 rows"
@@ -72,29 +73,35 @@ class SlideOptions extends Component {
                                             />
                                         })}
                                     </FormGroup>
-
+                                </FormControl>
+                                <FormGroup>
                                 <FormLabel component="legend">Transition Duration</FormLabel>
                                 <InputField
-                                    placeholder="Transition duration"
+                                    placeholder="Transition duration (Miliseconds)"
                                     type="number"
                                     fullWidth
-                                    value={presentation.transitionDuration}
+                                    value={(presentation.transitionDuration) ? presentation.transitionDuration : 500}
+                                    // value={presentation.transitionDuration}
                                     onChange={presentation.setTransitionDuration}
+                                    name="transitionDuration"
                                 />
-                                <FormLabel component="legend">Content Change (Slide) Duration</FormLabel>
-                                <InputField
-                                    placeholder="Slide Content change duration"
-                                    type="number"
-                                    fullWidth
-                                    value={presentation.slideDuration}
-                                    onChange={presentation.setSlideDuration}
-                                />
-                                </FormControl>
+                                </FormGroup>
+                                <FormGroup>
+                                    <FormLabel component="legend">Content Change (Slide) Duration (Miliseconds)</FormLabel>
+                                    <InputField
+                                        placeholder="Slide Content change duration"
+                                        type="number"
+                                        fullWidth
+                                        value={(presentation.slideDuration)? presentation.slideDuration : 15000 }
+                                        onChange={presentation.setSlideDuration}
+                                        name="slideDuration"
+                                    />
+                                </FormGroup>
                             </CardContent>
                         </Card>
                     </Paper>
                 </Grid>
-               {/* <Grid item xs={6}>
+                {/* <Grid item xs={6}>
                     <pre>{JSON.stringify(presentation, null, 2)}</pre>
                 </Grid>*/}
             </Grid>

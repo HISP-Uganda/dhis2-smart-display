@@ -4,12 +4,14 @@ import {inject, observer} from "mobx-react";
 import '@dhis2/d2-ui-core/css/Table.css';
 import {Deck, Heading, Image, Slide} from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
+import Grid from '@material-ui/core/Grid';
 
 
 const theme = createTheme(
     {
         primary: '#f5fffa',
-        secondary: '#000000'
+        secondary: '#000000',
+        textColor: '#327dcc',
     },
     {
         primary: 'Helvetica'
@@ -37,10 +39,21 @@ class Presentation extends Component {
     };
 
     display = (presentation) => {
+        const slideTheme = {
+            width: '100%',
+            margin: 0,
+            marginBottom: 20,
+            border: '1px solid #ff1e43',
+        };
+
         return presentation.map(item => {
-            return <Slide key={item.id} className="slide" fit={true}>
-                {this.displayHeader(item)}
-                {this.displayContent(item)}
+            return <Slide key={item.id} fit={true} style={slideTheme}>
+                <Grid container spacing={8}>
+                    <Grid item xs={12}>
+                        {this.displayHeader(item)}
+                        {this.displayContent(item)}
+                    </Grid>
+                </Grid>
             </Slide>
         });
     };
@@ -60,6 +73,7 @@ class Presentation extends Component {
             autoplayDuration={this.store.presentation.slideDuration}
             controls={true}
             theme={theme}
+            textColor={theme.textColor}
             bgColor="primary" className="deck">
             {
                 this.display(this.store.presentation.presentation)

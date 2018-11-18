@@ -13,6 +13,8 @@ import {inject, observer} from "mobx-react";
 import SlideOptions from "./slideoptions";
 import SlidePreview from "./slidepreview";
 
+import Home from '@material-ui/icons/Home';
+
 const itemStore = Store.create();
 const assignedItemStore = Store.create();
 
@@ -142,7 +144,8 @@ class ContentSettings extends Component {
                 return <SlideOptions d2={d2}/>;
             case 3:
                 return <SlidePreview d2={d2} baseUrl={baseUrl}/>;
-            default: return;
+            default:
+                return;
         }
     }
 
@@ -178,6 +181,16 @@ class ContentSettings extends Component {
         // const {store} = this.props;
         const steps = getSteps();
         const {activeStep} = this.state;
+
+        const style = {
+            margin: 0,
+            top: 'auto',
+            right: 20,
+            bottom: 20,
+            left: 'auto',
+            position: 'fixed',
+        };
+
         return <div>
 
             <Stepper activeStep={activeStep} alternativeLabel>
@@ -222,6 +235,11 @@ class ContentSettings extends Component {
                     </div>
                 )}
             </div>
+
+            <Button variant="fab" style={style}
+                    color="primary" href="/">
+                <Home/>
+            </Button>
         </div>
     }
 }

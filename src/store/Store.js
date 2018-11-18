@@ -230,7 +230,6 @@ class Store {
         namespace.set('presentations', whatToSave);
     };
 
-
     get groupedDashboards() {
         return _.groupBy(this.dashboards, 'id');
     }
@@ -256,6 +255,7 @@ decorate(Store, {
     unAssignItems: action,
     checkDataStore: action,
     setPresentations: action,
+    savePresentation:action, //Added
     setPresentation: action,
     setStatus: action,
     setFull: action,
