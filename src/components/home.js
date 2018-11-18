@@ -96,7 +96,7 @@ class HomePage extends React.Component {
                             {/*<Paper className={classes.paper}>xs=12</Paper>*/}
                             <Card className="start">
                                 <CardContent>
-                                    <h2 className="app-info">Please select a presentation to display on your smart
+                                    <h2>Please select a presentation to display on your smart
                                         screen or create a new
                                         presentation by clicking on the + Button below</h2>
                                     <Table
