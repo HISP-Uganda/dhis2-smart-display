@@ -17,6 +17,18 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import { withStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Paper from '@material-ui/core/Paper';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from "@material-ui/core/CardMedia/CardMedia";
+import IconButton from '@material-ui/core/IconButton';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {displayPreview} from "./presentation/utils";
+
 
 function TabContainer(props) {
     return (
@@ -29,6 +41,17 @@ function TabContainer(props) {
 TabContainer.propTypes = {
     children: PropTypes.node.isRequired,
 };
+
+const styles = theme => ({
+    paper: {
+        // position: 'absolute',
+        width: '90%',
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing.unit * 4,
+    },
+});
+
 
 class HomePage extends React.Component {
     store = null;
@@ -48,18 +71,26 @@ class HomePage extends React.Component {
         d2.i18n.translations['details'] = "Show details";
         d2.i18n.translations['print'] = "Print Presentation";
         d2.i18n.translations['delete'] = "Delete Presentation";
+        d2.i18n.translations['assign_all'] = "Assign All";
+
+        this.state = {open: false,}
     }
 
     present = args => {
         this.store.goFull();
         this.store.setPresentation(args);
+        this.store.presentation.setBaseUrl(this.props.baseUrl);
         this.store.setStatus(3);
     };
 
+    preview = args =>{
+        this.store.setPresentation(args);
+        this.store.presentation.setBaseUrl(this.props.baseUrl);
+        this.setState({open:true})
+    };
+
     smartMenuActions = {
-        preview(...args) {
-            console.log('Edit', ...args);
-        },
+        preview: this.preview,
         present: this.present,
         edit(...args) {
             console.log('Edit', ...args);
@@ -75,8 +106,48 @@ class HomePage extends React.Component {
         }
     };
 
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+    rand = () =>{
+        return Math.round(Math.random() * 20) - 10;
+    };
+
+    getModalStyle = () =>{
+        return {
+            // top: `${top}%`,
+            // left: `${left}%`,
+            // width: `${width}%`,
+            marginLeft:'auto',
+            marginRight: 'auto',
+            marginTop: '5%',
+            marginBottom: '10%',
+            minHeight: 400
+            // height,
+            // margin:'auto',
+            // transform: `translate(-${top}%, -${left}%)`,
+        };
+    };
+
+    previewSlides =()=>{
+        console.log(this.store.presentation);
+    };
+
+    displayPreview = () =>{
+        if(this.store.presentation){
+           return displayPreview(this.store.presentation.presentation)
+        }
+
+        return null;
+    };
+
     render() {
-        const {d2, store, baseUrl} = this.props;
+        const {d2, store, baseUrl,classes } = this.props;
 
         const style = {
             margin: 0,
@@ -87,7 +158,17 @@ class HomePage extends React.Component {
             position: 'fixed',
         };
 
+        const previewSettings = {
+            dots: true,
+            infinite: true,
+            speed: 500,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            arrows: true
+        };
+
         let display = '';
+        console.log(this.store.status);
         if (this.store.status === 1) {
             if (store.presentations.length > 0) {
                 display = <div>
@@ -165,11 +246,70 @@ class HomePage extends React.Component {
             display = <ContentSettings d2={d2} baseUrl={baseUrl}/>
         } else if (this.store.status === 3) {
             display = <SmartDisplay d2={d2} baseUrl={baseUrl}/>
-
         }
 
         return <Fullscreen enabled={this.store.isFull} onChange={isFull => this.store.setFull(isFull)}>
             {display}
+
+            <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={this.state.open}
+                onClose={this.handleClose}
+                style={{alignItems:'center',justifyContent:'center'}}
+            >
+                <div className={classes.paper} style={this.getModalStyle()}>
+                    <Slider {...previewSettings}>
+                        {
+                            this.displayPreview()
+                            // this.store.presentation.dashboards.map((d, k) => {
+                            //     const items = d.dashboardItems.filter(i => {
+                            //         return i.selected;
+                            //     });
+                            //     items.map(item => {
+                            //         // console.log(item)
+                            //         // const baseUrl = "http://localhost:8080/api/";
+                            //         const endpoint = item.dashboardItemContent.endpoint;
+                            //         const id = item.dashboardItemContent.id;
+                            //         let url = baseUrl+"/api/" + endpoint + "/" + id + "/data";
+                            //         if (endpoint === "reportTables") {
+                            //             url = url + ".html";
+                            //         }
+                            //         return <Paper className="slide-preview">
+                            //             <Card className="slide-preview">
+                            //                 <CardHeader
+                            //                     action={
+                            //                         <IconButton>
+                            //                             <MoreVertIcon/>
+                            //                         </IconButton>
+                            //                     }
+                            //                     // title={d.name}
+                            //                     subheader={item.dashboardItemContent.name + " - " + endpoint}
+                            //                     className="slide-preview-header"
+                            //                 >
+                            //                 </CardHeader>
+                            //                 <CardMedia
+                            //                     title={item.dashboardItemContent.name}
+                            //                     style={{height: 200, width: '95%'}}
+                            //                     image={url}
+                            //                 />
+                            //             </Card>
+                            //         </Paper>
+                            //     })
+                            // })
+
+                            // <pre>{JSON.stringify(this.store.presentation.dashboards,null,2)}</pre>
+                        }
+                    </Slider>
+                    {/*<Typography variant="h6" id="modal-title">*/}
+                        {/*Text in a modal*/}
+                    {/*</Typography>*/}
+                    {/*<Typography variant="subtitle1" id="simple-modal-description">*/}
+                        {/*Duis mollis, est non commodo luctus, nisi erat porttitor ligula.*/}
+                    {/*</Typography>*/}
+                    {/*<SimpleModalWrapped />*/}
+                </div>
+            </Modal>
         </Fullscreen>
 
     }
@@ -180,4 +320,6 @@ HomePage.propTypes = {
     d2: PropTypes.object.isRequired
 };
 
-export default inject("store")(observer(HomePage));
+
+
+export default withStyles(styles)(inject("store")(observer(HomePage)));

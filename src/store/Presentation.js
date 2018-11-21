@@ -77,23 +77,27 @@ class Presentation {
     }
 
     get presentation() {
-        const items = this.dashboards.map((dashboard, k) => {
-            const selected = dashboard.dashboardItems.filter(item => {
-                return item.selected;
+        if(this.dashboards.length > 0) {
+            const items = this.dashboards.map((dashboard, k) => {
+                const selected = dashboard.dashboardItems.filter(item => {
+                    return item.selected;
+                });
+                return selected.map((dashboardItem, itemkey) => {
+                    // const baseUrl = "http://localhost:8080/api/";
+                    const endpoint = dashboardItem.dashboardItemContent.endpoint;
+                    const id = dashboardItem.dashboardItemContent.id;
+                    let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
+                    if (endpoint === "reportTables") {
+                        url = url + ".html";
+                    }
+                    return {...dashboardItem.dashboardItemContent, url};
+                });
             });
-            return selected.map((dashboardItem, itemkey) => {
-                // const baseUrl = "http://localhost:8080/api/";
-                const endpoint = dashboardItem.dashboardItemContent.endpoint;
-                const id = dashboardItem.dashboardItemContent.id;
-                let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
-                if (endpoint === "reportTables") {
-                    url = url + ".html";
-                }
-                return {...dashboardItem.dashboardItemContent, url};
-            });
-        });
 
-        return _.flatten(items);
+            return _.flatten(items);
+        }
+
+        return [];
     }
 
     get pTransitionModes() {

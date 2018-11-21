@@ -43,7 +43,7 @@ class SlideOptions extends Component {
                                     placeholder="Name"
                                     type="text"
                                     fullWidth
-                                    value={(presentation.name)? presentation.name : ''}
+                                    value={(presentation.name) ? presentation.name : ''}
                                     onChange={presentation.setName}
                                     name="name"
                                 />
@@ -75,24 +75,25 @@ class SlideOptions extends Component {
                                     </FormGroup>
                                 </FormControl>
                                 <FormGroup>
-                                <FormLabel component="legend">Transition Duration</FormLabel>
-                                <InputField
-                                    placeholder="Transition duration (Miliseconds)"
-                                    type="number"
-                                    fullWidth
-                                    value={(presentation.transitionDuration) ? presentation.transitionDuration : 500}
-                                    // value={presentation.transitionDuration}
-                                    onChange={presentation.setTransitionDuration}
-                                    name="transitionDuration"
-                                />
+                                    <FormLabel component="legend">Transition Duration</FormLabel>
+                                    <InputField
+                                        placeholder="Transition duration (Miliseconds)"
+                                        type="number"
+                                        fullWidth
+                                        value={presentation.transitionDuration}
+                                        // value={presentation.transitionDuration}
+                                        onChange={presentation.setTransitionDuration}
+                                        name="transitionDuration"
+                                    />
                                 </FormGroup>
                                 <FormGroup>
-                                    <FormLabel component="legend">Content Change (Slide) Duration (Miliseconds)</FormLabel>
+                                    <FormLabel component="legend">Content Change (Slide) Duration
+                                        (Miliseconds)</FormLabel>
                                     <InputField
                                         placeholder="Slide Content change duration"
                                         type="number"
                                         fullWidth
-                                        value={(presentation.slideDuration)? presentation.slideDuration : 15000 }
+                                        value={presentation.slideDuration}
                                         onChange={presentation.setSlideDuration}
                                         name="slideDuration"
                                     />
