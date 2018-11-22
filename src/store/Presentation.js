@@ -31,7 +31,6 @@ class Presentation {
     setHtmlTables2 = val => this.htmlTables = val;
 
     setHtmlTables = async (d2) => {
-
         const data = this.dashboards.map(dashboard => {
             return dashboard.dashboardItems.filter(item => {
                 return item.selected && item.dashboardItemContent.endpoint === 'reportTables';
@@ -43,8 +42,10 @@ class Presentation {
         const ids = _.flatten(data);
         const api = d2.Api.getApi();
         const allTables = ids.map(id => {
-            return api.get("reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
+            // console.log(this.baseUrl);
+            return api.get(this.baseUrl+"/api/reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
         });
+        // console.log(allTables);
 
         let found = await Promise.all(allTables);
 

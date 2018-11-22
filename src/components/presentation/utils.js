@@ -4,6 +4,9 @@ import Heading from "spectacle/es/components/heading";
 import React from "react";
 
 import Grid from '@material-ui/core/Grid';
+import Card from "@material-ui/core/Card/Card";
+import Paper from '@material-ui/core/Paper';
+import CardContent from '@material-ui/core/CardContent';
 
 
 export const displayContent = (presentation, item) => {
@@ -19,11 +22,16 @@ export const displayContent = (presentation, item) => {
 
 export const displayPreviewContent = (presentation, item) => {
 
-    if (item.endpoint === "reportTables" && presentation.htmlTables) {
-        return <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
+    if (item.endpoint === "reportTables") {
+        console.log(presentation);
+        if (presentation.htmlTables) {
+            return <div>
+                CPX
+                <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/></div>
+        }
     } else {
-        return <div>
-            <img src={item.url} width="500px"/>
+        return <div style={{height: 370}}>
+            <img src={item.url} width="100%" height="100%" alt="Preview content"/>
         </div>
     }
 };
@@ -31,12 +39,12 @@ export const displayPreviewContent = (presentation, item) => {
 export const display = (presentation) => {
     const slideTheme = {
         width: '100%',
-        margin: 0,
+        margin: 10,
         marginBottom: 20,
         border: '1px solid #ff1e43',
     };
 
-    return presentation.map(item => {
+    return presentation.presentation.map(item => {
         return <Slide key={item.id} fit={true} style={slideTheme}>
             <Grid container spacing={8}>
                 <Grid item xs={12}>
@@ -49,11 +57,18 @@ export const display = (presentation) => {
 };
 
 export const displayPreview = (presentation) => {
-    return presentation.map(item => {
-        return <div key={item.id}>
-            {item.name}
-            {displayPreviewContent(presentation, item)}
-        </div>
+    return presentation.presentation.map(item => {
+        return <Grid container spacing={8} key={item.id}>
+            <Grid item xs={12}>
+                <Paper className="slide-preview">
+                    <Card className="slide-preview">
+                        <CardContent>
+                            {displayPreviewContent(presentation, item)}
+                        </CardContent>
+                    </Card>
+                </Paper>
+            </Grid>
+        </Grid>
     });
 };
 

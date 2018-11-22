@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {inject, observer} from "mobx-react";
 import '@dhis2/d2-ui-core/css/Table.css';
-import {Deck, Heading, Image, Slide} from 'spectacle';
+import {Deck} from 'spectacle';
 import createTheme from 'spectacle/lib/themes/default';
-import Grid from '@material-ui/core/Grid';
 
 import {display} from "./utils";
 
@@ -33,9 +32,8 @@ class Presentation extends Component {
     }
 
 
-
     render() {
-        const {baseUrl}= this.props;
+        // const {baseUrl}= this.props;
         return <Deck
             transition={this.store.presentation.pTransitionModes}
             transitionDuration={this.store.presentation.transitionDuration}
@@ -46,9 +44,9 @@ class Presentation extends Component {
             textColor={theme.textColor}
             bgColor="primary" className="deck">
             {
-                display(this.store.presentation.presentation)
+                display(this.store.presentation)
             }
-            {console.log(this.store.presentation.presentation)}
+            {/*{console.log(this.store.presentation.presentation)}*/}
         </Deck>
     }
 }

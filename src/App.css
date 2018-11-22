@@ -117,7 +117,13 @@ div.appbar > a{
 }
 
 .slide-preview{
-    height:280px;
+    height:95%;
+}
+
+.info-header{
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: normal;
+    color: #276696;
 }
 
 .slide-preview-header, .MuiTypography-root-95, .MuiTypography-headline-100,.MuiCardHeader-title-332{
