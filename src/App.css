@@ -121,9 +121,10 @@ div.appbar > a{
 }
 
 .info-header{
+    font-weight: 500;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-weight: normal;
-    color: #276696;
+    color: #3f51b5;
+
 }
 
 .slide-preview-header, .MuiTypography-root-95, .MuiTypography-headline-100,.MuiCardHeader-title-332{
