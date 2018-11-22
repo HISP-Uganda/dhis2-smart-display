@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import * as PropTypes from "prop-types";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary/ExpansionPanelSummary";
-// import ExpandMoreIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails/ExpansionPanelDetails";
 import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import Avatar from "@material-ui/core/Avatar/Avatar";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import Checkbox from "@material-ui/core/Checkbox/Checkbox";
-// import {itemTypeMap} from "./contents";
 import {InsertChart, Public, ViewList} from "@material-ui/icons";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {inject, observer} from "mobx-react";
@@ -41,23 +39,6 @@ class DashboardItems extends Component {
         });
     };
 
-    displayItemName = (item, propertyName) => {
-        if (propertyName === "map") {
-            return item.map.name;
-        } else if (propertyName === "chart") {
-            return item.chart.name;
-        } else if (propertyName === "reportTable") {
-            return item.reportTable.name;
-        } else if (propertyName === "eventReport") {
-            return item.eventReport.name;
-        } else if (propertyName === "eventChart") {
-            return item.chart.name;
-        }
-        return "";
-
-
-    }
-
     displayAvatar(endpoint) {
         if (endpoint === "reportTables") {
             return <ViewList/>
@@ -83,8 +64,6 @@ class DashboardItems extends Component {
                                 <List>
                                     {
                                         d.dashboardItems.map((item, key) => {
-                                            // console.log(item)
-                                            // const iconName = 'ViewList';
                                             return <ListItem key={key} role={undefined} dense
                                                              className="fullList">
                                                 <Avatar className="avatar-list">
@@ -110,10 +89,6 @@ class DashboardItems extends Component {
 
 DashboardItems.propTypes = {
     d2: PropTypes.object.isRequired
-}
-
-// DashboardItems.propTypes = {
-//     selectedDashboards: PropTypes.object.isRequired
-// }
+};
 
 export default inject("store")(observer(DashboardItems));

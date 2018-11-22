@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import * as PropTypes from "prop-types";
 import {Store} from '@dhis2/d2-ui-core';
-import i18n from "d2-i18n";
 import Typography from "@material-ui/core/Typography/Typography";
 import Button from "@material-ui/core/Button/Button";
 import Stepper from "@material-ui/core/Stepper/Stepper";
@@ -25,47 +24,6 @@ export const MAP = 'MAP';
 export const EVENT_REPORT = 'EVENT_REPORT';
 export const EVENT_CHART = 'EVENT_CHART';
 
-export const itemTypeMap = {
-    [REPORT_TABLE]: {
-        type: REPORT_TABLE,
-        endPointName: 'reportTables',
-        propName: 'reportTable',
-        appUrl: id => `dhis-web-pivot/?id=${id}`,
-        icon: 'ViewList',
-    },
-    [CHART]: {
-        type: CHART,
-        endPointName: 'charts',
-        propName: 'chart',
-        appUrl: id => `dhis-web-visualizer/?id=${id}`,
-        appName: i18n.t('Visualizer'),
-        icon: 'InsertChart',
-    },
-    [MAP]: {
-        type: MAP,
-        endPointName: 'maps',
-        propName: 'map',
-        appUrl: id => `dhis-web-maps/?id=${id}`,
-        appName: i18n.t('Maps'),
-        icon: 'Public',
-    },
-    [EVENT_REPORT]: {
-        type: EVENT_REPORT,
-        endPointName: 'eventReports',
-        propName: 'eventReport',
-        appUrl: id => `dhis-web-event-reports/?id=${id}`,
-        appName: i18n.t('Event Reports'),
-        icon: 'ViewList',
-    },
-    [EVENT_CHART]: {
-        id: EVENT_CHART,
-        endPointName: 'eventCharts',
-        propName: 'eventChart',
-        appUrl: id => `dhis-web-event-visualizer/?id=${id}`,
-        appName: i18n.t('Event Visualizer'),
-        icon: 'InsertChart',
-    },
-};
 
 //Stepper Contents
 function getSteps() {
@@ -81,8 +39,6 @@ class ContentSettings extends Component {
         itemStore.state = [];
         assignedItemStore.state = [];
         const {store, d2} = props;
-        d2.i18n.translations['assign_all'] = "Assign All";
-
         this.store = store;
         this.d2 = d2;
         this.dashItems = this.dashItems.bind(this);
@@ -96,10 +52,6 @@ class ContentSettings extends Component {
             dashboardItems: this.state.dashItems
         })
     }
-
-    /*getChildContext() {
-        return {d2: this.state.d2};
-    }*/
 
     //Stepper
     state = {
@@ -149,24 +101,6 @@ class ContentSettings extends Component {
                 return;
         }
     }
-
-    handleSkip = () => {
-        const {activeStep} = this.state;
-        if (!this.isStepOptional(activeStep)) {
-            // You probably want to guard against something like this,
-            // it should never occur unless someone's actively trying to break something.
-            throw new Error("You can't skip a step that isn't optional.");
-        }
-
-        this.setState(state => {
-            const skipped = new Set(state.skipped.values());
-            skipped.add(activeStep);
-            return {
-                activeStep: state.activeStep + 1,
-                skipped,
-            };
-        });
-    };
 
     handleReset = () => {
         this.setState({

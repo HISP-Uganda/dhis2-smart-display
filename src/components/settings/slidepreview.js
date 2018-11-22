@@ -31,8 +31,6 @@ class SlidePreview extends Component {
                     return <Grid container spacing={8} key={k}>
                         {
                             items.map(item => {
-                                // console.log(item)
-                                // const baseUrl = "http://localhost:8080/api/";
                                 const endpoint = item.dashboardItemContent.endpoint;
                                 const id = item.dashboardItemContent.id;
                                 let url = baseUrl+"/api/" + endpoint + "/" + id + "/data";
@@ -49,7 +47,6 @@ class SlidePreview extends Component {
                                                         <MoreVertIcon/>
                                                     </IconButton>
                                                 }
-                                                // title={d.name}
                                                 subheader={item.dashboardItemContent.name + " - " + endpoint}
                                                 className="slide-preview-header"
                                             >
