@@ -118,8 +118,8 @@ class Store {
         const transModes = pre.transitionModes.map(m => {
             return new PresentationOption(m.name, m.checked);
         });
-        p.setTransitionDuration(parseInt(pre.transitionDuration, 10));
-        p.setSlideDuration(parseInt(pre.slideDuration, 10));
+        p.setTransitionDuration(parseInt(pre.transitionDuration, 10) || p.transitionDuration);
+        p.setSlideDuration(parseInt(pre.slideDuration, 10) || p.slideDuration);
         p.setTransitionModes(transModes);
         const {dashboards} = pre;
         let selectedDashboards = [];
@@ -255,7 +255,7 @@ decorate(Store, {
     unAssignItems: action,
     checkDataStore: action,
     setPresentations: action,
-    savePresentation:action, //Added
+    savePresentation: action, //Added
     setPresentation: action,
     setStatus: action,
     setFull: action,

@@ -81,6 +81,7 @@ class ContentSettings extends Component {
         itemStore.state = [];
         assignedItemStore.state = [];
         const {store, d2} = props;
+        d2.i18n.translations['assign_all'] = "Assign All";
 
         this.store = store;
         this.d2 = d2;

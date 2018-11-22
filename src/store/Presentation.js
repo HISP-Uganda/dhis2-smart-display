@@ -31,7 +31,6 @@ class Presentation {
     setHtmlTables2 = val => this.htmlTables = val;
 
     setHtmlTables = async (d2) => {
-
         const data = this.dashboards.map(dashboard => {
             return dashboard.dashboardItems.filter(item => {
                 return item.selected && item.dashboardItemContent.endpoint === 'reportTables';
@@ -43,8 +42,10 @@ class Presentation {
         const ids = _.flatten(data);
         const api = d2.Api.getApi();
         const allTables = ids.map(id => {
-            return api.get("reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
+            // console.log(this.baseUrl);
+            return api.get(this.baseUrl+"/api/reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
         });
+        // console.log(allTables);
 
         let found = await Promise.all(allTables);
 
@@ -77,23 +78,27 @@ class Presentation {
     }
 
     get presentation() {
-        const items = this.dashboards.map((dashboard, k) => {
-            const selected = dashboard.dashboardItems.filter(item => {
-                return item.selected;
+        if(this.dashboards.length > 0) {
+            const items = this.dashboards.map((dashboard, k) => {
+                const selected = dashboard.dashboardItems.filter(item => {
+                    return item.selected;
+                });
+                return selected.map((dashboardItem, itemkey) => {
+                    // const baseUrl = "http://localhost:8080/api/";
+                    const endpoint = dashboardItem.dashboardItemContent.endpoint;
+                    const id = dashboardItem.dashboardItemContent.id;
+                    let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
+                    if (endpoint === "reportTables") {
+                        url = url + ".html";
+                    }
+                    return {...dashboardItem.dashboardItemContent, url};
+                });
             });
-            return selected.map((dashboardItem, itemkey) => {
-                // const baseUrl = "http://localhost:8080/api/";
-                const endpoint = dashboardItem.dashboardItemContent.endpoint;
-                const id = dashboardItem.dashboardItemContent.id;
-                let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
-                if (endpoint === "reportTables") {
-                    url = url + ".html";
-                }
-                return {...dashboardItem.dashboardItemContent, url};
-            });
-        });
 
-        return _.flatten(items);
+            return _.flatten(items);
+        }
+
+        return [];
     }
 
     get pTransitionModes() {

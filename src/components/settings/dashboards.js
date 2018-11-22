@@ -19,7 +19,8 @@ class Dashboards extends Component {
         }
 
         //Translations
-        d2.i18n.translations['ASSIGN_ALL'] = "Assign All";
+        d2.i18n.translations['assign_all'] = "Assign All";
+
     }
 
     /*getChildContext() {
