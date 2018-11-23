@@ -14,18 +14,7 @@ class Dashboards extends Component {
 
         this.store = props;
 
-        if (this.store.presentation) {
-            console.log(this.store.presentation);
-        }
-
-        //Translations
-        d2.i18n.translations['assign_all'] = "Assign All";
-
     }
-
-    /*getChildContext() {
-        return {d2: this.state.d2};
-    }*/
 
     render() {
         const {store} = this.props;
@@ -46,8 +35,6 @@ class Dashboards extends Component {
                          height={150}
                          filterText={store.filterText}
             />
-
-            {/*<pre>{JSON.stringify(store.presentation, null, 2)}</pre>*/}
         </div>
     }
 }

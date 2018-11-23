@@ -22,27 +22,12 @@ class App extends Component {
 
     render() {
         const {d2, baseUrl} = this.props;
-        // const {value} = this.state;
         return (
             //State Management
             <Provider store={Store}>
-                {/*<Router>*/}
                 <D2UIApp>
                     <HeaderBar d2={d2} className="app-header" />
                     <HomePage d2={d2} baseUrl={baseUrl}/>
-
-                    {/*  <AppBar position="static" className="appTab">
-                            <Tabs value={value} onChange={this.handleChange} className="test-class">
-                                <Tab label="Home" component={Link} to={`/`} icon={<Home/>}/>
-                                <Tab label="Smart Display" component={Link} to={`/smartdisplay`} icon={<Tv/>}/>
-                                <Tab label="Settings" component={Link} to={`/settings`} icon={<Settings/>}/>
-                                <Tab label="Help" component={Link} to={`/help`} icon={<Help/>}/>
-                            </Tabs>
-                        </AppBar>*/}
-                    {/* <Route exact path='/' render={(props) => <HomePage {...props} d2={d2}/>}/>
-                        <Route path={`/settings/content`} render={(props) => <ContentSettings {...props} d2={d2}/>}/>
-
-                        <Route path={`/smartdisplay`} render={(props) => <SmartDisplay {...props} d2={d2}/>}/>*/}
 
                 </D2UIApp>
             </Provider>

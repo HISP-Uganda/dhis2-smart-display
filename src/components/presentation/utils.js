@@ -23,10 +23,9 @@ export const displayContent = (presentation, item) => {
 };
 
 export const displayPreviewContent = (presentation, item) => {
-
     if (item.endpoint === "reportTables") {
-        console.log(presentation);
         if (presentation.htmlTables) {
+            return <div>
             return <Scrollbars style={{height: 370}}><div>
                 <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/></div>
             </Scrollbars>

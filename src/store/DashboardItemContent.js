@@ -12,11 +12,6 @@ class DashboardItemContent {
     setInterpretations = val => this.interpretations = val;
     setCreated = val => this.created = val;
     setEndpoint = val => this.endpoint = val;
-
-    url() {
-
-    }
-
 }
 
 decorate(DashboardItemContent, {

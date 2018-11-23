@@ -70,6 +70,16 @@ class HomePage extends React.Component {
         d2.i18n.translations['print'] = "Print";
         d2.i18n.translations['delete'] = "Delete";
         d2.i18n.translations['assign_all'] = "Assign All";
+        // Menu bar translations
+        d2.i18n.translations['app_search_placeholder'] = 'Search Apps';
+        d2.i18n.translations['manage_my_apps'] = 'Manage My Apps';
+        d2.i18n.translations['settings'] = 'Settings';
+        d2.i18n.translations['account'] = 'Account';
+        d2.i18n.translations['profile'] = 'Profile';
+        d2.i18n.translations['log_out'] = 'Logout';
+        d2.i18n.translations['help'] = 'Help';
+        d2.i18n.translations['about_dhis2'] = 'About DHIS2';
+        d2.i18n.translations['id'] = 'Id';
 
         this.state = {
             open: false,
@@ -91,8 +101,17 @@ class HomePage extends React.Component {
         this.store.setPresentation(args);
         this.store.presentation.setBaseUrl(this.props.baseUrl);
         this.store.presentation.setHtmlTables(this.props.d2);
-        console.log(this.store.presentation);
         this.setState({open: true})
+    };
+
+    delete = args => {
+        args.deletePresentation(this.props.d2, this.store.presentations).then(deleted => {
+
+        });
+    };
+
+    edit = args => {
+        this.store.editPresentation(args);
     };
 
     share = args => {
@@ -112,6 +131,7 @@ class HomePage extends React.Component {
     smartMenuActions = {
         preview: this.preview,
         present: this.present,
+        edit: this.edit,
         edit(...args) {
             console.log('Edit', ...args);
         },
@@ -122,9 +142,7 @@ class HomePage extends React.Component {
         print(...args) {
             console.log('Edit', ...args);
         },
-        delete(...args) {
-            console.log('Remove', ...args);
-        }
+        delete: this.delete
     };
 
     handleOpen = () => {
@@ -135,10 +153,6 @@ class HomePage extends React.Component {
         this.setState({open: false});
     };
 
-    rand = () => {
-        return Math.round(Math.random() * 20) - 10;
-    };
-
     getModalStyle = () => {
         return {
             marginLeft: 'auto',
@@ -147,6 +161,10 @@ class HomePage extends React.Component {
             marginBottom: '10%',
             height: 400,
             backgroundColor: '#85bbda'
+            backgroundColor: '#85bbda'
+            // height,
+            // margin:'auto',
+            // transform: `translate(-${top}%, -${left}%)`,
         };
     };
 
@@ -219,7 +237,7 @@ class HomePage extends React.Component {
                                     <h2 className="info-header">To get started, click on a presentation below or add a
                                         new one to continue</h2>
                                     <Table
-                                        columns={['name', 'description']}
+                                        columns={['id', 'name', 'description']}
                                         rows={store.presentations}
                                         contextMenuActions={this.smartMenuActions}
                                         contextMenuIcons={
