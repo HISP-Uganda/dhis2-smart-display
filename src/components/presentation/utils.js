@@ -8,6 +8,8 @@ import Card from "@material-ui/core/Card/Card";
 import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 
+import { Scrollbars } from 'react-custom-scrollbars';
+
 
 export const displayContent = (presentation, item) => {
 
@@ -15,7 +17,7 @@ export const displayContent = (presentation, item) => {
         return <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
     } else {
         return <div>
-            <Image src={item.url} width="100%"/>
+            <Image src={item.url} width="100%" height="100%" alt="Preview content"/>
         </div>
     }
 };
@@ -24,7 +26,9 @@ export const displayPreviewContent = (presentation, item) => {
     if (item.endpoint === "reportTables") {
         if (presentation.htmlTables) {
             return <div>
+            return <Scrollbars style={{height: 370}}><div>
                 <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/></div>
+            </Scrollbars>
         }
     } else {
         return <div style={{height: 370}}>
@@ -59,7 +63,7 @@ export const displayPreview = (presentation) => {
             <Grid item xs={12}>
                 <Paper className="slide-preview">
                     <Card className="slide-preview">
-                        <CardContent>
+                        <CardContent style={{minHeight:370}}>
                             {displayPreviewContent(presentation, item)}
                         </CardContent>
                     </Card>

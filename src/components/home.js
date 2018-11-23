@@ -1,5 +1,5 @@
 import React from 'react';
-import {Delete, Edit, Notes, Print, Tv, Visibility} from "@material-ui/icons";
+import {Delete, Edit, Details, Print, Tv, Visibility, Share} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from 'prop-types';
 import {inject, observer} from "mobx-react";
@@ -23,6 +23,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {displayPreview} from "./presentation/utils";
+import SharingDialog from '@dhis2/d2-ui-sharing-dialog';
 
 
 function TabContainer(props) {
@@ -59,13 +60,15 @@ class HomePage extends React.Component {
         store.checkDataStore(d2);
         // Translations are all available below
         d2.i18n.translations['name'] = "Presentation Name";
+        d2.i18n.translations['actions'] = "Actions";
         d2.i18n.translations['description'] = "Presentation Description";
-        d2.i18n.translations['present'] = "Start Smart Display";
-        d2.i18n.translations['preview'] = "Preview Presentation";
-        d2.i18n.translations['edit'] = "Edit Presentation";
+        d2.i18n.translations['present'] = "Present";
+        d2.i18n.translations['preview'] = "Preview";
+        d2.i18n.translations['edit'] = "Edit";
+        d2.i18n.translations['sharing'] = "Sharing Settings";
         d2.i18n.translations['details'] = "Show details";
-        d2.i18n.translations['print'] = "Print Presentation";
-        d2.i18n.translations['delete'] = "Delete Presentation";
+        d2.i18n.translations['print'] = "Print";
+        d2.i18n.translations['delete'] = "Delete";
         d2.i18n.translations['assign_all'] = "Assign All";
         // Menu bar translations
         d2.i18n.translations['app_search_placeholder'] = 'Search Apps';
@@ -78,7 +81,13 @@ class HomePage extends React.Component {
         d2.i18n.translations['about_dhis2'] = 'About DHIS2';
         d2.i18n.translations['id'] = 'Id';
 
-        this.state = {open: false,}
+        this.state = {
+            open: false,
+            sharingDialogProps: {
+                id: '',
+                type: '',
+            },
+        }
     }
 
     present = args => {
@@ -105,10 +114,28 @@ class HomePage extends React.Component {
         this.store.editPresentation(args);
     };
 
+    share = args => {
+        this.store.setPresentation(args);
+        this.store.presentation.setBaseUrl(this.props.baseUrl);
+        this.store.presentation.setHtmlTables(this.props.d2);
+        this.displaySharingDialog();
+        // console.log(this.store.presentation);
+        return <SharingDialog
+            open={this.state.open}
+            d2={this.props.d2}
+            onRequestClose={this.handleClose}
+            {...this.state.sharingDialogProps}
+        />;
+    };
+
     smartMenuActions = {
         preview: this.preview,
         present: this.present,
         edit: this.edit,
+        edit(...args) {
+            console.log('Edit', ...args);
+        },
+        sharing: this.share,
         details(...args) {
             // console.log('Edit', ...args);
         },
@@ -128,14 +155,12 @@ class HomePage extends React.Component {
 
     getModalStyle = () => {
         return {
-            // top: `${top}%`,
-            // left: `${left}%`,
-            // width: `${width}%`,
             marginLeft: 'auto',
             marginRight: 'auto',
             marginTop: '5%',
             marginBottom: '10%',
             height: 400,
+            backgroundColor: '#85bbda'
             backgroundColor: '#85bbda'
             // height,
             // margin:'auto',
@@ -148,9 +173,36 @@ class HomePage extends React.Component {
 
             return displayPreview(this.store.presentation)
         }
-
         return null;
     };
+
+    displaySharingDialog = () => {
+        console.log(this.store.presentation);
+        return <SharingDialog
+            open={this.state.open}
+            d2={this.props.d2}
+            onRequestClose={this.handleClose}
+            {...this.state.sharingDialogProps}
+        />;
+    }
+
+    createOpenHandler = (sharingDialogProps) => () => {
+        this.setState({
+            open: true,
+            sharingDialogProps,
+        });
+    };
+
+    handleConfirm = updatedSharing => {
+        console.log('Updated sharing settings:', updatedSharing);
+        this.handleClose();
+    };
+
+    // handleClose = () => {
+    //     this.setState({
+    //         open: false,
+    //     });
+    // };
 
     render() {
         const {d2, store, baseUrl, classes} = this.props;
@@ -174,7 +226,6 @@ class HomePage extends React.Component {
         }
 
         let display = '';
-        console.log(this.store.status);
         if (this.store.status === 1) {
             if (store.presentations.length > 0) {
                 display = <div>
@@ -194,7 +245,8 @@ class HomePage extends React.Component {
                                                 edit: <Edit/>,
                                                 present: <Tv/>,
                                                 delete: <Delete/>,
-                                                details: <Notes/>,
+                                                sharing: <Share/>,
+                                                details: <Details/>,
                                                 print: <Print/>,
                                                 preview: <Visibility/>
                                             }
@@ -256,6 +308,13 @@ class HomePage extends React.Component {
         return <Fullscreen enabled={this.store.isFull} onChange={isFull => this.store.setFull(isFull)}>
             {display}
 
+            <SharingDialog
+                open={this.state.open}
+                d2={this.props.d2}
+                onRequestClose={this.handleClose}
+                {...this.state.sharingDialogProps}
+            />;
+
             <Modal
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
@@ -271,6 +330,10 @@ class HomePage extends React.Component {
                     </Slider>
                 </div>
             </Modal>
+            {/*<div>{*/}
+            {/*this.displaySharingDialog()*/}
+            {/*}</div>*/}
+
         </Fullscreen>
 
     }
