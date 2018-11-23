@@ -8,6 +8,7 @@
     "@dhis2/d2-ui-core": "^5.0.3",
     "@dhis2/d2-ui-group-editor": "^5.0.3",
     "@dhis2/d2-ui-header-bar": "^5.0.3",
+    "@dhis2/d2-ui-sharing-dialog": "^5.0.6",
     "@dhis2/d2-ui-table": "^5.0.3",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
