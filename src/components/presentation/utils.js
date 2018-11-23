@@ -21,12 +21,9 @@ export const displayContent = (presentation, item) => {
 };
 
 export const displayPreviewContent = (presentation, item) => {
-
     if (item.endpoint === "reportTables") {
-        console.log(presentation);
         if (presentation.htmlTables) {
             return <div>
-                CPX
                 <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/></div>
         }
     } else {

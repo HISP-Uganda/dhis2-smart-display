@@ -1,4 +1,4 @@
-import {action, computed, configure, decorate, observable} from 'mobx';
+import {action, configure, decorate, observable} from 'mobx';
 import {Store as SmartStore} from "@dhis2/d2-ui-core";
 import _ from 'lodash';
 import Presentation from "./Presentation";
@@ -6,14 +6,14 @@ import Dashboard from "./Dashboard";
 import DashboardItem from "./DashboardItem";
 import DashboardItemContent from "./DashboardItemContent";
 import PresentationOption from "./PresentationOption";
+import {generateUid} from 'd2/uid';
 
 
 configure({enforceActions: "observed"});
 
 class Store {
 
-    constructor(props) {
-        // super(props);
+    constructor() {
         this.itemStore.state = [];
         this.assignedItemStore.state = [];
     }
@@ -24,9 +24,7 @@ class Store {
     dashboards = [];
     filterText = '';
     selectedDashboards = [];
-    // groupedDashboards={};
     checked = [];
-    checkedItems = new Map();
     activeStep = 0;
     skipped = new Set();
 
@@ -35,9 +33,6 @@ class Store {
     isFull = false;
 
     status = 1;
-
-    // itemStore = [];
-    // assignedItemStore = [];
 
     itemStore = SmartStore.create();
     assignedItemStore = SmartStore.create();
@@ -114,6 +109,7 @@ class Store {
         let p = new Presentation();
         p.setName(pre.name);
         p.setDescription(pre.description);
+        p.setId(pre.id || p.id);
 
         const transModes = pre.transitionModes.map(m => {
             return new PresentationOption(m.name, m.checked);
@@ -220,8 +216,17 @@ class Store {
     setStatus2 = value => () => this.setStatus(value);
 
     savePresentation = async (d2) => {
-        this.presentations = [...this.presentations, this.presentation];
-        // console.log(this.presentations);
+        if (this.presentation.id) {
+            const mapping = _.findIndex(this.presentations, {id: this.presentation.id});
+            if (mapping !== -1) {
+                this.presentations.splice(mapping, 1, this.presentation);
+            } else {
+                this.presentations = [...this.presentations, this.presentation];
+            }
+        } else {
+            this.presentation.setId(generateUid());
+            this.presentations = [...this.presentations, this.presentation];
+        }
 
         const whatToSave = this.presentations.map(p => {
             return p.canBeSaved;
@@ -230,10 +235,8 @@ class Store {
         namespace.set('presentations', whatToSave);
     };
 
-    get groupedDashboards() {
-        return _.groupBy(this.dashboards, 'id');
-    }
 }
+
 
 decorate(Store, {
     name: observable,
@@ -260,8 +263,6 @@ decorate(Store, {
     setStatus: action,
     setFull: action,
     goFull: action,
-
-    groupedDashboards: computed
-
+    editPresentation: action
 });
 export default new Store();

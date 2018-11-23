@@ -67,6 +67,16 @@ class HomePage extends React.Component {
         d2.i18n.translations['print'] = "Print Presentation";
         d2.i18n.translations['delete'] = "Delete Presentation";
         d2.i18n.translations['assign_all'] = "Assign All";
+        // Menu bar translations
+        d2.i18n.translations['app_search_placeholder'] = 'Search Apps';
+        d2.i18n.translations['manage_my_apps'] = 'Manage My Apps';
+        d2.i18n.translations['settings'] = 'Settings';
+        d2.i18n.translations['account'] = 'Account';
+        d2.i18n.translations['profile'] = 'Profile';
+        d2.i18n.translations['log_out'] = 'Logout';
+        d2.i18n.translations['help'] = 'Help';
+        d2.i18n.translations['about_dhis2'] = 'About DHIS2';
+        d2.i18n.translations['id'] = 'Id';
 
         this.state = {open: false,}
     }
@@ -82,25 +92,30 @@ class HomePage extends React.Component {
         this.store.setPresentation(args);
         this.store.presentation.setBaseUrl(this.props.baseUrl);
         this.store.presentation.setHtmlTables(this.props.d2);
-        console.log(this.store.presentation);
         this.setState({open: true})
+    };
+
+    delete = args => {
+        args.deletePresentation(this.props.d2, this.store.presentations).then(deleted => {
+
+        });
+    };
+
+    edit = args => {
+        this.store.editPresentation(args);
     };
 
     smartMenuActions = {
         preview: this.preview,
         present: this.present,
-        edit(...args) {
-            console.log('Edit', ...args);
-        },
+        edit: this.edit,
         details(...args) {
             // console.log('Edit', ...args);
         },
         print(...args) {
             console.log('Edit', ...args);
         },
-        delete(...args) {
-            console.log('Remove', ...args);
-        }
+        delete: this.delete
     };
 
     handleOpen = () => {
@@ -109,10 +124,6 @@ class HomePage extends React.Component {
 
     handleClose = () => {
         this.setState({open: false});
-    };
-
-    rand = () => {
-        return Math.round(Math.random() * 20) - 10;
     };
 
     getModalStyle = () => {
@@ -125,15 +136,11 @@ class HomePage extends React.Component {
             marginTop: '5%',
             marginBottom: '10%',
             height: 400,
-            backgroundColor:'#85bbda'
+            backgroundColor: '#85bbda'
             // height,
             // margin:'auto',
             // transform: `translate(-${top}%, -${left}%)`,
         };
-    };
-
-    previewSlides = () => {
-        console.log(this.store.presentation);
     };
 
     displayPreview = () => {
@@ -176,9 +183,10 @@ class HomePage extends React.Component {
                             {/*<Paper className={classes.paper}>xs=12</Paper>*/}
                             <Card className="start">
                                 <CardContent>
-                                    <h2 className="info-header">To get started, click on a presentation below or add a new one to continue</h2>
+                                    <h2 className="info-header">To get started, click on a presentation below or add a
+                                        new one to continue</h2>
                                     <Table
-                                        columns={['name', 'description']}
+                                        columns={['id', 'name', 'description']}
                                         rows={store.presentations}
                                         contextMenuActions={this.smartMenuActions}
                                         contextMenuIcons={

@@ -3,6 +3,7 @@ import PresentationOption from "./PresentationOption";
 import _ from 'lodash';
 
 class Presentation {
+    id;
     name = '';
     dashboards = [];
     description = '';
@@ -13,8 +14,8 @@ class Presentation {
         new PresentationOption('spin', true),
         new PresentationOption('fade', true)
     ];
-    transitionDuration=500; // 5 Miliseconds
-    slideDuration=20000; //20 Seconds
+    transitionDuration = 500; // 5 Miliseconds
+    slideDuration = 20000; //20 Seconds
 
     htmlTables;
 
@@ -27,7 +28,7 @@ class Presentation {
     setTransitionDuration = val => this.transitionDuration = val;
     setSlideDuration = val => this.slideDuration = val;
     setBaseUrl = val => this.baseUrl = val;
-
+    setId = val => this.id = val;
     setHtmlTables2 = val => this.htmlTables = val;
 
     setHtmlTables = async (d2) => {
@@ -42,10 +43,8 @@ class Presentation {
         const ids = _.flatten(data);
         const api = d2.Api.getApi();
         const allTables = ids.map(id => {
-            // console.log(this.baseUrl);
-            return api.get(this.baseUrl+"/api/reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
+            return api.get(this.baseUrl + "/api/reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
         });
-        // console.log(allTables);
 
         let found = await Promise.all(allTables);
 
@@ -57,28 +56,22 @@ class Presentation {
         this.setHtmlTables2(processedTables);
     };
 
-    onNameChange = (singleHintText) => {
-        this.setName(singleHintText)
-    };
-
-    onDescriptionChange = (singleHintText) => {
-        this.setDescription(singleHintText)
-    };
-
-    onDurationChange = (singleHintText) => {
-        this.setTransitionDuration(singleHintText)
-    };
-
-    onSlideDurationChange = (singleHintText) => {
-        this.setSlideDuration(singleHintText)
+    deletePresentation = async (d2, presentations) => {
+        const mapping = _.findIndex(presentations, {id: this.id});
+        presentations.splice(mapping, 1);
+        const whatToSave = presentations.map(p => {
+            return p.canBeSaved;
+        });
+        const namespace = await d2.dataStore.get('smart-slides');
+        namespace.set('presentations', whatToSave);
     };
 
     get canBeSaved() {
-        return _.pick(this, ['name', 'dashboards', 'description', 'transitionModes', 'transitionDuration','slideDuration'])
+        return _.pick(this, ['id', 'name', 'dashboards', 'description', 'transitionModes', 'transitionDuration', 'slideDuration'])
     }
 
     get presentation() {
-        if(this.dashboards.length > 0) {
+        if (this.dashboards.length > 0) {
             const items = this.dashboards.map((dashboard, k) => {
                 const selected = dashboard.dashboardItems.filter(item => {
                     return item.selected;
@@ -127,6 +120,7 @@ decorate(Presentation, {
     setHtmlTables: action,
     setHtmlTables2: action,
     setSlideDuration: action,
+    deletePresentation: action,
 
     presentation: computed,
     pTransitionModes: computed

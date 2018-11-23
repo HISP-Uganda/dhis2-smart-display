@@ -28,10 +28,7 @@ class SlideOptions extends Component {
 
     render() {
 
-        // const items = this.props.selectedDashboards;
         const {presentation} = this.store;
-        // const dashItems = this.props.dashItems;
-
         return <div className="smart-div">
             <Grid container spacing={8}>
                 <Grid item xs={12}>
@@ -81,7 +78,6 @@ class SlideOptions extends Component {
                                         type="number"
                                         fullWidth
                                         value={presentation.transitionDuration}
-                                        // value={presentation.transitionDuration}
                                         onChange={presentation.setTransitionDuration}
                                         name="transitionDuration"
                                     />
@@ -102,9 +98,6 @@ class SlideOptions extends Component {
                         </Card>
                     </Paper>
                 </Grid>
-                {/* <Grid item xs={6}>
-                    <pre>{JSON.stringify(presentation, null, 2)}</pre>
-                </Grid>*/}
             </Grid>
         </div>
     }
