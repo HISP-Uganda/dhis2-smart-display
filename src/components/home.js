@@ -132,9 +132,6 @@ class HomePage extends React.Component {
         preview: this.preview,
         present: this.present,
         edit: this.edit,
-        edit(...args) {
-            console.log('Edit', ...args);
-        },
         sharing: this.share,
         details(...args) {
             // console.log('Edit', ...args);
@@ -161,7 +158,6 @@ class HomePage extends React.Component {
             marginBottom: '10%',
             height: 400,
             backgroundColor: '#85bbda'
-            backgroundColor: '#85bbda'
             // height,
             // margin:'auto',
             // transform: `translate(-${top}%, -${left}%)`,
@@ -184,7 +180,7 @@ class HomePage extends React.Component {
             onRequestClose={this.handleClose}
             {...this.state.sharingDialogProps}
         />;
-    }
+    };
 
     createOpenHandler = (sharingDialogProps) => () => {
         this.setState({
@@ -222,8 +218,9 @@ class HomePage extends React.Component {
             speed: 500,
             slidesToShow: 2,
             slidesToScroll: 2,
-            arrows: true
-        }
+            arrows: true,
+            autoplay: true
+        };
 
         let display = '';
         if (this.store.status === 1) {
@@ -234,8 +231,13 @@ class HomePage extends React.Component {
                             {/*<Paper className={classes.paper}>xs=12</Paper>*/}
                             <Card className="start">
                                 <CardContent>
-                                    <h2 className="info-header">To get started, click on a presentation below or add a
-                                        new one to continue</h2>
+                                    <h3 className="info-header">To get started, click on a presentation below or add a
+                                        new one to continue
+                                        <Button size="small" color="primary">
+                                            Learn More
+                                        </Button>
+                                    </h3>
+
                                     <Table
                                         columns={['id', 'name', 'description']}
                                         rows={store.presentations}
@@ -255,14 +257,6 @@ class HomePage extends React.Component {
                                         primaryAction={this.smartMenuActions.preview}
                                     />
                                 </CardContent>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        Share
-                                    </Button>
-                                    <Button size="small" color="primary">
-                                        Learn More
-                                    </Button>
-                                </CardActions>
                             </Card>
                         </Grid>
                     </Grid>
@@ -276,13 +270,13 @@ class HomePage extends React.Component {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                }
+                };
                 const iconStyles = {
                     largeIcon: {
                         width: 60,
                         height: 60,
                     },
-                }
+                };
                 display = <div>
                     <div style={boxStyle}>
 
