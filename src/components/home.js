@@ -3,13 +3,10 @@ import {Delete, Edit, Details, Print, Tv, Visibility, Share} from "@material-ui/
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from 'prop-types';
 import {inject, observer} from "mobx-react";
-
 import Table from '@dhis2/d2-ui-table';
 import '@dhis2/d2-ui-core/css/Table.css';
-
 import ContentSettings from './settings/contents';
-import SmartDisplay from './presentation'
-
+import SmartDisplay from './presentation';
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from '@material-ui/icons/Add';
 import Fullscreen from "react-full-screen";
