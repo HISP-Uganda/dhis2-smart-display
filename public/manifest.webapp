@@ -8,14 +8,17 @@
 },
 "appType": "APP",
 "name": "DHIS2 Smart Display",
-"version": "1.0.1",
+"version": "1.0.3",
 "description": "A DHIS2 App for SMart screen display of DHIS2 Dashboards",
 "icons": {
 "48": "favicon.ico"
 },
 "developer": {
-"name": "HISP Uganda"
-},
+ "name": "Stephen Ocaya",
+ "organisation": "HISP Uganda",
+ "address": "Kampala",
+ "email": "socaya@hispuganda.org,
+ },
 "dhis2": {
 "apiVersion": "29"
 },

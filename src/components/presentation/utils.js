@@ -10,7 +10,6 @@ import CardContent from '@material-ui/core/CardContent';
 
 import {Scrollbars} from 'react-custom-scrollbars';
 
-
 export const displayContent = (presentation, item) => {
 
     if (item.endpoint === "reportTables" && presentation.htmlTables) {
@@ -31,6 +30,22 @@ export const displayPreviewContent = (presentation, item) => {
         }
     } else {
         return <div style={{height: 370}}>
+            <img src={item.url} width="100%" height="100%" alt="Preview content"/>
+        </div>
+    }
+};
+
+export const displaySlidePreviewContent = (presentation, item) => {
+    console.log(item);
+    if (item.endpoint === "reportTables") {
+        if (presentation.htmlTables) {
+            return <Scrollbars style={{height: 200}}>
+                <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
+            </Scrollbars>
+        }
+    } else {
+        // console.log(item);
+        return <div style={{height: 200}}>
             <img src={item.url} width="100%" height="100%" alt="Preview content"/>
         </div>
     }
@@ -59,7 +74,7 @@ export const display = (presentation) => {
 export const displayPreview = (presentation) => {
     return presentation.presentation.map(item => {
         return <Grid container spacing={8} key={item.id}>
-            <Grid item xs={12}>
+            <Grid item xs={12} key={item.id}>
                 <Paper className="slide-preview">
                     <Card className="slide-preview">
                         <CardContent>
@@ -72,6 +87,24 @@ export const displayPreview = (presentation) => {
     });
 };
 
+export const slidePreview = (presentation) => {
+    console.log(presentation);
+    return <Grid container spacing={8}>{
+        presentation.presentation.map(item => {
+
+            return <Grid item xs={3} key={item.id}>
+                <Paper className="slide-preview">
+                    <Card className="slide-preview">
+                        <CardContent>
+                            {displaySlidePreviewContent(presentation, item)}
+                        </CardContent>
+                    </Card>
+                </Paper>
+            </Grid>
+        })
+    }
+    </Grid>
+};
 
 export const displayHeader = (item) => {
     if (item.endpoint === "reportTables") {
