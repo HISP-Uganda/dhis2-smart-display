@@ -28,7 +28,6 @@ class App extends Component {
                 <D2UIApp>
                     <HeaderBar d2={d2} className="app-header" />
                     <HomePage d2={d2} baseUrl={baseUrl}/>
-
                 </D2UIApp>
             </Provider>
         );

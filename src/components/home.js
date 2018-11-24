@@ -3,19 +3,15 @@ import {Delete, Edit, Details, Print, Tv, Visibility, Share} from "@material-ui/
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from 'prop-types';
 import {inject, observer} from "mobx-react";
-
 import Table from '@dhis2/d2-ui-table';
 import '@dhis2/d2-ui-core/css/Table.css';
-
 import ContentSettings from './settings/contents';
-import SmartDisplay from './presentation'
-
+import SmartDisplay from './presentation';
 import Button from "@material-ui/core/Button/Button";
 import AddIcon from '@material-ui/icons/Add';
 import Fullscreen from "react-full-screen";
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import {withStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
@@ -40,7 +36,6 @@ TabContainer.propTypes = {
 
 const styles = theme => ({
     paper: {
-        // position: 'absolute',
         width: '90%',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
@@ -115,26 +110,14 @@ class HomePage extends React.Component {
     };
 
     share = args => {
-        this.store.setPresentation(args);
-        this.store.presentation.setBaseUrl(this.props.baseUrl);
-        this.store.presentation.setHtmlTables(this.props.d2);
         this.displaySharingDialog();
-        // console.log(this.store.presentation);
-        return <SharingDialog
-            open={this.state.open}
-            d2={this.props.d2}
-            onRequestClose={this.handleClose}
-            {...this.state.sharingDialogProps}
-        />;
     };
+
 
     smartMenuActions = {
         preview: this.preview,
         present: this.present,
         edit: this.edit,
-        edit(...args) {
-            console.log('Edit', ...args);
-        },
         sharing: this.share,
         details(...args) {
             // console.log('Edit', ...args);
@@ -146,11 +129,8 @@ class HomePage extends React.Component {
     };
 
     handleOpen = () => {
-        this.setState({open: true});
-    };
-
-    handleClose = () => {
-        this.setState({open: false});
+        this.setState({open: true}, () =>
+            console.log(this.state.open));
     };
 
     getModalStyle = () => {
@@ -160,7 +140,6 @@ class HomePage extends React.Component {
             marginTop: '5%',
             marginBottom: '10%',
             height: 400,
-            backgroundColor: '#85bbda'
             backgroundColor: '#85bbda'
             // height,
             // margin:'auto',
@@ -177,14 +156,9 @@ class HomePage extends React.Component {
     };
 
     displaySharingDialog = () => {
-        console.log(this.store.presentation);
-        return <SharingDialog
-            open={this.state.open}
-            d2={this.props.d2}
-            onRequestClose={this.handleClose}
-            {...this.state.sharingDialogProps}
-        />;
-    }
+        return this.displaySharing();
+        // return <Sharing d2={this.props.d2}/>;
+    };
 
     createOpenHandler = (sharingDialogProps) => () => {
         this.setState({
@@ -193,16 +167,32 @@ class HomePage extends React.Component {
         });
     };
 
+    handleClose = () => {
+        this.setState({open: false});
+    };
+
     handleConfirm = updatedSharing => {
         console.log('Updated sharing settings:', updatedSharing);
         this.handleClose();
     };
 
-    // handleClose = () => {
-    //     this.setState({
-    //         open: false,
-    //     });
-    // };
+
+    displaySharing = () => {
+        // this.setState({open: true});
+        this.createOpenHandler({
+            type: "presentation",
+            id: "K4gwuiVvW3z",
+            doNotPost: true,
+            onConfirm: this.handleConfirm
+        });
+        console.log(this.state);
+        return <SharingDialog
+            open={this.state.open}
+            d2={this.props.d2}
+            onRequestClose={this.handleClose}
+            {...this.state.sharingDialogProps}
+        />
+    };
 
     render() {
         const {d2, store, baseUrl, classes} = this.props;
@@ -222,8 +212,9 @@ class HomePage extends React.Component {
             speed: 500,
             slidesToShow: 2,
             slidesToScroll: 2,
-            arrows: true
-        }
+            arrows: true,
+            autoplay: true
+        };
 
         let display = '';
         if (this.store.status === 1) {
@@ -234,8 +225,13 @@ class HomePage extends React.Component {
                             {/*<Paper className={classes.paper}>xs=12</Paper>*/}
                             <Card className="start">
                                 <CardContent>
-                                    <h2 className="info-header">To get started, click on a presentation below or add a
-                                        new one to continue</h2>
+                                    <h3 className="info-header">To get started, click on a presentation below or add a
+                                        new one to continue
+                                        <Button size="small" color="primary">
+                                            Learn More
+                                        </Button>
+                                    </h3>
+
                                     <Table
                                         columns={['id', 'name', 'description']}
                                         rows={store.presentations}
@@ -255,14 +251,6 @@ class HomePage extends React.Component {
                                         primaryAction={this.smartMenuActions.preview}
                                     />
                                 </CardContent>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        Share
-                                    </Button>
-                                    <Button size="small" color="primary">
-                                        Learn More
-                                    </Button>
-                                </CardActions>
                             </Card>
                         </Grid>
                     </Grid>
@@ -276,13 +264,13 @@ class HomePage extends React.Component {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                }
+                };
                 const iconStyles = {
                     largeIcon: {
                         width: 60,
                         height: 60,
                     },
-                }
+                };
                 display = <div>
                     <div style={boxStyle}>
 
@@ -307,13 +295,6 @@ class HomePage extends React.Component {
 
         return <Fullscreen enabled={this.store.isFull} onChange={isFull => this.store.setFull(isFull)}>
             {display}
-
-            <SharingDialog
-                open={this.state.open}
-                d2={this.props.d2}
-                onRequestClose={this.handleClose}
-                {...this.state.sharingDialogProps}
-            />;
 
             <Modal
                 aria-labelledby="simple-modal-title"

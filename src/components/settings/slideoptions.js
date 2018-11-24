@@ -45,7 +45,7 @@ class SlideOptions extends Component {
                                     name="name"
                                 />
                                 <InputField
-                                    placeholder="Multiline field showing 2 rows and up to 4 rows"
+                                    placeholder="Enter presentation decription"
                                     type="text"
                                     multiline
                                     fullWidth

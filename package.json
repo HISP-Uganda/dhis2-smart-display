@@ -2,6 +2,7 @@
   "name": "dsmart",
   "version": "0.1.0",
   "private": true,
+  "homepage":"https://github.com/socaya/dhis2-smart-display",
   "dependencies": {
     "@babel/core": "7.1.0",
     "@dhis2/d2-ui-app": "^2.0.0",

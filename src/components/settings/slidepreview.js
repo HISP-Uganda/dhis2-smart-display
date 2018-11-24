@@ -1,68 +1,26 @@
 import React, {Component} from 'react';
 import * as PropTypes from "prop-types";
 import {inject, observer} from "mobx-react";
-import Card from "@material-ui/core/Card/Card";
-import CardHeader from '@material-ui/core/CardHeader';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import CardMedia from "@material-ui/core/CardMedia/CardMedia";
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {slidePreview} from "../presentation/utils";
 
 
 class SlidePreview extends Component {
 
     store = null;
+    baseUrl = null;
 
     constructor(props) {
         super(props);
-        const {store} = props;
+        const {store, d2} = props;
         this.store = store;
+        this.store.presentation.setHtmlTables(d2);
     }
 
     render() {
-        const {baseUrl} = this.props;
+        this.store.setBaseUrl(this.props.baseUrl);
         return <div className="smart-div">
             {
-                this.store.presentation.dashboards.map((d, k) => {
-                    const items = d.dashboardItems.filter(i => {
-                        return i.selected;
-                    });
-                    return <Grid container spacing={8} key={k}>
-                        {
-                            items.map(item => {
-                                const endpoint = item.dashboardItemContent.endpoint;
-                                const id = item.dashboardItemContent.id;
-                                let url = baseUrl+"/api/" + endpoint + "/" + id + "/data";
-                                if (endpoint === "reportTables") {
-                                    url = url + ".html";
-                                }
-                                return <Grid item xs={3} key={item.id}>
-                                    <Paper className="slide-preview">
-
-                                        <Card className="slide-preview">
-                                            <CardHeader
-                                                action={
-                                                    <IconButton>
-                                                        <MoreVertIcon/>
-                                                    </IconButton>
-                                                }
-                                                subheader={item.dashboardItemContent.name + " - " + endpoint}
-                                                className="slide-preview-header"
-                                            >
-                                            </CardHeader>
-                                            <CardMedia
-                                                title={item.dashboardItemContent.name}
-                                                style={{height: 200, width: '95%'}}
-                                                image={url}
-                                            />
-                                        </Card>
-                                    </Paper>
-                                </Grid>
-                            })
-                        }
-                    </Grid>
-                })
+                slidePreview(this.store.presentation)
             }
         </div>
     }

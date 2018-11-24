@@ -43,11 +43,10 @@ class Presentation {
         const ids = _.flatten(data);
         const api = d2.Api.getApi();
         const allTables = ids.map(id => {
-            return api.get(this.baseUrl + "/api/reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
+            return api.get("/reportTables/" + id + "/data.html", {headers: {'Accept': 'text/html'}})
         });
 
         let found = await Promise.all(allTables);
-
         let processedTables = {};
 
         ids.forEach((v, k) => {
@@ -55,6 +54,8 @@ class Presentation {
         });
         this.setHtmlTables2(processedTables);
     };
+
+
 
     deletePresentation = async (d2, presentations) => {
         const mapping = _.findIndex(presentations, {id: this.id});
@@ -67,7 +68,7 @@ class Presentation {
     };
 
     get canBeSaved() {
-        return _.pick(this, ['id', 'name', 'dashboards', 'description', 'transitionModes', 'transitionDuration', 'slideDuration'])
+        return _.pick(this, ['id', 'name', 'dashboards', 'baseUrl', 'description', 'transitionModes', 'transitionDuration', 'slideDuration'])
     }
 
     get presentation() {
@@ -77,7 +78,6 @@ class Presentation {
                     return item.selected;
                 });
                 return selected.map((dashboardItem, itemkey) => {
-                    // const baseUrl = "http://localhost:8080/api/";
                     const endpoint = dashboardItem.dashboardItemContent.endpoint;
                     const id = dashboardItem.dashboardItemContent.id;
                     let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
@@ -111,6 +111,7 @@ decorate(Presentation, {
     transitionDuration: observable,
     slideDuration: observable,
     htmlTables: observable,
+    baseUrl:observable,
 
     setName: action,
     setDashboards: action,
@@ -121,6 +122,7 @@ decorate(Presentation, {
     setHtmlTables2: action,
     setSlideDuration: action,
     deletePresentation: action,
+    setBaseUrl: action,
 
     presentation: computed,
     pTransitionModes: computed
