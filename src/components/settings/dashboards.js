@@ -9,10 +9,8 @@ class Dashboards extends Component {
 
     constructor(props) {
         super(props);
-        const {d2, store} = props;
-        store.loadDashboards(d2);
-
-        this.store = props;
+        const {store} = props;
+        this.store = store;
 
     }
 
