@@ -7,6 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card/Card";
 import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Delete from '@material-ui/icons/Delete';
 
 import {Scrollbars} from 'react-custom-scrollbars';
 
@@ -88,18 +92,22 @@ export const displayPreview = (presentation) => {
 };
 
 export const slidePreview = (presentation) => {
-    console.log(presentation);
     return <Grid container spacing={8}>{
         presentation.presentation.map(item => {
-
             return <Grid item xs={3} key={item.id}>
-                <Paper className="slide-preview">
-                    <Card className="slide-preview">
-                        <CardContent>
-                            {displaySlidePreviewContent(presentation, item)}
-                        </CardContent>
-                    </Card>
-                </Paper>
+                <Card className="slide-preview">
+                    <CardHeader
+                        action={
+                            <IconButton>
+                                <Delete/>
+                            </IconButton>
+                        }
+                        subheader={item.name}
+                    />
+                    <CardContent>
+                        {displaySlidePreviewContent(presentation, item)}
+                    </CardContent>
+                </Card>
             </Grid>
         })
     }
