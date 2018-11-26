@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import * as PropTypes from "prop-types";
-import {Store} from '@dhis2/d2-ui-core';
 import Typography from "@material-ui/core/Typography/Typography";
 import Button from "@material-ui/core/Button/Button";
 import Stepper from "@material-ui/core/Stepper/Stepper";
@@ -13,9 +12,6 @@ import SlideOptions from "./slideoptions";
 import SlidePreview from "./slidepreview";
 
 import Home from '@material-ui/icons/Home';
-
-const itemStore = Store.create();
-const assignedItemStore = Store.create();
 
 //Sets Mapping for Dashboard Item Types
 export const REPORT_TABLE = 'REPORT_TABLE';
@@ -36,21 +32,10 @@ class ContentSettings extends Component {
 
     constructor(props) {
         super(props);
-        itemStore.state = [];
-        assignedItemStore.state = [];
         const {store, d2} = props;
         this.store = store;
         this.d2 = d2;
-        this.dashItems = this.dashItems.bind(this);
-
-
-    }
-
-    dashItems(e) {
-        e.preventDefault();
-        this.setState({
-            dashboardItems: this.state.dashItems
-        })
+        this.store.loadDashboards(d2);
     }
 
     //Stepper

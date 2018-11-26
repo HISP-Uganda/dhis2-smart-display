@@ -11,6 +11,7 @@ import {generateUid} from 'd2/uid';
 
 configure({enforceActions: "observed"});
 
+
 class Store {
 
     constructor() {
@@ -23,7 +24,6 @@ class Store {
     //Content.js Variables
     dashboards = [];
     filterText = '';
-    selectedDashboards = [];
     checked = [];
     activeStep = 0;
     skipped = new Set();
@@ -182,7 +182,6 @@ class Store {
         // const assigned = this.assignedItemStore.concat(items);
         const assigned = this.assignedItemStore.state.concat(items);
         this.assignedItemStore.setState(assigned);
-        this.selectedDashboards = assigned;
 
         // console.log(this.dashboards);
         const dashboards = this.dashboards.filter(d => {
@@ -194,12 +193,19 @@ class Store {
             {name: 'zoom', checked: true},
             {name: 'spin', checked: true},
             {name: 'fade', checked: true}];
+
         this.setPresentation(this.convert({dashboards, transitionModes}));
         return Promise.resolve();
     };
 
     editPresentation = model => {
         this.setPresentation(model);
+
+        const ass = this.presentation.dashboards.map(d => {
+            return {text: d.name, value: d.id};
+        });
+
+        this.assignedItemStore.setState(ass);
         this.setStatus(2);
     };
 
@@ -208,7 +214,18 @@ class Store {
         const assigned = this.assignedItemStore.state.filter(item => items.indexOf(item) === -1);
 
         this.assignedItemStore.setState(assigned);
-        this.selectedDashboards = assigned;
+
+        const dashboards = this.dashboards.filter(d => {
+            return assigned.indexOf(d.id) >= 0;
+        });
+
+        const transitionModes = [
+            {name: 'slide', checked: true},
+            {name: 'zoom', checked: true},
+            {name: 'spin', checked: true},
+            {name: 'fade', checked: true}];
+
+        this.setPresentation(this.convert({dashboards, transitionModes}));
         return Promise.resolve();
     };
 

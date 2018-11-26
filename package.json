@@ -2,7 +2,7 @@
   "name": "dsmart",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://github.com/socaya/dhis2-smart-display",
+  "homepage": "https://github.com/socaya/dhis2-smart-display",
   "dependencies": {
     "@babel/core": "7.1.0",
     "@dhis2/d2-ui-app": "^2.0.0",
@@ -11,6 +11,8 @@
     "@dhis2/d2-ui-header-bar": "^5.0.3",
     "@dhis2/d2-ui-sharing-dialog": "^5.0.6",
     "@dhis2/d2-ui-table": "^5.0.3",
+    "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
     "@svgr/webpack": "2.4.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
@@ -70,9 +72,7 @@
     "webpack": "4.19.1",
     "webpack-dev-server": "3.1.9",
     "webpack-manifest-plugin": "2.0.4",
-    "workbox-webpack-plugin": "3.6.3",
-    "@material-ui/core": "latest",
-    "@material-ui/icons": "latest"
+    "workbox-webpack-plugin": "3.6.3"
   },
   "scripts": {
     "start": "node scripts/start.js",
