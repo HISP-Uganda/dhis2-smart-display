@@ -57,13 +57,15 @@ export const display = (presentation) => {
     const slideTheme = {
         width: '100%',
         margin: 10,
+        marginTop: 100,
         marginBottom: 20,
         border: '1px solid #ff1e43',
+        controlColor: '#477fcc'
     };
 
     return presentation.presentation.map((item, key) => {
-        return <Slide key={item.id + key} fit={true} style={slideTheme}>
-            <Grid container spacing={8}>
+        return <Slide key={item.id + key} fit={true} style={slideTheme} controlColor={slideTheme.controlColor}>
+            <Grid container spacing={8} style={{marginTop: 20}}>
                 <Grid item xs={12}>
                     {displayHeader(item)}
                     {displayContent(presentation, item)}

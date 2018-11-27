@@ -20,6 +20,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {displayPreview} from "./presentation/utils";
 import SharingDialog from '@dhis2/d2-ui-sharing-dialog';
+import * as html2canvas from "html2canvas";
+import * as jsPDF from 'jspdf';
 
 
 function TabContainer(props) {
@@ -113,6 +115,13 @@ class HomePage extends React.Component {
         this.displaySharingDialog();
     };
 
+    print = args =>{
+        this.store.setPresentation(args);
+        this.store.presentation.setBaseUrl(this.props.baseUrl);
+        this.store.presentation.setHtmlTables(this.props.d2);
+        this.printPresentation();
+    }
+
 
     smartMenuActions = {
         preview: this.preview,
@@ -122,9 +131,7 @@ class HomePage extends React.Component {
         details(...args) {
             // console.log('Edit', ...args);
         },
-        print(...args) {
-            console.log('Edit', ...args);
-        },
+        print:this.print,
         delete: this.delete
     };
 
@@ -157,7 +164,30 @@ class HomePage extends React.Component {
 
     displaySharingDialog = () => {
         return this.displaySharing();
-        // return <Sharing d2={this.props.d2}/>;
+    };
+
+    printPresentation = () => {
+        const content = document.createElement('Deck');
+        content.className = "presentation-document";
+        content.id = "print";
+        // content.innerHTML = "TEST PDF";
+        const presentation = this.store.presentation;
+        // const slides = display(presentation);
+
+        content.innerHTML = "";
+        document.body.appendChild(content);
+        const input = document.getElementById('print');
+        html2canvas(input)
+            .then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF();
+                pdf.addImage(imgData, 'JPEG', 0, 0);
+                // pdf.output('dataurlnewwindow');
+                const name = presentation.name +".pdf";
+                console.log(name);
+                pdf.save(name);
+            })
+        ;
     };
 
     createOpenHandler = (sharingDialogProps) => () => {

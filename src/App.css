@@ -246,3 +246,7 @@ table.listTable tfoot .links a{
     font-weight: normal;
     margin-top: 150px;
 }
+
+.spectacle-slide{
+    top: 25px;
+}

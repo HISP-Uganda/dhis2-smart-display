@@ -13,10 +13,12 @@ const theme = createTheme(
         primary: '#f5fffa',
         secondary: '#000000',
         textColor: '#327dcc',
+        marginTop: 50
     },
     {
         primary: 'Helvetica'
-    }
+    },
+
 );
 
 

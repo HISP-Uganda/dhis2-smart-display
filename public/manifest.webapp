@@ -17,10 +17,10 @@
  "name": "Stephen Ocaya",
  "organisation": "HISP Uganda",
  "address": "Kampala",
- "email": "socaya@hispuganda.org,
+ "email": "socaya@hispuganda.org"
  },
 "dhis2": {
 "apiVersion": "29"
 },
-"manifest_generated_at": "Mon Jul 16 2018 19:26:06 GMT+0300 (EAT)"
+"manifest_generated_at": "Tuesday November 27 2018 04:13:06 GMT+0300 (EAT)"
 }

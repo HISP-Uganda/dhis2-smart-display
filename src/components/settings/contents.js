@@ -12,6 +12,7 @@ import SlideOptions from "./slideoptions";
 import SlidePreview from "./slidepreview";
 
 import Home from '@material-ui/icons/Home';
+import HomePage from '../home';
 
 //Sets Mapping for Dashboard Item Types
 export const REPORT_TABLE = 'REPORT_TABLE';
@@ -84,7 +85,7 @@ class ContentSettings extends Component {
             case 3:
                 return <SlidePreview d2={d2} baseUrl={baseUrl}/>;
             default:
-                return;
+                return <HomePage d2={d2}/>;
         }
     }
 
@@ -133,7 +134,7 @@ class ContentSettings extends Component {
             </Stepper>
             <div>
                 {this.state.activeStep === steps.length ? (
-                    <div>
+                    <div className="last-step">
                         <Typography className="instruction">All steps completed</Typography>
                         <Button onClick={this.handleReset}>Reset</Button>
                     </div>

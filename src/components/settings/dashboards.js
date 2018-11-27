@@ -15,7 +15,10 @@ class Dashboards extends Component {
     }
 
     render() {
+
         const {store} = this.props;
+        console.log(store.assignedItemStore);
+        // const item = { value: store.itemStore.state.length.toString(), text: `Item ${store.itemStore.state.length+1}` };
         return <div className="smart-div">
             <InputField
                 id="filter"
