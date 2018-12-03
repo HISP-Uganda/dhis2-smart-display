@@ -7,9 +7,9 @@
 }
 },
 "appType": "APP",
-"name": "DHIS2 Smart Display",
+"name": "Smart Display",
 "version": "1.0.3",
-"description": "A DHIS2 App for SMart screen display of DHIS2 Dashboards",
+"description": "A DHIS2 App for Smart screen display of DHIS2 Dashboards",
 "icons": {
 "48": "favicon.ico"
 },

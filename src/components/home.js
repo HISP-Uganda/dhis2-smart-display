@@ -211,7 +211,7 @@ class HomePage extends React.Component {
         // this.setState({open: true});
         this.createOpenHandler({
             type: "presentation",
-            id: "K4gwuiVvW3z",
+            id: this.store.presentation.id,
             doNotPost: true,
             onConfirm: this.handleConfirm
         });
@@ -263,7 +263,7 @@ class HomePage extends React.Component {
                                     </h3>
 
                                     <Table
-                                        columns={['id', 'name', 'description']}
+                                        columns={['name', 'description']}
                                         rows={store.presentations}
                                         contextMenuActions={this.smartMenuActions}
                                         contextMenuIcons={

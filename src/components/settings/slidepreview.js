@@ -16,6 +16,10 @@ class SlidePreview extends Component {
         this.store.presentation.setHtmlTables(d2);
     }
 
+    deletePreviewItem(item){
+
+    }
+
     render() {
         this.store.setBaseUrl(this.props.baseUrl);
         return <div className="smart-div">

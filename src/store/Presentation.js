@@ -56,7 +56,6 @@ class Presentation {
     };
 
 
-
     deletePresentation = async (d2, presentations) => {
         const mapping = _.findIndex(presentations, {id: this.id});
         presentations.splice(mapping, 1);
@@ -65,6 +64,18 @@ class Presentation {
         });
         const namespace = await d2.dataStore.get('smart-slides');
         namespace.set('presentations', whatToSave);
+    };
+
+    deletePresentationItem = item => {
+        this.dashboards = this.dashboards.map(dashboard => {
+            const dashboardItems = dashboard.dashboardItems.map(dashboardItem => {
+                if (dashboardItem.id === item.id) {
+                    dashboardItem.setSelected(false);
+                }
+                return dashboardItem
+            });
+            return {...dashboard, dashboardItems};
+        })
     };
 
     get canBeSaved() {
@@ -80,11 +91,13 @@ class Presentation {
                 return selected.map((dashboardItem, itemkey) => {
                     const endpoint = dashboardItem.dashboardItemContent.endpoint;
                     const id = dashboardItem.dashboardItemContent.id;
+                    const selectedItem = dashboardItem;
                     let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
                     if (endpoint === "reportTables") {
                         url = url + ".html";
                     }
-                    return {...dashboardItem.dashboardItemContent, url};
+
+                    return {...dashboardItem.dashboardItemContent, url, selectedItem};
                 });
             });
 
@@ -111,7 +124,7 @@ decorate(Presentation, {
     transitionDuration: observable,
     slideDuration: observable,
     htmlTables: observable,
-    baseUrl:observable,
+    baseUrl: observable,
 
     setName: action,
     setDashboards: action,
@@ -123,6 +136,7 @@ decorate(Presentation, {
     setSlideDuration: action,
     deletePresentation: action,
     setBaseUrl: action,
+    deletePresentationItem: action,
 
     presentation: computed,
     pTransitionModes: computed

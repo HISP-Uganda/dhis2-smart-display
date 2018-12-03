@@ -128,7 +128,9 @@ class Store {
                 const dashboardItem = new DashboardItem();
                 dashboardItem.setId(item.id);
 
-                dashboardItem.setSelected(item.selected || dashboardItem.selected);
+                if(item.selected !== undefined && item.selected !== null){
+                    dashboardItem.setSelected(item.selected);
+                }
 
                 const content = new DashboardItemContent();
                 content.setId(item.dashboardItemContent.id);

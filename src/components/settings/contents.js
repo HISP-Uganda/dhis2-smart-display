@@ -10,6 +10,7 @@ import DashboardItems from "./dashboardItems";
 import {inject, observer} from "mobx-react";
 import SlideOptions from "./slideoptions";
 import SlidePreview from "./slidepreview";
+// import {Link } from "react-router-dom";
 
 import Home from '@material-ui/icons/Home';
 import HomePage from '../home';
@@ -157,9 +158,7 @@ class ContentSettings extends Component {
                     </div>
                 )}
             </div>
-
-            <Button variant="fab" style={style}
-                    color="primary" href="/">
+            <Button variant="fab" style={style} color="primary" href="/">
                 <Home/>
             </Button>
         </div>
