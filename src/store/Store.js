@@ -38,6 +38,7 @@ class Store {
     assignedItemStore = SmartStore.create();
 
     loadDashboards = async (d2) => {
+        console.log(this.assignedItemStore);
         const api = d2.Api.getApi();
         const {dashboards} = await api.get('dashboards', {
             paging: false,
@@ -69,20 +70,16 @@ class Store {
             const ass = this.presentation.dashboards.map(d => {
                 return {text: d.name, value: d.id};
             });
-
+            // console.log(ass);
             const assignedIds = ass.map(i => {
                 return i.value;
             });
 
-
             items = items.filter(obj => {
                 return !(assignedIds.indexOf(obj.value) !== -1);
             });
-
-            const assigned = this.assignedItemStore.state.concat(ass);
-            this.assignedItemStore.setState(assigned);
-
-
+            // const assigned = this.assignedItemStore.state.concat(ass);
+            this.assignedItemStore.setState(ass);
             this.itemStore.setState(items);
         } else {
             this.itemStore.setState(items);
@@ -131,7 +128,9 @@ class Store {
                 const dashboardItem = new DashboardItem();
                 dashboardItem.setId(item.id);
 
-                dashboardItem.setSelected(item.selected || dashboardItem.selected);
+                if(item.selected !== undefined && item.selected !== null){
+                    dashboardItem.setSelected(item.selected);
+                }
 
                 const content = new DashboardItemContent();
                 content.setId(item.dashboardItemContent.id);

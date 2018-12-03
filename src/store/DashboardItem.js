@@ -12,10 +12,11 @@ class DashboardItem {
     handleChange = e =>{
         const isChecked = e.target.checked;
         this.setSelected(isChecked);
+    };
+
+    deleteItem = ()=>{
+        this.setSelected(false)
     }
-
-
-
 }
 
 decorate(DashboardItem, {

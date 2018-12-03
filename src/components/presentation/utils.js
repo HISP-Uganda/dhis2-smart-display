@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 
 import {Scrollbars} from 'react-custom-scrollbars';
+import Button from "@material-ui/core/Button/Button";
 
 export const displayContent = (presentation, item) => {
 
@@ -57,13 +58,15 @@ export const display = (presentation) => {
     const slideTheme = {
         width: '100%',
         margin: 10,
+        marginTop: 100,
         marginBottom: 20,
         border: '1px solid #ff1e43',
+        controlColor: '#477fcc'
     };
 
     return presentation.presentation.map((item, key) => {
-        return <Slide key={item.id + key} fit={true} style={slideTheme}>
-            <Grid container spacing={8}>
+        return <Slide key={item.id + key} fit={true} style={slideTheme} controlColor={slideTheme.controlColor}>
+            <Grid container spacing={8} style={{marginTop: 20}}>
                 <Grid item xs={12}>
                     {displayHeader(item)}
                     {displayContent(presentation, item)}
@@ -89,14 +92,17 @@ export const displayPreview = (presentation) => {
     });
 };
 
-export const slidePreview = (presentation) => {
+
+export const slidePreview = presentation => {
     return <Grid container spacing={8}>{
         presentation.presentation.map((item, key) => {
             return <Grid item xs={3} key={item.id + key}>
                 <Card className="slide-preview">
                     <CardHeader
                         action={
-                            <IconButton>
+                            <IconButton onClick={() => {
+                                presentation.deletePresentationItem(item.selectedItem)
+                            }}>
                                 <Delete/>
                             </IconButton>
                         }

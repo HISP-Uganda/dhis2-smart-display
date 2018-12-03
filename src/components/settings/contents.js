@@ -10,8 +10,10 @@ import DashboardItems from "./dashboardItems";
 import {inject, observer} from "mobx-react";
 import SlideOptions from "./slideoptions";
 import SlidePreview from "./slidepreview";
+// import {Link } from "react-router-dom";
 
 import Home from '@material-ui/icons/Home';
+import HomePage from '../home';
 
 //Sets Mapping for Dashboard Item Types
 export const REPORT_TABLE = 'REPORT_TABLE';
@@ -84,7 +86,7 @@ class ContentSettings extends Component {
             case 3:
                 return <SlidePreview d2={d2} baseUrl={baseUrl}/>;
             default:
-                return;
+                return <HomePage d2={d2}/>;
         }
     }
 
@@ -133,7 +135,7 @@ class ContentSettings extends Component {
             </Stepper>
             <div>
                 {this.state.activeStep === steps.length ? (
-                    <div>
+                    <div className="last-step">
                         <Typography className="instruction">All steps completed</Typography>
                         <Button onClick={this.handleReset}>Reset</Button>
                     </div>
@@ -156,9 +158,7 @@ class ContentSettings extends Component {
                     </div>
                 )}
             </div>
-
-            <Button variant="fab" style={style}
-                    color="primary" href="/">
+            <Button variant="fab" style={style} color="primary" href="/">
                 <Home/>
             </Button>
         </div>
