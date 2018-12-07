@@ -158,7 +158,7 @@ class ContentSettings extends Component {
                     </div>
                 )}
             </div>
-            <Button variant="fab" style={style} color="primary" href="/">
+            <Button variant="fab" style={style} color="primary" onClick={this.store.returnHome}>
                 <Home/>
             </Button>
         </div>

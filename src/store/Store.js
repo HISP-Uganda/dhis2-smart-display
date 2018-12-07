@@ -128,7 +128,7 @@ class Store {
                 const dashboardItem = new DashboardItem();
                 dashboardItem.setId(item.id);
 
-                if(item.selected !== undefined && item.selected !== null){
+                if (item.selected !== undefined && item.selected !== null) {
                     dashboardItem.setSelected(item.selected);
                 }
 
@@ -230,6 +230,11 @@ class Store {
 
     setStatus = value => this.status = value;
     setStatus2 = value => () => this.setStatus(value);
+
+    returnHome = () => {
+        this.setStatus(1);
+        this.setFull(false);
+    };
 
     savePresentation = async (d2) => {
         if (this.presentation.id) {

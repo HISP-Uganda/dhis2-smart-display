@@ -63,7 +63,7 @@ class Presentation extends Component {
                 }
                 {/*{console.log(this.store.presentation.presentation)}*/}
             </Deck>
-            <Button variant="fab" style={style} color="primary" href="/">
+            <Button variant="fab" style={style} color="primary" onClick={this.store.returnHome}>
                 <Home/>
             </Button>
         </div>
