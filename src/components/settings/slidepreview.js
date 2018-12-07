@@ -11,17 +11,14 @@ class SlidePreview extends Component {
 
     constructor(props) {
         super(props);
-        const {store, d2} = props;
+        const {store, d2, baseUrl} = props;
         this.store = store;
+        this.store.setBaseUrl(baseUrl);
         this.store.presentation.setHtmlTables(d2);
     }
 
-    deletePreviewItem(item){
-
-    }
 
     render() {
-        this.store.setBaseUrl(this.props.baseUrl);
         return <div className="smart-div">
             {
                 slidePreview(this.store.presentation)
