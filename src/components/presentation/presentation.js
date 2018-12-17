@@ -48,7 +48,7 @@ class Presentation extends Component {
             textColor: '#FFFFFF',
             position: 'fixed',
         };
-        return <div className="smart-div">
+        return <div>
             <Deck
                 transition={this.store.presentation.pTransitionModes}
                 transitionDuration={this.store.presentation.transitionDuration}

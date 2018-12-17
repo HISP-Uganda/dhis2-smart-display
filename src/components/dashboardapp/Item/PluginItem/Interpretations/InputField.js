@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'd2-ui/lib/text-field/TextField';
-import Button from 'd2-ui/lib/button/Button';
+// import TextField from 'd2-ui/lib/text-field/TextField';
+// import Button from 'd2-ui/lib/button/Button';
 import { colors } from '../../../colors';
 
 import { Editor as RichTextEditor } from '@dhis2/d2-ui-rich-text';
 import MentionsWrapper from '@dhis2/d2-ui-mentions-wrapper';
+import Button from "@dhis2/d2-ui-core/button/Button";
+import TextField from "@dhis2/d2-ui-core/form-fields/TextField";
 
 const style = {
     button: {

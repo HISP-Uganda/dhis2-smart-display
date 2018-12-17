@@ -140,7 +140,7 @@ div.appbar > a{
 
 .slide-content{
     width: 100%;
-    margin-top:15px;
+    /*margin-top:15px;*/
     /*background-color: #cc168d;*/
 }
 
@@ -151,7 +151,15 @@ div.appbar > a{
 
 .deck, spectacle-deck{
     border: 5px solid #cc168d;
-    margin-top: 50px;
+    /*margin-top: 50px;*/
+}
+
+.spectacle-slide{
+    margin-top: 45px;
+}
+
+.spectacle-content{
+    padding:0px;
 }
 
 .grid-content{
@@ -175,7 +183,7 @@ div.appbar > a{
 }
 
 .start{
-    margin:20px;
+    marginTop:100px;
 }
 
 
@@ -245,8 +253,4 @@ table.listTable tfoot .links a{
     color: #4389d2;
     font-weight: normal;
     margin-top: 150px;
-}
-
-.spectacle-slide{
-    top: 25px;
 }
