@@ -33,7 +33,6 @@ class Presentation {
 
     setHtmlTables = async (d2) => {
         const data = this.dashboards.map(dashboard => {
-            console.log(dashboard);
             return dashboard.dashboardItems.filter(item => {
                 return item.selected && item.dashboardItemContent.endpoint === 'reportTables';
             }).map(i => {
@@ -85,34 +84,24 @@ class Presentation {
 
     get presentation() {
         if (this.dashboards.length > 0) {
-            const pItems = this.dashboards.map((dashboard, k)=>{
-                // console.log(dashboard.presentationItems);
-                return (dashboard.presentationItems)? dashboard.presentationItems : {};
+            const items = this.dashboards.map((dashboard, k) => {
+                const selected = dashboard.dashboardItems.filter(item => {
+                    return item.selected;
+                });
+                return selected.map((dashboardItem, itemkey) => {
+                    const endpoint = dashboardItem.dashboardItemContent.endpoint;
+                    const id = dashboardItem.dashboardItemContent.id;
+                    const selectedItem = dashboardItem;
+                    let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
+                    if (endpoint === "reportTables") {
+                        url = url + ".html";
+                    }
+
+                    return {...dashboardItem.dashboardItemContent, url, selectedItem};
+                });
             });
 
-            // console.log(pItems);
-
-            // const items = this.dashboards.map((dashboard, k) => {
-            //     const selected = dashboard.dashboardItems.filter(item => {
-            //         console.log(item);
-            //         return item.selected;
-            //     });
-            //     return selected.map((dashboardItem, itemkey) => {
-            //         const endpoint = dashboardItem.dashboardItemContent.endpoint;
-            //         const id = dashboardItem.dashboardItemContent.id;
-            //         const selectedItem = dashboardItem;
-            //         let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
-            //         if (endpoint === "reportTables") {
-            //             url = url + ".html";
-            //         }
-            //
-            //         return {...dashboardItem.dashboardItemContent, url, selectedItem};
-            //     });
-            // });
-            //
-            // console.log(items);
-
-            return _.flatten(pItems);
+            return _.flatten(items);
         }
 
         return [];

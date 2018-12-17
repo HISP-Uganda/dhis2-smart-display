@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { List, ListItem as MUIListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-// import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
+import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
 import ItemHeader from '../ItemHeader';
 import Line from '../../widgets/Line';
 import { itemTypeMap, getItemUrl } from '../../itemTypes';
 import { orArray } from '../../util';
 import { tRemoveListItemContent } from './actions';
 import { colors } from '../../colors';
-import SvgIcon from "@dhis2/d2-ui-core/svg-icon/SvgIcon";
 
 const getItemTitle = item => {
     return itemTypeMap[item.type].pluralTitle;
