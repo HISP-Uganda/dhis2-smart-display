@@ -9,6 +9,7 @@ import {display} from "./utils";
 import {Home} from "@material-ui/icons";
 import Button from "@material-ui/core/Button/Button";
 import HomePage from "../home";
+import Grid from "@material-ui/core/Grid/Grid";
 // import {Link } from "react-router-dom";
 
 
@@ -38,7 +39,6 @@ class Presentation extends Component {
 
 
     render() {
-        // const {baseUrl}= this.props;
         const style = {
             margin: 0,
             top: 'auto',
@@ -48,7 +48,7 @@ class Presentation extends Component {
             textColor: '#FFFFFF',
             position: 'fixed',
         };
-        return <div>
+        return <div className="smart-div">
             <Deck
                 transition={this.store.presentation.pTransitionModes}
                 transitionDuration={this.store.presentation.transitionDuration}
@@ -57,11 +57,10 @@ class Presentation extends Component {
                 controls={true}
                 theme={theme}
                 textColor={theme.textColor}
-                bgColor="primary" className="deck">
+                bgColor="primary" className="deck" fill={true}>
                 {
                     display(this.store.presentation)
                 }
-                {/*{console.log(this.store.presentation.presentation)}*/}
             </Deck>
             <Button variant="fab" style={style} color="primary" onClick={this.store.returnHome}>
                 <Home/>
