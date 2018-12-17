@@ -20,7 +20,6 @@ class Store {
     }
 
 
-    name = 'Test Store state management';
     //Content.js Variables
     dashboards = [];
     filterText = '';
@@ -38,13 +37,12 @@ class Store {
     assignedItemStore = SmartStore.create();
 
     loadDashboards = async (d2) => {
-        console.log(this.assignedItemStore);
         const api = d2.Api.getApi();
         const {dashboards} = await api.get('dashboards', {
             paging: false,
             fields: 'id,name,created,dashboardItems[*,map[*],chart[*],reportTable[*]]'
         });
-        this.dashboards = dashboards.map(dashboard => {
+        const processedDashboards = dashboards.map(dashboard => {
             const dashboardItems = dashboard.dashboardItems.map(dashboardItem => {
                 let dashboardItemContent = {};
                 if (dashboardItem['chart']) {
@@ -62,27 +60,20 @@ class Store {
             return {...dashboard, dashboardItems};
         });
 
+        this.setDashboards(processedDashboards);
+
         let items = this.dashboards.map(d => {
             return {text: d.name, value: d.id};
         });
 
+        this.itemStore.setState(items);
+
         if (this.presentation) {
             const ass = this.presentation.dashboards.map(d => {
-                return {text: d.name, value: d.id};
-            });
-            // console.log(ass);
-            const assignedIds = ass.map(i => {
-                return i.value;
+                return d.id;
             });
 
-            items = items.filter(obj => {
-                return !(assignedIds.indexOf(obj.value) !== -1);
-            });
-            // const assigned = this.assignedItemStore.state.concat(ass);
-            this.assignedItemStore.setState(ass);
-            this.itemStore.setState(items);
-        } else {
-            this.itemStore.setState(items);
+            this.assignItems(ass);
         }
 
         return Promise.resolve();
@@ -101,6 +92,7 @@ class Store {
     setFull = val => {
         this.isFull = val;
     };
+
 
     convert = (pre) => {
         let p = new Presentation();
@@ -146,6 +138,8 @@ class Store {
             selectedDashboards = [...selectedDashboards, dashboard]
         });
         p.setDashboards(selectedDashboards);
+
+        console.log(JSON.stringify(p, null, 2));
         return p;
     };
 
@@ -230,6 +224,8 @@ class Store {
 
     setStatus = value => this.status = value;
     setStatus2 = value => () => this.setStatus(value);
+    setDashboards = val => this.dashboards = val;
+
 
     returnHome = () => {
         this.setStatus(1);
@@ -284,6 +280,7 @@ decorate(Store, {
     setStatus: action,
     setFull: action,
     goFull: action,
+    setDashboards: action,
     editPresentation: action
 });
 export default new Store();
