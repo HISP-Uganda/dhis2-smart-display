@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 
 import ItemHeader from '../ItemHeader';
 import Line from '../../widgets/Line';
-// import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
+import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
 
 import { fromItemFilter } from '../../reducers';
 import { FILTER_USER_ORG_UNIT } from '../../actions/itemFilter';
-import SvgIcon from "@dhis2/d2-ui-core/svg-icon/SvgIcon";
 
 const getIframeSrc = (appDetails, item, itemFilter) => {
     let iframeSrc = `${appDetails.launchUrl}?dashboardItemId=${item.id}`;

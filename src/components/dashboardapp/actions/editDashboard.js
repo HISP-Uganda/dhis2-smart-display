@@ -1,4 +1,4 @@
-// import { generateUid } from 'd2/lib/uid';
+import { generateUid } from 'd2/lib/uid';
 import { actionTypes } from '../reducers';
 import { fromEditDashboard } from '../reducers';
 import { updateDashboard, postDashboard } from '../api/editDashboard';
@@ -11,7 +11,6 @@ import {
     emptyTextItemContent,
     isTextType,
 } from '../itemTypes';
-import {generateUid} from "d2/uid";
 
 const onError = error => {
     console.log('Error (Saving Dashboard): ', error);
