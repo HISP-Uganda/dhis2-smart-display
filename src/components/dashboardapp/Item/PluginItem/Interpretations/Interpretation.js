@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import i18n from 'd2-i18n';
-import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
+// import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
 import { fromUser } from '../../../reducers';
 import InputField from './InputField';
 import { colors } from '../../../colors';
@@ -22,6 +22,7 @@ import {
 } from './actions';
 
 import './Interpretation.css';
+import SvgIcon from "@dhis2/d2-ui-core/svg-icon/SvgIcon";
 
 const actionButtonClass = 'interpretation-action-button';
 const style = {

@@ -24,12 +24,15 @@ class SlideOptions extends Component {
         super(props);
         const {store} = props;
         this.store = store;
+
+        console.log(JSON.stringify(this.store.presentation,null,2));
     }
 
     render() {
 
         const {presentation} = this.store;
         return <div className="smart-div">
+            <pre>{this.store.presentation.name}</pre>
             <Grid container spacing={8}>
                 <Grid item xs={12}>
                     <Paper>
@@ -40,12 +43,11 @@ class SlideOptions extends Component {
                                     placeholder="Name"
                                     type="text"
                                     fullWidth
-                                    value={(presentation.name) ? presentation.name : ''}
+                                    value={presentation.name}
                                     onChange={presentation.setName}
-                                    name="name"
                                 />
                                 <InputField
-                                    placeholder="Enter presentation decription"
+                                    placeholder="Enter presentation description"
                                     type="text"
                                     multiline
                                     fullWidth

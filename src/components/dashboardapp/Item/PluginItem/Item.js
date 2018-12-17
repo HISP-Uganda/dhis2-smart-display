@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
+// import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
 import i18n from 'd2-i18n';
 import ItemHeader, { HEADER_HEIGHT } from '../ItemHeader';
 import ItemFooter from './ItemFooter';
@@ -15,6 +15,7 @@ import { sGetVisualization } from '../../reducers/visualizations';
 import { acReceivedActiveVisualization } from '../../actions/selected';
 import { fromItemFilter } from '../../reducers';
 import { itemTypeMap } from '../../itemTypes';
+import SvgIcon from "@dhis2/d2-ui-core/svg-icon/SvgIcon";
 
 const style = {
     icon: {

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import ItemHeader from '../ItemHeader';
-import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
+import SvgIcon from "@dhis2/d2-ui-core/svg-icon/SvgIcon";
+// import SvgIcon from 'd2-ui/lib/svg-icon/SvgIcon';
 
 const NotSupportedItem = props => (
     <Fragment>

@@ -75,7 +75,6 @@ class ContentSettings extends Component {
 
     getStepContent(step) {
         const {d2, baseUrl} = this.props;
-        console.log(baseUrl);
         switch (step) {
             case 0:
                 return <Dashboards d2={d2}/>;

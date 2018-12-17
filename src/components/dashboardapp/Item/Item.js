@@ -23,7 +23,7 @@ import {
 } from '../itemTypes';
 import { DEFAULT_STATE } from '../reducers/itemFilter';
 
-const getGridItem = type => {
+export const getGridItem = type => {
     switch (type) {
         case REPORT_TABLE:
         case CHART:
@@ -50,13 +50,11 @@ const getGridItem = type => {
 
 export const Item = props => {
     const GridItem = getGridItem(props.item.type);
-
     return (
         <GridItem
             item={props.item}
             editMode={props.editMode}
             itemFilter={props.editMode ? DEFAULT_STATE : props.itemFilter}
-            onToggleItemExpanded={props.onToggleItemExpanded}
         />
     );
 };

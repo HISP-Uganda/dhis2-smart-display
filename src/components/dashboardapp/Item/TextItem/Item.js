@@ -4,9 +4,10 @@ import i18n from 'd2-i18n';
 
 import ItemHeader from '../ItemHeader';
 import Line from '../../widgets/Line';
-import TextField from 'd2-ui/lib/text-field/TextField';
+// import TextField from 'd2-ui/lib/text-field/TextField';
 import { acUpdateDashboardItem } from '../../actions/editDashboard';
 import { fromEditDashboard, fromDashboards } from '../../reducers';
+import TextField from "@dhis2/d2-ui-core/form-fields/TextField";
 
 const style = {
     textDiv: {
