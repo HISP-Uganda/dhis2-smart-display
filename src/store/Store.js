@@ -139,7 +139,7 @@ class Store {
         });
         p.setDashboards(selectedDashboards);
 
-        console.log(JSON.stringify(p, null, 2));
+        // console.log(JSON.stringify(p, null, 2));
         return p;
     };
 
