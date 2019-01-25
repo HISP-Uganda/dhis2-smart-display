@@ -30,6 +30,22 @@ const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
+
+const dhisConfigPath =
+    process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
+
+let dhisConfig;
+try {
+  dhisConfig = require(dhisConfigPath);
+} catch (e) {
+  // Failed to load config file - use default config
+  console.warn(`\nWARNING! Failed to load DHIS config:`, e.message);
+  dhisConfig = {
+    baseUrl: 'http://localhost:8080',
+    authorization: 'Basic YWRtaW46ZGlzdHJpY3Q=', // admin:district
+  };
+}
+
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
@@ -39,10 +55,19 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
-const dhisConfig = {
-    baseUrl: 'http://localhost:8080',
-    authorization: 'Basic YWRtaW46ZGlzdHJpY3Q=', // admin:district
-};
+
+const manifest = JSON.parse(
+    fs.readFileSync(`${paths.appPublic}/manifest.webapp`, 'utf8')
+);
+
+const globals = Object.assign(
+    {},
+    {
+      DHIS_CONFIG: JSON.stringify(dhisConfig),
+      manifest: JSON.stringify(manifest),
+    },
+    env.stringified
+);
 
 const scriptPrefix = dhisConfig.baseUrl;
 const pathnamePrefix = parse(scriptPrefix).pathname;

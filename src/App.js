@@ -14,8 +14,6 @@ class App extends Component {
         this.state = {
             d2: props.d2,
         };
-
-        console.log(global.reportTablePlugin);
     }
 
     getChildContext() {

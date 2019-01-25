@@ -22,6 +22,8 @@ import {displayPreview} from "./presentation/utils";
 import SharingDialog from '@dhis2/d2-ui-sharing-dialog';
 import * as html2canvas from "html2canvas";
 import * as jsPDF from 'jspdf';
+import VisualizationItem from "./item/VisualizationItem";
+import Map from "./Map";
 
 
 function TabContainer(props) {
@@ -48,7 +50,7 @@ const styles = theme => ({
 
 class HomePage extends React.Component {
     store = null;
-
+    item = null;
     constructor(props) {
         super(props);
         const {store, d2} = props;
@@ -84,7 +86,7 @@ class HomePage extends React.Component {
                 id: '',
                 type: '',
             },
-        }
+        };
     }
 
     present = args => {
@@ -115,12 +117,12 @@ class HomePage extends React.Component {
         this.displaySharingDialog();
     };
 
-    print = args =>{
+    print = args => {
         this.store.setPresentation(args);
         this.store.presentation.setBaseUrl(this.props.baseUrl);
         this.store.presentation.setHtmlTables(this.props.d2);
         this.printPresentation();
-    }
+    };
 
 
     smartMenuActions = {
@@ -131,7 +133,7 @@ class HomePage extends React.Component {
         details(...args) {
             // console.log('Edit', ...args);
         },
-        print:this.print,
+        print: this.print,
         delete: this.delete
     };
 
@@ -183,7 +185,7 @@ class HomePage extends React.Component {
                 const pdf = new jsPDF();
                 pdf.addImage(imgData, 'JPEG', 0, 0);
                 // pdf.output('dataurlnewwindow');
-                const name = presentation.name +".pdf";
+                const name = presentation.name + ".pdf";
                 console.log(name);
                 pdf.save(name);
             })
@@ -223,6 +225,13 @@ class HomePage extends React.Component {
             {...this.state.sharingDialogProps}
         />
     };
+
+     async componentDidMount() {
+        await this.store.loadDashboards2(this.props.d2);
+        await this.store.loadDashboard2(this.props.d2, this.store.dashboards2[0].id);
+        // this.item = this.store.currentDashboard
+
+    }
 
     render() {
         const {d2, store, baseUrl, classes} = this.props;
@@ -313,6 +322,9 @@ class HomePage extends React.Component {
                             color="primary">
                         <AddIcon/>
                     </Button>
+
+                    <Map baseUrl={baseUrl}/>
+
                 </div>
             }
 

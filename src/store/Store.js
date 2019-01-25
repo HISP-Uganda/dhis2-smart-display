@@ -7,6 +7,8 @@ import DashboardItem from "./DashboardItem";
 import DashboardItemContent from "./DashboardItemContent";
 import PresentationOption from "./PresentationOption";
 import {generateUid} from 'd2/uid';
+import {arrayClean} from "d2-utilizr";
+import {getDashboardFields} from "../api";
 
 
 configure({enforceActions: "observed"});
@@ -35,6 +37,39 @@ class Store {
 
     itemStore = SmartStore.create();
     assignedItemStore = SmartStore.create();
+
+    dashboards2 = [];
+    currentDashboard;
+
+    // TODO Remove this hardcoded
+    inputMapID = 'kwX3awhakCk';
+    inputUserOrgUnit = 'O6uvpzGd5pu';
+
+    loadDashboards2 = async (d2) => {
+        const collection = await d2.models.dashboard.list({
+            fields: [
+                getDashboardFields().join(','),
+                'dashboardItems[id]',
+            ].join(','),
+            paging: 'false',
+        });
+
+        const response = collection.toArray();
+
+        this.setDashboards2(response);
+    };
+
+    loadDashboard2 = async (d2, id) => {
+        const dashboard = await d2.models.dashboard.get(id, {
+            fields: arrayClean(
+                getDashboardFields({
+                    withItems: true,
+                    withFavorite: {withDimensions: false},
+                })
+            ).join(','),
+        });
+        this.setCurrentDashboard(dashboard);
+    };
 
     loadDashboards = async (d2) => {
         const api = d2.Api.getApi();
@@ -91,6 +126,14 @@ class Store {
 
     setFull = val => {
         this.isFull = val;
+    };
+
+    setInputMapID = val => {
+        this.inputMapID = val;
+    };
+
+    setInputUserOrgUnit = val => {
+        this.inputUserOrgUnit = val;
     };
 
 
@@ -225,7 +268,8 @@ class Store {
     setStatus = value => this.status = value;
     setStatus2 = value => () => this.setStatus(value);
     setDashboards = val => this.dashboards = val;
-
+    setDashboards2 = val => this.dashboards2 = val;
+    setCurrentDashboard = val => this.currentDashboard = val;
 
     returnHome = () => {
         this.setStatus(1);
@@ -252,6 +296,31 @@ class Store {
         namespace.set('presentations', whatToSave);
     };
 
+    load = (mapId, orgUnit, baseUrl) => () => {
+        const mapPlugin = global.mapPlugin;
+        mapPlugin.url = baseUrl;
+        mapPlugin.username = 'admin';
+        mapPlugin.password = 'district';
+
+        mapPlugin.load({
+            id: mapId,
+            el: 'map',
+            userOrgUnit: [orgUnit],
+        });
+    };
+
+
+    /*Get logins*/
+
+    get loadOne() {
+
+        if (this.currentDashboard) {
+            return this.currentDashboard.dashboardItems[0]
+        }
+
+        return null;
+    }
+
 }
 
 
@@ -262,6 +331,10 @@ decorate(Store, {
     selectedDashboards: observable,
     status: observable,
     isFull: observable,
+    dashboards2: observable,
+    currentDashboard: observable,
+    inputMapID: observable,
+    inputUserOrgUnit: observable,
 
     checked: observable,
     checkedItems: observable,
@@ -281,6 +354,12 @@ decorate(Store, {
     setFull: action,
     goFull: action,
     setDashboards: action,
-    editPresentation: action
+    editPresentation: action,
+    loadDashboards2: action,
+    setDashboards2: action,
+    setCurrentDashboard: action,
+    setInputMapID: action,
+    setInputUserOrgUnit: action,
+    load: action
 });
 export default new Store();
