@@ -15,7 +15,7 @@ import SlidePreview from "./slidepreview";
 import Home from '@material-ui/icons/Home';
 import HomePage from '../home';
 
-//Sets Mapping for Dashboard Item Types
+//Sets Mapping for Dashboard VisualizationItem Types
 export const REPORT_TABLE = 'REPORT_TABLE';
 export const CHART = 'CHART';
 export const MAP = 'MAP';

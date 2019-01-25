@@ -17,6 +17,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin-alt');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const parse = require('url-parse');
 
 
 // Webpack uses `publicPath` to determine where the app is being served from.
@@ -29,6 +30,22 @@ const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
 
+
+const dhisConfigPath =
+    process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
+
+let dhisConfig;
+try {
+  dhisConfig = require(dhisConfigPath);
+} catch (e) {
+  // Failed to load config file - use default config
+  console.warn(`\nWARNING! Failed to load DHIS config:`, e.message);
+  dhisConfig = {
+    baseUrl: 'http://localhost:8080',
+    authorization: 'Basic YWRtaW46ZGlzdHJpY3Q=', // admin:district
+  };
+}
+
 // Check if TypeScript is setup
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
@@ -37,6 +54,23 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+
+
+const manifest = JSON.parse(
+    fs.readFileSync(`${paths.appPublic}/manifest.webapp`, 'utf8')
+);
+
+const globals = Object.assign(
+    {},
+    {
+      DHIS_CONFIG: JSON.stringify(dhisConfig),
+      manifest: JSON.stringify(manifest),
+    },
+    env.stringified
+);
+
+const scriptPrefix = dhisConfig.baseUrl;
+const pathnamePrefix = parse(scriptPrefix).pathname;
 
 // common function to get style loaders
 const getStyleLoaders = (cssOptions, preProcessor) => {
@@ -340,6 +374,25 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
+        vendorScripts: [
+            `${scriptPrefix}/dhis-web-core-resource/fonts/roboto.css`,
+            `${scriptPrefix}/dhis-web-core-resource/babel-polyfill/6.20.0/dist/polyfill.js`,
+            `${scriptPrefix}/dhis-web-core-resource/react/16.2.0/umd/react.production.min.js`,
+            `${scriptPrefix}/dhis-web-core-resource/react-dom/16.2.0/umd/react-dom.production.min.js`,
+            `${scriptPrefix}/dhis-web-core-resource/jquery/3.2.1/dist/jquery.js`,
+            `${scriptPrefix}/dhis-web-core-resource/jquery-migrate/3.0.1/dist/jquery-migrate.js`,
+            `${scriptPrefix}/dhis-web-pivot/reporttable.js`,
+            `${scriptPrefix}/dhis-web-visualizer/chart.js`,
+            `${scriptPrefix}/dhis-web-maps/map.js`,
+            `${scriptPrefix}/dhis-web-event-reports/eventreport.js`,
+            `${scriptPrefix}/dhis-web-event-visualizer/eventchart.js`,
+        ]
+            .map(asset => {
+                return /\.js$/.test(asset)
+                    ? `<script src="${asset}"></script>`
+                    : `<link type="text/css" rel="stylesheet" href="${asset}">`;
+            })
+            .join('\n')
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:

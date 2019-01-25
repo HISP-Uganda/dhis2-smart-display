@@ -24,8 +24,6 @@ class SlideOptions extends Component {
         super(props);
         const {store} = props;
         this.store = store;
-
-        console.log(JSON.stringify(this.store.presentation,null,2));
     }
 
     render() {
