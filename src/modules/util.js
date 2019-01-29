@@ -1,4 +1,5 @@
 import isObject from 'lodash/isObject';
+import {CHART, EVENT_CHART, EVENT_REPORT, MAP, REPORT_TABLE} from "./itemTypes";
 
 // validation
 export function orNull(param) {
@@ -82,4 +83,57 @@ export const getBaseUrl = d2 => {
     const api = d2.Api.getApi();
     const idx = api.baseUrl.indexOf('/api');
     return idx > -1 ? api.baseUrl.slice(0, idx) : api.baseUrl;
+};
+
+export const getGridItemDomId = id => `item-${id}`;
+
+export const extractFavorite = item => {
+    if (!isObject(item)) {
+        return null;
+    }
+
+    switch (item.type) {
+        case REPORT_TABLE:
+            return item.reportTable;
+        case CHART:
+            return item.chart;
+        case MAP:
+            return item.map;
+        case EVENT_REPORT:
+            return item.eventReport;
+        case EVENT_CHART:
+            return item.eventChart;
+        default:
+            return (
+                item.reportTable ||
+                item.chart ||
+                item.map ||
+                item.eventReport ||
+                item.eventChart ||
+                {}
+            );
+    }
+};
+
+export  const setFavorite = (item, data) => {
+    switch (item.type) {
+        case REPORT_TABLE:
+            item.setReportTable(data);
+            break;
+        case CHART:
+            item.setChart(data) ;
+            break;
+        case MAP:
+            item.setMap(data);
+            break;
+        case EVENT_REPORT:
+            item.setEventReport(data);
+            break;
+        case EVENT_CHART:
+            item.setEventChart(data);
+            break;
+        default:
+    }
+
+    return item;
 };

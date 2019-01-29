@@ -1,6 +1,8 @@
 import {action, computed, decorate, observable} from 'mobx';
 import PresentationOption from "./PresentationOption";
 import _ from 'lodash';
+import {extractFavorite} from "../modules/util";
+import DashboardItemContent from "./DashboardItemContent";
 
 class Presentation {
     id;
@@ -32,7 +34,7 @@ class Presentation {
     setHtmlTables2 = val => this.htmlTables = val;
 
     setHtmlTables = async (d2) => {
-        const data = this.dashboards.map(dashboard => {
+        /*const data = this.dashboards.map(dashboard => {
             return dashboard.dashboardItems.filter(item => {
                 return item.selected && item.dashboardItemContent.endpoint === 'reportTables';
             }).map(i => {
@@ -51,8 +53,8 @@ class Presentation {
 
         ids.forEach((v, k) => {
             processedTables = {...processedTables, ..._.fromPairs([[v, found[k]]])}
-        });
-        this.setHtmlTables2(processedTables);
+        });*/
+        this.setHtmlTables2([]);
     };
 
 
@@ -89,21 +91,22 @@ class Presentation {
                     return item.selected;
                 });
                 return selected.map((dashboardItem, itemkey) => {
-                    const endpoint = dashboardItem.dashboardItemContent.endpoint;
-                    const id = dashboardItem.dashboardItemContent.id;
-                    const selectedItem = dashboardItem;
-                    let url = this.baseUrl + "/api/" + endpoint + "/" + id + "/data";
-                    if (endpoint === "reportTables") {
-                        url = url + ".html";
-                    }
 
-                    return {...dashboardItem.dashboardItemContent, url, selectedItem};
+                    const i = extractFavorite(dashboardItem);
+                    const content = new DashboardItemContent();
+
+                    content.setId(i.id);
+                    content.setName((i.name));
+                    content.setInterpretations(i.interpretations);
+                    content.setType(i.type);
+                    content.setDashboardItemType(dashboardItem.type);
+
+                    return content;
                 });
             });
 
             return _.flatten(items);
         }
-
         return [];
     }
 

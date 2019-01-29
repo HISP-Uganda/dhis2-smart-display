@@ -22,8 +22,7 @@ import {displayPreview} from "./presentation/utils";
 import SharingDialog from '@dhis2/d2-ui-sharing-dialog';
 import * as html2canvas from "html2canvas";
 import * as jsPDF from 'jspdf';
-import VisualizationItem from "./item/VisualizationItem";
-import Map from "./Map";
+// import Map from "./Map";
 
 
 function TabContainer(props) {
@@ -226,13 +225,6 @@ class HomePage extends React.Component {
         />
     };
 
-     async componentDidMount() {
-        await this.store.loadDashboards2(this.props.d2);
-        await this.store.loadDashboard2(this.props.d2, this.store.dashboards2[0].id);
-        // this.item = this.store.currentDashboard
-
-    }
-
     render() {
         const {d2, store, baseUrl, classes} = this.props;
 
@@ -323,7 +315,7 @@ class HomePage extends React.Component {
                         <AddIcon/>
                     </Button>
 
-                    <Map baseUrl={baseUrl}/>
+                    {/*<Map baseUrl={baseUrl}/>*/}
 
                 </div>
             }
