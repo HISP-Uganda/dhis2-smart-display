@@ -12,10 +12,12 @@ import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
 
 import {Scrollbars} from 'react-custom-scrollbars';
-import Button from "@material-ui/core/Button/Button";
+
+import Visualization from '../Visualization'
+// import Button from "@material-ui/core/Button/Button";
 
 export const displayContent = (presentation, item) => {
-
+    console.log(JSON.stringify(item, null, 2));
     if (item.endpoint === "reportTables" && presentation.htmlTables) {
         return <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
     } else {
@@ -54,24 +56,19 @@ export const displaySlidePreviewContent = (presentation, item) => {
     }
 };
 
-export const display = (presentation) => {
+export const display = (presentation, d2) => {
     const slideTheme = {
-        width: '100%',
-        margin: 10,
-        marginTop: 100,
-        marginBottom: 20,
-        border: '1px solid #ff1e43',
+        // width: '100%',
+        // margin: 10,
+        // marginTop: 100,
+        // marginBottom: 20,
+        // border: '1px solid #ff1e43',
         controlColor: '#477fcc'
     };
 
     return presentation.presentation.map((item, key) => {
-        return <Slide key={item.id + key} fit={true} style={slideTheme} controlColor={slideTheme.controlColor}>
-            <Grid container spacing={8} style={{marginTop: 20}}>
-                <Grid item xs={12}>
-                    {displayHeader(item)}
-                    {displayContent(presentation, item)}
-                </Grid>
-            </Grid>
+        return <Slide key={item.id + key} fit={true} controlColor={slideTheme.controlColor}>
+            <Visualization item={item} d2={d2}/>
         </Slide>
     });
 };

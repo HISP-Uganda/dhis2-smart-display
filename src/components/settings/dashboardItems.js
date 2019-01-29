@@ -66,11 +66,11 @@ class DashboardItems extends Component {
                                         d.dashboardItems.map((item, key) => {
                                             return <ListItem key={key} role={undefined} dense
                                                              className="fullList">
-                                                <Avatar className="avatar-list">
+                                                {/*<Avatar className="avatar-list">
                                                     {this.displayAvatar(item.dashboardItemContent.endpoint)}
-                                                </Avatar>
+                                                </Avatar>*/}
 
-                                                <ListItemText primary={item.dashboardItemContent.name}/>
+                                                <ListItemText primary={item.name}/>
                                                 <Checkbox checked={item.selected}
                                                           onChange={item.handleChange}/>
                                             </ListItem>

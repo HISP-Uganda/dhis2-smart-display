@@ -9,6 +9,7 @@ import PresentationOption from "./PresentationOption";
 import {generateUid} from 'd2/uid';
 import {arrayClean} from "d2-utilizr";
 import {getDashboardFields} from "../api";
+import {extractFavorite, setFavorite} from "../modules/util";
 
 
 configure({enforceActions: "observed"});
@@ -59,7 +60,7 @@ class Store {
         this.setDashboards2(response);
     };
 
-    loadDashboard2 = async (d2, id) => {
+    /*loadDashboard2 = async (d2, id) => {
         const dashboard = await d2.models.dashboard.get(id, {
             fields: arrayClean(
                 getDashboardFields({
@@ -69,13 +70,19 @@ class Store {
             ).join(','),
         });
         this.setCurrentDashboard(dashboard);
-    };
+    };*/
 
     loadDashboards = async (d2) => {
         const api = d2.Api.getApi();
         const {dashboards} = await api.get('dashboards', {
             paging: false,
-            fields: 'id,name,created,dashboardItems[*,map[*],chart[*],reportTable[*]]'
+            fields: arrayClean(
+                getDashboardFields({
+                    withItems: true,
+                    withFavorite: {withDimensions: false},
+                })
+            ).join(',')
+            // fields: 'id,name,created,dashboardItems[*,map[*],chart[*],reportTable[*]]'
         });
         const processedDashboards = dashboards.map(dashboard => {
             const dashboardItems = dashboard.dashboardItems.map(dashboardItem => {
@@ -136,7 +143,6 @@ class Store {
         this.inputUserOrgUnit = val;
     };
 
-
     convert = (pre) => {
         let p = new Presentation();
         p.setName(pre.name);
@@ -162,26 +168,29 @@ class Store {
             d.dashboardItems.forEach(item => {
                 const dashboardItem = new DashboardItem();
                 dashboardItem.setId(item.id);
+                dashboardItem.setType(item.type);
+                dashboardItem.setShape((item.shape));
 
                 if (item.selected !== undefined && item.selected !== null) {
                     dashboardItem.setSelected(item.selected);
                 }
 
+                const i = extractFavorite(item);
                 const content = new DashboardItemContent();
-                content.setId(item.dashboardItemContent.id);
-                content.setCreated(item.dashboardItemContent.created);
-                content.setName((item.dashboardItemContent.name));
-                content.setInterpretations(item.dashboardItemContent.interpretations);
-                content.setEndpoint(item.dashboardItemContent.endpoint);
-                dashboardItem.setDashboardItemContent(content);
-                items = [...items, dashboardItem];
+
+                content.setId(i.id);
+                content.setName((i.name));
+                content.setInterpretations(i.interpretations);
+                content.setType(i.type);
+
+                const processedItem = setFavorite(dashboardItem,content);
+                items = [...items, processedItem];
 
             });
             dashboard.setDashboardItems(items);
             selectedDashboards = [...selectedDashboards, dashboard]
         });
         p.setDashboards(selectedDashboards);
-
         // console.log(JSON.stringify(p, null, 2));
         return p;
     };
@@ -295,32 +304,6 @@ class Store {
         const namespace = await d2.dataStore.get('smart-slides');
         namespace.set('presentations', whatToSave);
     };
-
-    load = (mapId, orgUnit, baseUrl) => () => {
-        const mapPlugin = global.mapPlugin;
-        mapPlugin.url = baseUrl;
-        mapPlugin.username = 'admin';
-        mapPlugin.password = 'district';
-
-        mapPlugin.load({
-            id: mapId,
-            el: 'map',
-            userOrgUnit: [orgUnit],
-        });
-    };
-
-
-    /*Get logins*/
-
-    get loadOne() {
-
-        if (this.currentDashboard) {
-            return this.currentDashboard.dashboardItems[0]
-        }
-
-        return null;
-    }
-
 }
 
 
@@ -362,4 +345,7 @@ decorate(Store, {
     setInputUserOrgUnit: action,
     load: action
 });
-export default new Store();
+
+export default new
+
+Store();

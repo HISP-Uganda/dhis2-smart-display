@@ -14,10 +14,10 @@ import HomePage from "../home";
 
 const theme = createTheme(
     {
-        primary: '#f5fffa',
+        primary: 'white',
         secondary: '#000000',
         textColor: '#327dcc',
-        marginTop: 50
+        // marginTop: 50
     },
     {
         primary: 'Helvetica'
@@ -38,7 +38,7 @@ class Presentation extends Component {
 
 
     render() {
-        // const {baseUrl}= this.props;
+        const {d2} = this.props;
         const style = {
             margin: 0,
             top: 'auto',
@@ -59,9 +59,8 @@ class Presentation extends Component {
                 textColor={theme.textColor}
                 bgColor="primary" className="deck">
                 {
-                    display(this.store.presentation)
+                    display(this.store.presentation, d2)
                 }
-                {/*{console.log(this.store.presentation.presentation)}*/}
             </Deck>
             <Button variant="fab" style={style} color="primary" onClick={this.store.returnHome}>
                 <Home/>
