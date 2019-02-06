@@ -156,9 +156,10 @@ class HomePage extends React.Component {
     };
 
     displayPreview = () => {
+        // const {d2} = this.props;
         if (this.store.presentation) {
 
-            return displayPreview(this.store.presentation)
+            return displayPreview(this.store.presentation, this.props.d2)
         }
         return null;
     };

@@ -73,14 +73,15 @@ export const display = (presentation, d2) => {
     });
 };
 
-export const displayPreview = (presentation) => {
+export const displayPreview = (presentation, d2) => {
     return presentation.presentation.map((item, key) => {
         return <Grid container spacing={8} key={item.id + key}>
             <Grid item xs={12}>
                 <Paper className="slide-preview">
                     <Card className="slide-preview">
                         <CardContent>
-                            {displayPreviewContent(presentation, item)}
+                            {/*{displayPreviewContent(presentation, item)}*/}
+                            <Visualization item={item} d2={d2}/>
                         </CardContent>
                     </Card>
                 </Paper>
@@ -90,7 +91,7 @@ export const displayPreview = (presentation) => {
 };
 
 
-export const slidePreview = presentation => {
+export const slidePreview = (presentation, d2) => {
     return <Grid container spacing={8}>{
         presentation.presentation.map((item, key) => {
             return <Grid item xs={3} key={item.id + key}>
@@ -106,7 +107,8 @@ export const slidePreview = presentation => {
                         subheader={item.name}
                     />
                     <CardContent>
-                        {displaySlidePreviewContent(presentation, item)}
+                        {/*{displaySlidePreviewContent(presentation, item)}*/}
+                        <Visualization item={item} d2={d2}/>
                     </CardContent>
                 </Card>
             </Grid>

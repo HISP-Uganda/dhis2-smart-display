@@ -21,7 +21,7 @@ class SlidePreview extends Component {
     render() {
         return <div className="smart-div">
             {
-                slidePreview(this.store.presentation)
+                slidePreview(this.store.presentation, this.props.d2)
             }
         </div>
     }
