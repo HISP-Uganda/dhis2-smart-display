@@ -92,7 +92,6 @@ class SlideOptions extends Component {
                                         name="slideDuration"
                                     />
                                 </FormGroup>
-                                <pre>{JSON.stringify(presentation, null, 2)}</pre>
                             </CardContent>
                         </Card>
                     </Paper>

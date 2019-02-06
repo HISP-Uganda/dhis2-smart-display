@@ -178,7 +178,6 @@ class Store {
                 const namespace = await d2.dataStore.get('smart-slides');
                 const presentations = await namespace.get('presentations');
                 const processed = presentations.map(pre => {
-                    console.log(pre);
                     return this.convert(pre);
                 });
                 this.setPresentations(processed);
