@@ -2898,7 +2898,7 @@ d2-i18n@^1.0.3:
   dependencies:
     i18next "^10.3"
 
-d2-utilizr@^0.2.15:
+d2-utilizr@^0.2.15, d2-utilizr@latest:
   version "0.2.16"
   resolved "https://registry.yarnpkg.com/d2-utilizr/-/d2-utilizr-0.2.16.tgz#b71df7ca8c7ab5125ca8bdb4899611bc6782a754"
   dependencies:
