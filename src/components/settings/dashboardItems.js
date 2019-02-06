@@ -1,16 +1,17 @@
 import React, {Component} from 'react';
 import * as PropTypes from "prop-types";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails/ExpansionPanelDetails";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import List from "@material-ui/core/List/List";
-import ListItem from "@material-ui/core/ListItem/ListItem";
-import Avatar from "@material-ui/core/Avatar/Avatar";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox/Checkbox";
-import {InsertChart, Public, ViewList} from "@material-ui/icons";
+import ListItem from "@material-ui/core/ListItem";
+import Avatar from "@material-ui/core/Avatar";
+import ListItemText from "@material-ui/core/ListItemText";
+import Checkbox from "@material-ui/core/Checkbox";
+import {Help, InsertChart, Public, ViewList} from "@material-ui/icons";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {inject, observer} from "mobx-react";
+import {extractFavorite} from "../../modules/util";
 
 class DashboardItems extends Component {
     store = null;
@@ -40,12 +41,15 @@ class DashboardItems extends Component {
     };
 
     displayAvatar(endpoint) {
-        if (endpoint === "reportTables") {
+        // console.log(endpoint);
+        if (endpoint === 'REPORT_TABLE' || endpoint === 'EVENT_REPORT') {
             return <ViewList/>
-        } else if (endpoint === "charts") {
+        } else if (endpoint === 'CHART' || endpoint === 'EVENT_CHART') {
             return <InsertChart/>
-        } else if (endpoint === 'maps') {
+        } else if (endpoint === 'MAP') {
             return <Public/>
+        } else {
+            return <Help/>
         }
     }
 
@@ -66,11 +70,12 @@ class DashboardItems extends Component {
                                         d.dashboardItems.map((item, key) => {
                                             return <ListItem key={key} role={undefined} dense
                                                              className="fullList">
-                                                {/*<Avatar className="avatar-list">
-                                                    {this.displayAvatar(item.dashboardItemContent.endpoint)}
-                                                </Avatar>*/}
+                                                <Avatar className="avatar-list">
+                                                    {this.displayAvatar(item.type)}
+                                                    {/*<ViewList/>*/}
+                                                </Avatar>
 
-                                                <ListItemText primary={item.name}/>
+                                                <ListItemText primary={extractFavorite(item).name}/>
                                                 <Checkbox checked={item.selected}
                                                           onChange={item.handleChange}/>
                                             </ListItem>

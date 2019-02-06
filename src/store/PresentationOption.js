@@ -1,7 +1,7 @@
 import {decorate, observable, action} from 'mobx';
 
 class PresentationOption {
-    name;
+    name = '';
     checked = true;
 
     constructor(name, checked) {
