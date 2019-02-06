@@ -70,7 +70,7 @@ class DashboardItemContent {
             // ...(await this.configureFavorite(d2)),
             id: this.id,
             el: this.getItemId,
-            userOrgUnit: ['O6uvpzGd5pu']
+            // userOrgUnit: ['O6uvpzGd5pu']
         };
 
         //         id: mapId,

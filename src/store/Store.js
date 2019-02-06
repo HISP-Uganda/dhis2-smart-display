@@ -42,35 +42,6 @@ class Store {
     dashboards2 = [];
     currentDashboard;
 
-    // TODO Remove this hardcoded
-    inputMapID = 'kwX3awhakCk';
-    inputUserOrgUnit = 'O6uvpzGd5pu';
-
-    loadDashboards2 = async (d2) => {
-        const collection = await d2.models.dashboard.list({
-            fields: [
-                getDashboardFields().join(','),
-                'dashboardItems[id]',
-            ].join(','),
-            paging: 'false',
-        });
-
-        const response = collection.toArray();
-
-        this.setDashboards2(response);
-    };
-
-    /*loadDashboard2 = async (d2, id) => {
-        const dashboard = await d2.models.dashboard.get(id, {
-            fields: arrayClean(
-                getDashboardFields({
-                    withItems: true,
-                    withFavorite: {withDimensions: false},
-                })
-            ).join(','),
-        });
-        this.setCurrentDashboard(dashboard);
-    };*/
 
     loadDashboards = async (d2) => {
         const api = d2.Api.getApi();
@@ -145,8 +116,8 @@ class Store {
 
     convert = (pre) => {
         let p = new Presentation();
-        p.setName(pre.name);
-        p.setDescription(pre.description);
+        p.setName(pre.name || '');
+        p.setDescription(pre.description || '');
         p.setId(pre.id || p.id);
 
         const transModes = pre.transitionModes.map(m => {
@@ -183,7 +154,7 @@ class Store {
                 content.setInterpretations(i.interpretations);
                 content.setType(i.type);
 
-                const processedItem = setFavorite(dashboardItem,content);
+                const processedItem = setFavorite(dashboardItem, content);
                 items = [...items, processedItem];
 
             });
@@ -207,6 +178,7 @@ class Store {
                 const namespace = await d2.dataStore.get('smart-slides');
                 const presentations = await namespace.get('presentations');
                 const processed = presentations.map(pre => {
+                    console.log(pre);
                     return this.convert(pre);
                 });
                 this.setPresentations(processed);
@@ -228,7 +200,6 @@ class Store {
         const assigned = this.assignedItemStore.state.concat(items);
         this.assignedItemStore.setState(assigned);
 
-        // console.log(this.dashboards);
         const dashboards = this.dashboards.filter(d => {
             return assigned.indexOf(d.id) >= 0;
         });
@@ -239,13 +210,17 @@ class Store {
             {name: 'spin', checked: true},
             {name: 'fade', checked: true}];
 
-        this.setPresentation(this.convert({dashboards, transitionModes}));
+
+        if (this.presentation) {
+            this.presentation.setDashboards(dashboards);
+        } else {
+            this.setPresentation(this.convert({dashboards, transitionModes}));
+        }
         return Promise.resolve();
     };
 
     editPresentation = model => {
         this.setPresentation(model);
-
         const ass = this.presentation.dashboards.map(d => {
             return {text: d.name, value: d.id};
         });
@@ -270,15 +245,17 @@ class Store {
             {name: 'spin', checked: true},
             {name: 'fade', checked: true}];
 
-        this.setPresentation(this.convert({dashboards, transitionModes}));
+        if (this.presentation) {
+            this.presentation.setDashboards(dashboards);
+        } else {
+            this.setPresentation(this.convert({dashboards, transitionModes}));
+        }
         return Promise.resolve();
     };
 
     setStatus = value => this.status = value;
     setStatus2 = value => () => this.setStatus(value);
     setDashboards = val => this.dashboards = val;
-    setDashboards2 = val => this.dashboards2 = val;
-    setCurrentDashboard = val => this.currentDashboard = val;
 
     returnHome = () => {
         this.setStatus(1);

@@ -27,10 +27,8 @@ class SlideOptions extends Component {
     }
 
     render() {
-
         const {presentation} = this.store;
         return <div className="smart-div">
-            <pre>{this.store.presentation.name}</pre>
             <Grid container spacing={8}>
                 <Grid item xs={12}>
                     <Paper>
@@ -94,6 +92,7 @@ class SlideOptions extends Component {
                                         name="slideDuration"
                                     />
                                 </FormGroup>
+                                <pre>{JSON.stringify(presentation, null, 2)}</pre>
                             </CardContent>
                         </Card>
                     </Paper>

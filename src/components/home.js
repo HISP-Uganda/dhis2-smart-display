@@ -109,6 +109,7 @@ class HomePage extends React.Component {
     };
 
     edit = args => {
+        console.log(args);
         this.store.editPresentation(args);
     };
 
@@ -147,7 +148,7 @@ class HomePage extends React.Component {
             marginRight: 'auto',
             marginTop: '5%',
             marginBottom: '10%',
-            height: 400,
+            height: '75vh',
             backgroundColor: '#85bbda'
             // height,
             // margin:'auto',

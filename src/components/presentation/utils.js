@@ -77,14 +77,14 @@ export const displayPreview = (presentation, d2) => {
     return presentation.presentation.map((item, key) => {
         return <Grid container spacing={8} key={item.id + key}>
             <Grid item xs={12}>
-                <Paper className="slide-preview">
-                    <Card className="slide-preview">
+                {/*<Paper>*/}
+                    <Card>
                         <CardContent>
                             {/*{displayPreviewContent(presentation, item)}*/}
-                            <Visualization item={item} d2={d2}/>
+                            <Visualization item={item} d2={d2} height={'70vh'}/>
                         </CardContent>
                     </Card>
-                </Paper>
+                {/*</Paper>*/}
             </Grid>
         </Grid>
     });
@@ -108,7 +108,7 @@ export const slidePreview = (presentation, d2) => {
                     />
                     <CardContent>
                         {/*{displaySlidePreviewContent(presentation, item)}*/}
-                        <Visualization item={item} d2={d2}/>
+                        <Visualization item={item} d2={d2} height={'30vh'} width={'30vw'}/>
                     </CardContent>
                 </Card>
             </Grid>
