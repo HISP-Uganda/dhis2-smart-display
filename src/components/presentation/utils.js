@@ -5,7 +5,7 @@ import React from "react";
 
 import Grid from '@material-ui/core/Grid';
 import Card from "@material-ui/core/Card/Card";
-import Paper from '@material-ui/core/Paper';
+// import Paper from '@material-ui/core/Paper';
 import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,7 +17,6 @@ import Visualization from '../Visualization'
 // import Button from "@material-ui/core/Button/Button";
 
 export const displayContent = (presentation, item) => {
-    console.log(JSON.stringify(item, null, 2));
     if (item.endpoint === "reportTables" && presentation.htmlTables) {
         return <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
     } else {
@@ -78,12 +77,12 @@ export const displayPreview = (presentation, d2) => {
         return <Grid container spacing={8} key={item.id + key}>
             <Grid item xs={12}>
                 {/*<Paper>*/}
-                    <Card>
-                        <CardContent>
-                            {/*{displayPreviewContent(presentation, item)}*/}
-                            <Visualization item={item} d2={d2} height={'70vh'}/>
-                        </CardContent>
-                    </Card>
+                <Card>
+                    <CardContent>
+                        {/*{displayPreviewContent(presentation, item)}*/}
+                        <Visualization item={item} d2={d2} height={'70vh'}/>
+                    </CardContent>
+                </Card>
                 {/*</Paper>*/}
             </Grid>
         </Grid>
@@ -94,7 +93,7 @@ export const displayPreview = (presentation, d2) => {
 export const slidePreview = (presentation, d2) => {
     return <Grid container spacing={8}>{
         presentation.presentation.map((item, key) => {
-            return <Grid item xs={3} key={item.id + key}>
+            return <Grid item xs={3} key={item.id ? item.id + key : key}>
                 <Card className="slide-preview">
                     <CardHeader
                         action={
@@ -107,7 +106,6 @@ export const slidePreview = (presentation, d2) => {
                         subheader={item.name}
                     />
                     <CardContent>
-                        {/*{displaySlidePreviewContent(presentation, item)}*/}
                         <Visualization item={item} d2={d2} height={'30vh'} width={'30vw'}/>
                     </CardContent>
                 </Card>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
+import * as  PropTypes from 'prop-types';
 import {inject, observer} from "mobx-react";
 import '@dhis2/d2-ui-core/css/Table.css';
 import {Deck} from 'spectacle';
@@ -8,7 +8,6 @@ import createTheme from 'spectacle/lib/themes/default';
 import {display} from "./utils";
 import {Home} from "@material-ui/icons";
 import Button from "@material-ui/core/Button/Button";
-import HomePage from "../home";
 // import {Link } from "react-router-dom";
 
 

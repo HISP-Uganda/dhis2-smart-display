@@ -109,7 +109,6 @@ class HomePage extends React.Component {
     };
 
     edit = args => {
-        console.log(args);
         this.store.editPresentation(args);
     };
 

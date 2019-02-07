@@ -21,7 +21,7 @@ const styles = theme => ({
 
 class Visualization extends Component {
     render() {
-        const {item, classes, height, width} = this.props;
+        const {item, height, width} = this.props;
         let style = {
             height: height || '75vh',
             padding: '0 4px 4px',
