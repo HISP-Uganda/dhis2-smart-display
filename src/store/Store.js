@@ -209,12 +209,14 @@ class Store {
             {name: 'spin', checked: true},
             {name: 'fade', checked: true}];
 
-
+        let presentation = this.convert({dashboards, transitionModes});
         if (this.presentation) {
-            this.presentation.setDashboards(dashboards);
-        } else {
-            this.setPresentation(this.convert({dashboards, transitionModes}));
+            this.presentation.setDashboards(presentation.dashboards);
+            this.presentation.setTransitionModes(presentation.transitionModes);
+        }else{
+            this.setPresentation(presentation);
         }
+
         return Promise.resolve();
     };
 
@@ -244,10 +246,12 @@ class Store {
             {name: 'spin', checked: true},
             {name: 'fade', checked: true}];
 
+        let presentation = this.convert({dashboards, transitionModes});
         if (this.presentation) {
-            this.presentation.setDashboards(dashboards);
-        } else {
-            this.setPresentation(this.convert({dashboards, transitionModes}));
+            this.presentation.setDashboards(presentation.dashboards);
+            this.presentation.setTransitionModes(presentation.transitionModes);
+        }else{
+            this.setPresentation(presentation);
         }
         return Promise.resolve();
     };
