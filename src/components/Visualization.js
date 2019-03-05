@@ -31,7 +31,10 @@ class Visualization extends Component {
         if (width) {
             style = {...style, width}
         }
-        return <div id={item.getItemId} style={style}>
+        return <div>
+            <div>{item.name}</div>
+            <div id={item.getItemId} style={style}>
+        </div>
         </div>
     }
 
