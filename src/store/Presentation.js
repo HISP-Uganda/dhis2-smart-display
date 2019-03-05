@@ -71,7 +71,8 @@ class Presentation {
     deletePresentationItem = item => {
         this.dashboards = this.dashboards.map(dashboard => {
             const dashboardItems = dashboard.dashboardItems.map(dashboardItem => {
-                if (dashboardItem.id === item.id) {
+                const i = extractFavorite(dashboardItem);
+                if (i && i.id === item.id) {
                     dashboardItem.setSelected(false);
                 }
                 return dashboardItem
