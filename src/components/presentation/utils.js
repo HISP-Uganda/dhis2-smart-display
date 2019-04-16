@@ -98,7 +98,7 @@ export const slidePreview = (presentation, d2) => {
                     <CardHeader
                         action={
                             <IconButton onClick={() => {
-                                presentation.deletePresentationItem(item.selectedItem)
+                                presentation.deletePresentationItem(item)
                             }}>
                                 <Delete/>
                             </IconButton>
