@@ -1,5 +1,5 @@
 import React from 'react';
-import {Delete, Edit, Details, Print, Tv, Visibility, Share} from "@material-ui/icons";
+import {Delete, Edit, Details, Tv, Visibility} from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from 'prop-types';
 import {inject, observer} from "mobx-react";
@@ -22,6 +22,7 @@ import {displayPreview} from "./presentation/utils";
 import SharingDialog from '@dhis2/d2-ui-sharing-dialog';
 import * as html2canvas from "html2canvas";
 import * as jsPDF from 'jspdf';
+
 // import Map from "./Map";
 
 
@@ -50,6 +51,7 @@ const styles = theme => ({
 class HomePage extends React.Component {
     store = null;
     item = null;
+
     constructor(props) {
         super(props);
         const {store, d2} = props;
@@ -128,11 +130,11 @@ class HomePage extends React.Component {
         preview: this.preview,
         present: this.present,
         edit: this.edit,
-        sharing: this.share,
-        details(...args) {
-            // console.log('Edit', ...args);
-        },
-        print: this.print,
+        // sharing: this.share,
+        // details(...args) {
+        //     // console.log('Edit', ...args);
+        // },
+        // print: this.print,
         delete: this.delete
     };
 
@@ -272,11 +274,12 @@ class HomePage extends React.Component {
                                             {
                                                 edit: <Edit/>,
                                                 present: <Tv/>,
-                                                delete: <Delete/>,
-                                                sharing: <Share/>,
+                                                preview: <Visibility/>,
+                                                // sharing: <Share/>,
                                                 details: <Details/>,
-                                                print: <Print/>,
-                                                preview: <Visibility/>
+                                                // print: <Print/>,
+                                                delete: <Delete/>,
+
                                             }
                                         }
                                         // primaryAction={this.store.editPresentation}
