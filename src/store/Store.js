@@ -1,18 +1,18 @@
-import {action, configure, decorate, observable} from 'mobx';
-import {Store as SmartStore} from "@dhis2/d2-ui-core";
+import { action, configure, decorate, observable } from 'mobx';
+import { Store as SmartStore } from "@dhis2/d2-ui-core";
 import _ from 'lodash';
 import Presentation from "./Presentation";
 import Dashboard from "./Dashboard";
 import DashboardItem from "./DashboardItem";
 import DashboardItemContent from "./DashboardItemContent";
 import PresentationOption from "./PresentationOption";
-import {generateUid} from 'd2/uid';
-import {arrayClean} from "d2-utilizr";
-import {getDashboardFields} from "../api";
-import {extractFavorite, setFavorite} from "../modules/util";
+import { generateUid } from 'd2/uid';
+import { arrayClean } from "d2-utilizr";
+import { getDashboardFields } from "../api";
+import { extractFavorite, setFavorite } from "../modules/util";
 
 
-configure({enforceActions: "observed"});
+configure({ enforceActions: "observed" });
 
 
 class Store {
@@ -45,38 +45,39 @@ class Store {
 
     loadDashboards = async (d2) => {
         const api = d2.Api.getApi();
-        const {dashboards} = await api.get('dashboards', {
+        const { dashboards } = await api.get('dashboards', {
             paging: false,
             fields: arrayClean(
                 getDashboardFields({
                     withItems: true,
-                    withFavorite: {withDimensions: false},
+                    withFavorite: { withDimensions: false },
                 })
             ).join(',')
             // fields: 'id,name,created,dashboardItems[*,map[*],chart[*],reportTable[*]]'
         });
         const processedDashboards = dashboards.map(dashboard => {
             const dashboardItems = dashboard.dashboardItems.map(dashboardItem => {
+                console.log(dashboardItem)
                 let dashboardItemContent = {};
                 if (dashboardItem['chart']) {
 
-                    dashboardItemContent = {...dashboardItem['chart'], endpoint: 'charts'};
+                    dashboardItemContent = { ...dashboardItem['chart'], endpoint: 'charts' };
 
                 } else if (dashboardItem['map']) {
-                    dashboardItemContent = {...dashboardItem['map'], endpoint: 'maps'};
+                    dashboardItemContent = { ...dashboardItem['map'], endpoint: 'maps' };
                 } else if (dashboardItem['reportTable']) {
-                    dashboardItemContent = {...dashboardItem['reportTable'], endpoint: 'reportTables'};
+                    dashboardItemContent = { ...dashboardItem['reportTable'], endpoint: 'reportTables' };
                 }
 
-                return {...dashboardItem, dashboardItemContent}
+                return { ...dashboardItem, dashboardItemContent }
             });
-            return {...dashboard, dashboardItems};
+            return { ...dashboard, dashboardItems };
         });
 
         this.setDashboards(processedDashboards);
 
         let items = this.dashboards.map(d => {
-            return {text: d.name, value: d.id};
+            return { text: d.name, value: d.id };
         });
 
         this.itemStore.setState(items);
@@ -126,7 +127,7 @@ class Store {
         p.setTransitionDuration(parseInt(pre.transitionDuration, 10) || p.transitionDuration);
         p.setSlideDuration(parseInt(pre.slideDuration, 10) || p.slideDuration);
         p.setTransitionModes(transModes);
-        const {dashboards} = pre;
+        const { dashboards } = pre;
         let selectedDashboards = [];
         dashboards.forEach(d => {
             const dashboard = new Dashboard();
@@ -204,16 +205,16 @@ class Store {
         });
 
         const transitionModes = [
-            {name: 'slide', checked: true},
-            {name: 'zoom', checked: true},
-            {name: 'spin', checked: true},
-            {name: 'fade', checked: true}];
+            { name: 'slide', checked: true },
+            { name: 'zoom', checked: true },
+            { name: 'spin', checked: true },
+            { name: 'fade', checked: true }];
 
-        let presentation = this.convert({dashboards, transitionModes});
+        let presentation = this.convert({ dashboards, transitionModes });
         if (this.presentation) {
             this.presentation.setDashboards(presentation.dashboards);
             this.presentation.setTransitionModes(presentation.transitionModes);
-        }else{
+        } else {
             this.setPresentation(presentation);
         }
 
@@ -223,7 +224,7 @@ class Store {
     editPresentation = model => {
         this.setPresentation(model);
         const ass = this.presentation.dashboards.map(d => {
-            return {text: d.name, value: d.id};
+            return { text: d.name, value: d.id };
         });
 
         this.assignedItemStore.setState(ass);
@@ -241,16 +242,16 @@ class Store {
         });
 
         const transitionModes = [
-            {name: 'slide', checked: true},
-            {name: 'zoom', checked: true},
-            {name: 'spin', checked: true},
-            {name: 'fade', checked: true}];
+            { name: 'slide', checked: true },
+            { name: 'zoom', checked: true },
+            { name: 'spin', checked: true },
+            { name: 'fade', checked: true }];
 
-        let presentation = this.convert({dashboards, transitionModes});
+        let presentation = this.convert({ dashboards, transitionModes });
         if (this.presentation) {
             this.presentation.setDashboards(presentation.dashboards);
             this.presentation.setTransitionModes(presentation.transitionModes);
-        }else{
+        } else {
             this.setPresentation(presentation);
         }
         return Promise.resolve();
@@ -267,7 +268,7 @@ class Store {
 
     savePresentation = async (d2) => {
         if (this.presentation.id) {
-            const mapping = _.findIndex(this.presentations, {id: this.presentation.id});
+            const mapping = _.findIndex(this.presentations, { id: this.presentation.id });
             if (mapping !== -1) {
                 this.presentations.splice(mapping, 1, this.presentation);
             } else {
@@ -311,7 +312,7 @@ decorate(Store, {
     unAssignItems: action,
     checkDataStore: action,
     setPresentations: action,
-    savePresentation: action, //Added
+    savePresentation: action,
     setPresentation: action,
     setStatus: action,
     setFull: action,
@@ -328,4 +329,4 @@ decorate(Store, {
 
 export default new
 
-Store();
+    Store();
