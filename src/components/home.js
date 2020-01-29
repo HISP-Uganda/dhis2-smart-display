@@ -22,8 +22,8 @@ import { displayPreview } from "./presentation/utils";
 import SharingDialog from '@dhis2/d2-ui-sharing-dialog';
 import * as html2canvas from "html2canvas";
 import * as jsPDF from 'jspdf';
-// import Map from "./Map";
 
+// import Map from "./Map";
 
 function TabContainer(props) {
     return (
@@ -50,6 +50,7 @@ const styles = theme => ({
 class HomePage extends React.Component {
     store = null;
     item = null;
+
     constructor(props) {
         super(props);
         const { store, d2 } = props;
@@ -128,11 +129,11 @@ class HomePage extends React.Component {
         preview: this.preview,
         present: this.present,
         edit: this.edit,
-        sharing: this.share,
-        details(...args) {
-            // console.log('Edit', ...args);
-        },
-        print: this.print,
+        // sharing: this.share,
+        // details(...args) {
+        //     // console.log('Edit', ...args);
+        // },
+        // print: this.print,
         delete: this.delete
     };
 

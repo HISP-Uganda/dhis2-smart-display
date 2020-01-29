@@ -10,7 +10,6 @@ import DashboardItems from "./dashboardItems";
 import {inject, observer} from "mobx-react";
 import SlideOptions from "./slideoptions";
 import SlidePreview from "./slidepreview";
-// import {Link } from "react-router-dom";
 
 import Home from '@material-ui/icons/Home';
 import HomePage from '../home';
@@ -64,6 +63,7 @@ class ContentSettings extends Component {
 
         if (activeStep === getSteps().length - 1) {
             this.store.savePresentation(this.d2);
+            this.store.returnHome()
         }
     };
 
@@ -100,7 +100,6 @@ class ContentSettings extends Component {
     }
 
     render() {
-        // const {store} = this.props;
         const steps = getSteps();
         const {activeStep} = this.state;
 
