@@ -1,6 +1,6 @@
-import {action, computed, decorate, observable} from 'mobx';
+import { action, computed, decorate, observable } from 'mobx';
 // import {getEndPointName} from "../api";
-import {itemTypeMap} from "../modules/itemTypes";
+import { itemTypeMap } from "../modules/itemTypes";
 // import {getMapFields} from "../api/metadata";
 // import {orObject} from "../modules/util";
 // import {extractMapView} from "../modules/plugin";
@@ -18,20 +18,6 @@ class DashboardItemContent {
     setType = val => this.type = val;
     setInterpretations = val => this.interpretations = val;
     setDashboardItemType = val => this.dashboardItemType = val;
-
-
-    /*configureFavorite = async (d2) => {
-        const api = d2.Api.getApi();
-        const fetchedFavorite = await api.get(`${getEndPointName(this.dashboardItemType)}/${this.id}`, {
-            fields: this.dashboardItemType === MAP ? getMapFields() : null,
-        });
-
-        const favorite = this.dashboardItemType === MAP ? orObject(extractMapView(fetchedFavorite)) : fetchedFavorite;
-
-        // favorite.id = null;
-
-        return favorite;
-    };*/
 
     get getItemId() {
         return `item-${this.id}`

@@ -33,8 +33,7 @@ class Visualization extends Component {
         }
         return <div>
             <div>{item.name}</div>
-            <div id={item.getItemId} style={style}>
-        </div>
+            <div id={item.getItemId} style={style}></div>
         </div>
     }
 

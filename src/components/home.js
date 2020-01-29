@@ -1,8 +1,8 @@
 import React from 'react';
-import {Delete, Edit, Details, Tv, Visibility} from "@material-ui/icons";
+import { Delete, Edit, Details, Print, Tv, Visibility, Share } from "@material-ui/icons";
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from 'prop-types';
-import {inject, observer} from "mobx-react";
+import { inject, observer } from "mobx-react";
 import Table from '@dhis2/d2-ui-table';
 import '@dhis2/d2-ui-core/css/Table.css';
 import ContentSettings from './settings/contents';
@@ -13,22 +13,21 @@ import Fullscreen from "react-full-screen";
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {withStyles} from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {displayPreview} from "./presentation/utils";
+import { displayPreview } from "./presentation/utils";
 import SharingDialog from '@dhis2/d2-ui-sharing-dialog';
 import * as html2canvas from "html2canvas";
 import * as jsPDF from 'jspdf';
 
 // import Map from "./Map";
 
-
 function TabContainer(props) {
     return (
-        <Typography component="div" style={{padding: 8 * 3}}>
+        <Typography component="div" style={{ padding: 8 * 3 }}>
             {props.children}
         </Typography>
     );
@@ -54,7 +53,7 @@ class HomePage extends React.Component {
 
     constructor(props) {
         super(props);
-        const {store, d2} = props;
+        const { store, d2 } = props;
 
         this.store = store;
         store.checkDataStore(d2);
@@ -101,7 +100,7 @@ class HomePage extends React.Component {
         this.store.setPresentation(args);
         this.store.presentation.setBaseUrl(this.props.baseUrl);
         this.store.presentation.setHtmlTables(this.props.d2);
-        this.setState({open: true})
+        this.setState({ open: true })
     };
 
     delete = args => {
@@ -139,7 +138,7 @@ class HomePage extends React.Component {
     };
 
     handleOpen = () => {
-        this.setState({open: true}, () =>
+        this.setState({ open: true }, () =>
             console.log(this.state.open));
     };
 
@@ -191,7 +190,7 @@ class HomePage extends React.Component {
                 console.log(name);
                 pdf.save(name);
             })
-        ;
+            ;
     };
 
     createOpenHandler = (sharingDialogProps) => () => {
@@ -202,7 +201,7 @@ class HomePage extends React.Component {
     };
 
     handleClose = () => {
-        this.setState({open: false});
+        this.setState({ open: false });
     };
 
     handleConfirm = updatedSharing => {
@@ -219,7 +218,6 @@ class HomePage extends React.Component {
             doNotPost: true,
             onConfirm: this.handleConfirm
         });
-        console.log(this.state);
         return <SharingDialog
             open={this.state.open}
             d2={this.props.d2}
@@ -229,7 +227,7 @@ class HomePage extends React.Component {
     };
 
     render() {
-        const {d2, store, baseUrl, classes} = this.props;
+        const { d2, store, baseUrl, classes } = this.props;
 
         const style = {
             margin: 0,
@@ -272,14 +270,13 @@ class HomePage extends React.Component {
                                         contextMenuActions={this.smartMenuActions}
                                         contextMenuIcons={
                                             {
-                                                edit: <Edit/>,
-                                                present: <Tv/>,
-                                                preview: <Visibility/>,
-                                                // sharing: <Share/>,
-                                                details: <Details/>,
-                                                // print: <Print/>,
-                                                delete: <Delete/>,
-
+                                                edit: <Edit />,
+                                                present: <Tv />,
+                                                delete: <Delete />,
+                                                sharing: <Share />,
+                                                details: <Details />,
+                                                print: <Print />,
+                                                preview: <Visibility />
                                             }
                                         }
                                         // primaryAction={this.store.editPresentation}
@@ -290,8 +287,8 @@ class HomePage extends React.Component {
                         </Grid>
                     </Grid>
                     <Button variant="fab" style={style} onClick={this.store.setStatus2(2)}
-                            color="primary">
-                        <AddIcon/>
+                        color="primary">
+                        <AddIcon />
                     </Button>
                 </div>
             } else {
@@ -310,13 +307,13 @@ class HomePage extends React.Component {
                     <div style={boxStyle}>
 
                         <h2 className="app-info">
-                            <Tv style={iconStyles.largeIcon}/> <br/>
+                            <Tv style={iconStyles.largeIcon} /> <br />
                             No presentation available. Please start by Creating a Presentation
                         </h2>
                     </div>
                     <Button variant="fab" style={style} onClick={this.store.setStatus2(2)}
-                            color="primary">
-                        <AddIcon/>
+                        color="primary">
+                        <AddIcon />
                     </Button>
 
                     {/*<Map baseUrl={baseUrl}/>*/}
@@ -326,9 +323,9 @@ class HomePage extends React.Component {
 
 
         } else if (this.store.status === 2) {
-            display = <ContentSettings d2={d2} baseUrl={baseUrl}/>
+            display = <ContentSettings d2={d2} baseUrl={baseUrl} />
         } else if (this.store.status === 3) {
-            display = <SmartDisplay d2={d2} baseUrl={baseUrl}/>
+            display = <SmartDisplay d2={d2} baseUrl={baseUrl} />
         }
 
         return <Fullscreen enabled={this.store.isFull} onChange={isFull => this.store.setFull(isFull)}>
@@ -339,7 +336,7 @@ class HomePage extends React.Component {
                 aria-describedby="simple-modal-description"
                 open={this.state.open}
                 onClose={this.handleClose}
-                style={{alignItems: 'center', justifyContent: 'center'}}
+                style={{ alignItems: 'center', justifyContent: 'center' }}
             >
                 <div className={classes.paper} style={this.getModalStyle()}>
                     <Slider {...previewSettings}>

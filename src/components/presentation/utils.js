@@ -10,18 +10,18 @@ import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
 import IconButton from '@material-ui/core/IconButton';
 import Delete from '@material-ui/icons/Delete';
-
-import {Scrollbars} from 'react-custom-scrollbars';
+import ChartPlugin from '@dhis2/data-visualizer-plugin';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 import Visualization from '../Visualization'
 // import Button from "@material-ui/core/Button/Button";
 
 export const displayContent = (presentation, item) => {
     if (item.endpoint === "reportTables" && presentation.htmlTables) {
-        return <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
+        return <div dangerouslySetInnerHTML={{ __html: presentation.htmlTables[item.id] }} />
     } else {
         return <div>
-            <Image src={item.url} width="100%" height="100%" alt="Preview content"/>
+            <Image src={item.url} width="100%" height="100%" alt="Preview content" />
         </div>
     }
 };
@@ -29,13 +29,13 @@ export const displayContent = (presentation, item) => {
 export const displayPreviewContent = (presentation, item) => {
     if (item.endpoint === "reportTables") {
         if (presentation.htmlTables) {
-            return <Scrollbars style={{height: 370}}>
-                <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
+            return <Scrollbars style={{ height: 370 }}>
+                <div dangerouslySetInnerHTML={{ __html: presentation.htmlTables[item.id] }} />
             </Scrollbars>
         }
     } else {
-        return <div style={{height: 370}}>
-            <img src={item.url} width="100%" height="100%" alt="Preview content"/>
+        return <div style={{ height: 370 }}>
+            <img src={item.url} width="100%" height="100%" alt="Preview content" />
         </div>
     }
 };
@@ -43,14 +43,14 @@ export const displayPreviewContent = (presentation, item) => {
 export const displaySlidePreviewContent = (presentation, item) => {
     if (item.endpoint === "reportTables") {
         if (presentation.htmlTables) {
-            return <Scrollbars style={{height: 200}}>
-                <div dangerouslySetInnerHTML={{__html: presentation.htmlTables[item.id]}}/>
+            return <Scrollbars style={{ height: 200 }}>
+                <div dangerouslySetInnerHTML={{ __html: presentation.htmlTables[item.id] }} />
             </Scrollbars>
         }
     } else {
         // console.log(item);
-        return <div style={{height: 200}}>
-            <img src={item.url} width="100%" height="100%" alt="Preview content"/>
+        return <div style={{ height: 200 }}>
+            <img src={item.url} width="100%" height="100%" alt="Preview content" />
         </div>
     }
 };
@@ -67,7 +67,7 @@ export const display = (presentation, d2) => {
 
     return presentation.presentation.map((item, key) => {
         return <Slide key={item.id + key} fit={true} controlColor={slideTheme.controlColor}>
-            <Visualization item={item} d2={d2}/>
+            <Visualization item={item} d2={d2} />
         </Slide>
     });
 };
@@ -79,8 +79,7 @@ export const displayPreview = (presentation, d2) => {
                 {/*<Paper>*/}
                 <Card>
                     <CardContent>
-                        {/*{displayPreviewContent(presentation, item)}*/}
-                        <Visualization item={item} d2={d2} height={'70vh'}/>
+                        <Visualization item={item} d2={d2} height={'70vh'} />
                     </CardContent>
                 </Card>
                 {/*</Paper>*/}
@@ -100,13 +99,19 @@ export const slidePreview = (presentation, d2) => {
                             <IconButton onClick={() => {
                                 presentation.deletePresentationItem(item)
                             }}>
-                                <Delete/>
+                                <Delete />
                             </IconButton>
                         }
                         subheader={item.name}
                     />
                     <CardContent>
-                        <Visualization item={item} d2={d2} height={'30vh'} width={'30vw'}/>
+                        <pre>{JSON.stringify(item, null, 2)}</pre>
+                        {item.dashboardItemType === 'CHART' ? <ChartPlugin
+                            d2={d2}
+                            config={{ i: item.id }}
+                            forDashboard={true}
+                        /> : <Visualization item={item} d2={d2} height={'30vh'} width={'30vw'} />}
+
                     </CardContent>
                 </Card>
             </Grid>
