@@ -3,25 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { init, config } from 'd2/d2'
+import {init, config} from 'd2/d2'
 
 let baseUrl = '';
 // let appUrl = '';
 if (process.env.NODE_ENV === 'development') {
-    baseUrl = 'https://play.dhis2.org/2.33.1/';
-    config.headers = { Authorization: 'Basic YWRtaW46ZGlzdHJpY3Q=' };
+  baseUrl = 'http://localhost:8080/';
+  config.headers = {Authorization: 'Basic YWRtaW46ZGlzdHJpY3Q='};
 
 } else {
-    let urlArray = window.location.pathname.split('/');
-    let apiIndex = urlArray.indexOf('api');
-    if (apiIndex > 1) {
-        baseUrl = '/' + urlArray[apiIndex - 1] + '/';
-        // appUrl = '/' + urlArray[apiIndex - 1];
-    } else {
-        baseUrl = '/';
-    }
+  let urlArray = window.location.pathname.split('/');
+  let apiIndex = urlArray.indexOf('api');
+  if (apiIndex > 1) {
+    baseUrl = '/' + urlArray[apiIndex - 1] + '/';
+    // appUrl = '/' + urlArray[apiIndex - 1];
+  } else {
+    baseUrl = '/';
+  }
 
-    baseUrl = window.location.protocol + '//' + window.location.host + baseUrl;
+  baseUrl = window.location.protocol + '//' + window.location.host + baseUrl;
 }
 
 // api config
@@ -33,10 +33,10 @@ if (process.env.NODE_ENV === 'development') {
 config.baseUrl = `${baseUrl}api`;
 
 init(config)
-    .then(d2 => {
-        ReactDOM.render(
-            <App d2={d2} baseUrl={baseUrl} />, document.getElementById('root'));
-    })
-    .catch(err => console.error(err));
+  .then(d2 => {
+    ReactDOM.render(
+      <App d2={d2} baseUrl={baseUrl}/>, document.getElementById('root'));
+  })
+  .catch(err => console.error(err));
 
 serviceWorker.unregister();
