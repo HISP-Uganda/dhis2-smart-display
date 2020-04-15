@@ -5,12 +5,20 @@
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    <title>DHIS2 Smart Display</title>
     <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-    <%= htmlWebpackPlugin.options.vendorScripts %>
+    <script src="%PUBLIC_URL%/vendor/jquery.js"></script>
+    <script src="%PUBLIC_URL%/vendor/ext-all.js"></script>
+    <script src="%PUBLIC_URL%/vendor/OpenLayers.js"></script>
+    <script src="%PUBLIC_URL%/vendor/googlemaps.js"></script>
+    <script src="%PUBLIC_URL%/vendor/reporttable.js"></script>
+    <script src="%PUBLIC_URL%/vendor/map-plugin-32.0.32.js"></script>
+<!--    <script src="%PUBLIC_URL%/vendor/chart.js"></script>-->
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -20,7 +28,6 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>DHIS2 Smart Display</title>
   </head>
   <body>
     <noscript>

@@ -65,7 +65,7 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-dev-utils": "^6.1.1",
     "react-dom": "^16.6.3",
-    "react-full-screen": "^0.2.3",
+    "react-full-screen": "^0.2.4",
     "react-number-format": "^4.0.5",
     "react-router-dom": "^4.3.1",
     "react-slick": "^0.23.2",

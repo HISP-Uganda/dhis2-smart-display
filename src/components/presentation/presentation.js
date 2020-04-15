@@ -12,65 +12,65 @@ import Button from "@material-ui/core/Button/Button";
 
 
 const theme = createTheme(
-    {
-        primary: 'white',
-        secondary: '#000000',
-        textColor: '#327dcc',
-        // marginTop: 50
-    },
-    {
-        primary: 'Helvetica'
-    },
+  {
+    primary: 'white',
+    secondary: '#000000',
+    textColor: '#327dcc',
+    // marginTop: 50
+  },
+  {
+    primary: 'Helvetica'
+  },
 );
 
 
 class Presentation extends Component {
-    store = null;
+  store = null;
 
-    constructor(props) {
-        super(props);
-        const {store, baseUrl, d2} = this.props;
-        this.store = store;
-        this.store.setBaseUrl(baseUrl);
-        this.store.presentation.setHtmlTables(d2)
-    }
+  constructor(props) {
+    super(props);
+    const {store, baseUrl, d2} = this.props;
+    this.store = store;
+    this.store.setBaseUrl(baseUrl);
+    this.store.presentation.setHtmlTables(d2)
+  }
 
 
-    render() {
-        const {d2} = this.props;
-        const style = {
-            margin: 0,
-            top: 'auto',
-            right: 20,
-            bottom: 20,
-            left: 'auto',
-            textColor: '#FFFFFF',
-            position: 'fixed',
-        };
-        return <div>
-            <Deck
-                transition={this.store.presentation.pTransitionModes}
-                transitionDuration={this.store.presentation.transitionDuration}
-                autoplay={true}
-                autoplayDuration={this.store.presentation.slideDuration}
-                controls={true}
-                theme={theme}
-                textColor={theme.textColor}
-                bgColor="primary" className="deck">
-                {
-                    display(this.store.presentation, d2)
-                }
-            </Deck>
-            <Button variant="fab" style={style} color="primary" onClick={this.store.returnHome}>
-                <Home/>
-            </Button>
-        </div>
-    }
+  render() {
+    const {d2} = this.props;
+    const style = {
+      margin: 0,
+      top: 'auto',
+      right: 20,
+      bottom: 20,
+      left: 'auto',
+      textColor: '#FFFFFF',
+      position: 'fixed',
+    };
+    return <div style={{background: 'green'}}>
+      <Deck
+        transition={this.store.presentation.pTransitionModes}
+        transitionDuration={this.store.presentation.transitionDuration}
+        autoplay={true}
+        autoplayDuration={this.store.presentation.slideDuration}
+        controls={true}
+        theme={theme}
+        textColor={theme.textColor}
+        bgColor="primary">
+        {
+          display(this.store.presentation, d2)
+        }
+      </Deck>
+      <Button variant="fab" style={style} color="primary" onClick={this.store.returnHome}>
+        <Home/>
+      </Button>
+    </div>
+  }
 }
 
 Presentation.propTypes = {
-    d2: PropTypes.object.isRequired,
-    baseUrl: PropTypes.string.isRequired
+  d2: PropTypes.object.isRequired,
+  baseUrl: PropTypes.string.isRequired
 };
 
 

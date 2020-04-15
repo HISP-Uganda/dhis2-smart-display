@@ -32,7 +32,7 @@ const env = getClientEnvironment(publicUrl);
 
 
 const dhisConfigPath =
-    process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
+  process.env.DHIS2_HOME && `${process.env.DHIS2_HOME}/config`;
 
 let dhisConfig;
 try {
@@ -41,7 +41,7 @@ try {
   // Failed to load config file - use default config
   console.warn(`\nWARNING! Failed to load DHIS config:`, e.message);
   dhisConfig = {
-    baseUrl: 'http://localhost:8080',
+    baseUrl: 'https://play.dhis2.org/2.33.3',
     authorization: 'Basic YWRtaW46ZGlzdHJpY3Q=', // admin:district
   };
 }
@@ -57,16 +57,16 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 
 const manifest = JSON.parse(
-    fs.readFileSync(`${paths.appPublic}/manifest.webapp`, 'utf8')
+  fs.readFileSync(`${paths.appPublic}/manifest.webapp`, 'utf8')
 );
 
 const globals = Object.assign(
-    {},
-    {
-      DHIS_CONFIG: JSON.stringify(dhisConfig),
-      manifest: JSON.stringify(manifest),
-    },
-    env.stringified
+  {},
+  {
+    DHIS_CONFIG: JSON.stringify(dhisConfig),
+    manifest: JSON.stringify(manifest),
+  },
+  env.stringified
 );
 
 const scriptPrefix = dhisConfig.baseUrl;
@@ -208,7 +208,7 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       // Disable require.ensure as it's not a standard language feature.
-      { parser: { requireEnsure: false } },
+      {parser: {requireEnsure: false}},
 
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
@@ -220,7 +220,7 @@ module.exports = {
             options: {
               formatter: require.resolve('react-dev-utils/eslintFormatter'),
               eslintPath: require.resolve('eslint'),
-              
+
             },
             loader: require.resolve('eslint-loader'),
           },
@@ -253,7 +253,7 @@ module.exports = {
               customize: require.resolve(
                 'babel-preset-react-app/webpack-overrides'
               ),
-              
+
               plugins: [
                 [
                   require.resolve('babel-plugin-named-asset-import'),
@@ -287,13 +287,13 @@ module.exports = {
               presets: [
                 [
                   require.resolve('babel-preset-react-app/dependencies'),
-                  { helpers: true },
+                  {helpers: true},
                 ],
               ],
               cacheDirectory: true,
               // Don't waste time on Gzipping the cache
               cacheCompression: false,
-              
+
               // If an error happens in a package, it's possible to be
               // because it was compiled. Thus, we don't want the browser
               // debugger to show the original code. Instead, the code
@@ -332,7 +332,7 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+            use: getStyleLoaders({importLoaders: 2}, 'sass-loader'),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
@@ -373,26 +373,7 @@ module.exports = {
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
-      template: paths.appHtml,
-        vendorScripts: [
-            `${scriptPrefix}/dhis-web-core-resource/fonts/roboto.css`,
-            `${scriptPrefix}/dhis-web-core-resource/babel-polyfill/6.20.0/dist/polyfill.js`,
-            `${scriptPrefix}/dhis-web-core-resource/react/16.2.0/umd/react.production.min.js`,
-            `${scriptPrefix}/dhis-web-core-resource/react-dom/16.2.0/umd/react-dom.production.min.js`,
-            `${scriptPrefix}/dhis-web-core-resource/jquery/3.2.1/dist/jquery.js`,
-            `${scriptPrefix}/dhis-web-core-resource/jquery-migrate/3.0.1/dist/jquery-migrate.js`,
-            `${scriptPrefix}/dhis-web-pivot/reporttable.js`,
-            `${scriptPrefix}/dhis-web-visualizer/chart.js`,
-            `${scriptPrefix}/dhis-web-maps/map.js`,
-            `${scriptPrefix}/dhis-web-event-reports/eventreport.js`,
-            `${scriptPrefix}/dhis-web-event-visualizer/eventchart.js`,
-        ]
-            .map(asset => {
-                return /\.js$/.test(asset)
-                    ? `<script src="${asset}"></script>`
-                    : `<link type="text/css" rel="stylesheet" href="${asset}">`;
-            })
-            .join('\n')
+      template: paths.appHtml
     }),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
@@ -431,33 +412,33 @@ module.exports = {
     }),
     // TypeScript type checking
     useTypeScript &&
-      new ForkTsCheckerWebpackPlugin({
-        typescript: resolve.sync('typescript', {
-          basedir: paths.appNodeModules,
-        }),
-        async: false,
-        checkSyntacticErrors: true,
-        tsconfig: paths.appTsConfig,
-        compilerOptions: {
-          module: 'esnext',
-          moduleResolution: 'node',
-          resolveJsonModule: true,
-          isolatedModules: true,
-          noEmit: true,
-          jsx: 'preserve',
-        },
-        reportFiles: [
-          '**',
-          '!**/*.json',
-          '!**/__tests__/**',
-          '!**/?(*.)(spec|test).*',
-          '!src/setupProxy.js',
-          '!src/setupTests.*',
-        ],
-        watch: paths.appSrc,
-        silent: true,
-        formatter: typescriptFormatter,
+    new ForkTsCheckerWebpackPlugin({
+      typescript: resolve.sync('typescript', {
+        basedir: paths.appNodeModules,
       }),
+      async: false,
+      checkSyntacticErrors: true,
+      tsconfig: paths.appTsConfig,
+      compilerOptions: {
+        module: 'esnext',
+        moduleResolution: 'node',
+        resolveJsonModule: true,
+        isolatedModules: true,
+        noEmit: true,
+        jsx: 'preserve',
+      },
+      reportFiles: [
+        '**',
+        '!**/*.json',
+        '!**/__tests__/**',
+        '!**/?(*.)(spec|test).*',
+        '!src/setupProxy.js',
+        '!src/setupTests.*',
+      ],
+      watch: paths.appSrc,
+      silent: true,
+      formatter: typescriptFormatter,
+    }),
   ].filter(Boolean),
 
   // Some libraries import Node modules but don't use them in the browser.
