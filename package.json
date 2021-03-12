@@ -48,7 +48,7 @@
     "jest-pnp-resolver": "1.0.1",
     "jest-resolve": "23.6.0",
     "jquery": "^3.4.0",
-    "jspdf": "^1.4.1",
+    "jspdf": "^2.3.1",
     "lodash": "^4.17.13",
     "mini-css-extract-plugin": "0.4.3",
     "mobx": "^5.6.0",
